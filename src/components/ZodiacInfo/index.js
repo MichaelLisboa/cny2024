@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { motion, easeInOut } from 'framer-motion';
 
 const AnimalImage = styled(motion.img)`
-  width: 150%;
   height: auto;
+  max-height: 45vh;
   position: relative;
   z-index: 2;
 `;

@@ -17,15 +17,16 @@ const DatePickerContainer = styled.div`
 
 const DateInput = styled.input`
     font-size: 2.75rem;
-    font-family: inherit;
-    width: auto;
+    font-style: italic;
+    width: 80%;
+    max-width: 480px;
     padding: 8px 16px;
     border: none;
     border-radius: 8px;
     background-color: rgba(255, 255, 255, 0.5);
     outline: none;
     text-align: center;
-    color: #000000;
+    color: #888;
     cursor: pointer;
     transition: background-color 0.2s ease-in-out;
     &:hover {
@@ -150,6 +151,7 @@ function WhenWereYouBorn() {
                 <>
                     <div className="header-section mal-text-center" />
                     <div className="body-section mal-text-center">
+                        <div className="mal-container mal-width-1-1">
                         <div className="mal-margin-bottom-large mal-padding">
                             <h1 className="mal-margin-remove-top">When were you born?</h1>
                             <p className="mal-text-medium">Every decision shapes your destiny. Find out which extraordinary creature you're destined to become.</p>
@@ -157,8 +159,8 @@ function WhenWereYouBorn() {
                         <DatePickerContainer>
                             <DateInput
                                 className="dateInput"
-                                type="date"
-                                value={birthdate || ''}
+                                type="text"
+                                value={birthdate || 'YYYY-MM-DD'}
                                 onChange={handleInputChange}
                                 onClick={(e) => {
                                     e.target.value = ''; // Clear the date input field
@@ -180,6 +182,7 @@ function WhenWereYouBorn() {
                                 </div>
                             )}
                         </DatePickerContainer>
+                        </div>
                     </div>
                     <div className="footer-section" />
                 </>
