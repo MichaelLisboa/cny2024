@@ -66,6 +66,10 @@ const StyledMalCarousel = styled(MalCarousel)`
     overflow: hidden;
     box-shadow: 0 0 16px rgba(0, 0, 0, 0.25);
 
+    &.slide img {
+        object-fit: cover;
+    }
+
     &:not(.slide-current) {
       box-shadow: 0 0 16px rgba(0, 0, 0, 0.25);
     }
@@ -182,7 +186,7 @@ const WhatIsYourElement = () => {
                 className="header-section mal-text-center"
             >
                 {content === 'initial' ? (
-                    <div className="mal-margin-bottom-large mal-padding">
+                    <div className="mal-margin-bottom-large mal-padding-remove-horizontal">
                         <h3 className="mal-margin-remove-top">You find yourself in an ethereal realm, surrounded by a captivating aura of...</h3>
                     </div>
                 ) : null}

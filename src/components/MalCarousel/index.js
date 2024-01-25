@@ -3,7 +3,6 @@ import styled, { keyframes, css } from 'styled-components';
 import Carousel from "nuka-carousel";
 
 const Card = styled.div`
-  height: 100%;
   margin: 0px;
   border-radius: 16px;
   background: transparent;
@@ -18,12 +17,12 @@ const Card = styled.div`
   will-change: transform;
 
   @media (min-width: 768px) {
-    height: 50vh;
+    height: 45vh;
   }
 
   img {
     width: 100%;
-    height: 100%;
+    max-height: 45vh;
     overflow: hidden;
     object-fit: contain;
     object-position: center;
