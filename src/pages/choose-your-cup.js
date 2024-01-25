@@ -97,11 +97,11 @@ const StyledMalCarousel = styled(MalCarousel)`
   .slide {
     margin: 0 !important;
     padding: 0 !important;
-    max-height: 40vh;
+    max-height: 36vh;
     overflow: visible !important;
 
     &.slide img {
-        max-height: 40vh;
+        max-height: 36vh;
     }
   }
 `;
