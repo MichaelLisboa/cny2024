@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "CNY2024",
+  "name": "Lunar New Year 2024",
   "icons": [
     {
       "src": "favicon.ico",
@@ -8,18 +8,21 @@
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "android-chrome-192x192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "logo512.png",
+      "src": "android-chrome-512x512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
+  "start_url": "/?utm_source=CNY2024_app&utm_medium=app&utm_campaign=CNY2024_app",
+  "theme_color": "#B25548",
+  "background_color": "#ffffff",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "description": "Lunar New Year 2024",
+  "orientation": "portrait-primary",
+  "id": "/?utm_source=CNY2024_app&utm_medium=app&utm_campaign=CNY2024_app"
 }

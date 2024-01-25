@@ -1,6 +1,6 @@
 {
-    "name": "",
-    "short_name": "",
+    "name": "Lunar New Year 2024",
+    "short_name": "CNY2024",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
@@ -13,7 +13,13 @@
             "type": "image/png"
         }
     ],
-    "theme_color": "#ffffff",
+    "start_url": "/?utm_source=CNY2024_app&utm_medium=app&utm_campaign=CNY2024_app",
+    "theme_color": "#B25548",
     "background_color": "#ffffff",
-    "display": "standalone"
+    "display": "standalone",
+    "description": "Lunar New Year 2024",   
+    "orientation": "portrait-primary",
+    "id": "/?utm_source=CNY2024_app&utm_medium=app&utm_campaign=CNY2024_app"
 }
+
+
