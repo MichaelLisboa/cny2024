@@ -147,7 +147,9 @@ const WhatIsYourElement = () => {
 
     const animateExit = async () => {
         await footerControls.start({ y: 100, opacity: 0 });
+        await new Promise(resolve => setTimeout(resolve, 5));
         await bodyControls.start({ y: 100, opacity: 0 });
+        await new Promise(resolve => setTimeout(resolve, 5));
         await headerControls.start({ y: 100, opacity: 0 });
     };
 
@@ -164,7 +166,9 @@ const WhatIsYourElement = () => {
         if (chosenElement) {
             await animateExit();
             setContent('monkey'); // Change the content
-            await animateEnter();
+            setTimeout(() => {
+                animateEnter();
+            }, 500);
         }
     };
 
