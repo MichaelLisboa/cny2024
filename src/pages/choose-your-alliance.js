@@ -1,7 +1,7 @@
-import React, { useContext, useState, useMemo } from 'react';
+import React, { useContext, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import { motion, useAnimation } from 'framer-motion'; // Import useAnimation here
+import { motion, useAnimation } from 'framer-motion';
 import pages from '../utils/pages';
 import Layout from '../templates/layout';
 import { AppContext } from '../contexts/AppContext';
@@ -110,19 +110,14 @@ const allianceList = [
 
 const StyledMalCarousel = styled(MalCarousel)`
   .slide {
-    background-color: transparent;
-    overflow: hidden;
+    margin: 0 !important;
+    padding: 0 !important;
+    max-height: 40vh;
+    overflow: visible !important;
 
     &.slide img {
-        max-height: 45vh;
-        object-fit: contain;    
-        object-position: center;
+        max-height: 40vh;
     }
-
-    &.slide-current img {
-        object-fit: contain;
-      }
-
   }
 `;
 
@@ -137,7 +132,6 @@ const DescriptionText = styled.p`
     margin: 0;
     padding: 0;
 `;
-
 
 const HeaderSection = styled(motion.div)`
   // Add your header-section styles here.
@@ -154,7 +148,6 @@ const FooterSection = styled(motion.div)`
 const ChooseYourAlliance = () => {
     const { updateUserSelection, getUserInfo } = useContext(AppContext);
     const [content, setContent] = useState('initial');
-    const [selectedCard, setSelectedCard] = useState(null);
 
     const userInfo = getUserInfo();
     const userElement = userInfo.chosenElement;
@@ -192,7 +185,6 @@ const ChooseYourAlliance = () => {
 
     const handleButtonClick = async () => {
         const chosenAlliance = currentSlide.title;
-        setSelectedCard(chosenAlliance);
         updateUserSelection('chosenAlliance', chosenAlliance);
 
         if (chosenAlliance) {
