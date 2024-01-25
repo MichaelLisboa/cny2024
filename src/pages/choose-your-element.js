@@ -202,7 +202,7 @@ const WhatIsYourElement = () => {
                 className="body-section"
             >
                 {content === 'initial' ? (
-                    <div className="mal-padding">
+                    <div className="mal-padding mal-padding-remove-vertical">
                         <StyledMalCarousel
                             elementsList={elementsList}
                             initialSlide={initialSlide.index}

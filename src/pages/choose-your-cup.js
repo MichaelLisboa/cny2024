@@ -93,6 +93,19 @@ const traitsList = [
     },
 ];
 
+const StyledMalCarousel = styled(MalCarousel)`
+  .slide {
+    margin: 0 !important;
+    padding: 0 !important;
+    max-height: 40vh;
+    overflow: visible !important;
+
+    &.slide img {
+        max-height: 40vh;
+    }
+  }
+`;
+
 const DescriptionText = styled.p`
     display: block;
     font-size: 0.75rem;
@@ -230,8 +243,8 @@ const ChooseYourTrait = () => {
                 className="body-section"
             >
                 {content === 'initial' ? (
-                    <div className="mal-padding">
-                        <MalCarousel
+                    <div>
+                        <StyledMalCarousel
                             elementsList={randomItems}
                             initialSlide={initialSlide.index}
                             onCurrentSlideChange={handleCurrentSlideChange}
