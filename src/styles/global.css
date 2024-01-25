@@ -46,7 +46,9 @@
   height: 15%;
 }
 
-.subheader:empty, .footer:empty {
+.chapter-title:empty,
+.header-section:empty,
+.footer:empty {
   display: none;
 }
 
