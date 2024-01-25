@@ -206,6 +206,7 @@ const WhatIsYourElement = () => {
                         <StyledMalCarousel
                             elementsList={elementsList}
                             onCurrentSlideChange={handleCurrentSlideChange}
+                            handleCardClick={handleButtonClick}
                         />
                     </div>
                 ) : (

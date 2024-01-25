@@ -234,6 +234,7 @@ const ChooseYourTrait = () => {
                         <MalCarousel
                             elementsList={randomItems}
                             onCurrentSlideChange={handleCurrentSlideChange}
+                            handleCardClick={handleButtonClick}
                         />
                     </div>
                 ) : (

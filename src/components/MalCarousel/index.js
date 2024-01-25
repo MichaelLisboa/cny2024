@@ -112,7 +112,7 @@ const NextButton = styled.button`
   }
 `;
 
-const MalCarousel = ({ elementsList, onCurrentSlideChange, className }) => {
+const MalCarousel = ({ elementsList, onCurrentSlideChange, handleCardClick, className }) => {
     
     const carouselRef = useRef(null);
     const [currentSlide, setCurrentSlide] = useState(2);
@@ -168,6 +168,7 @@ const MalCarousel = ({ elementsList, onCurrentSlideChange, className }) => {
                 <Card
                     key={index}
                     selected={index === currentSlide}
+                    onClick={handleCardClick}
                     >
                     <img
                         src={element.image}
