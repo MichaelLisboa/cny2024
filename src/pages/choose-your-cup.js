@@ -196,7 +196,9 @@ const ChooseYourTrait = () => {
         if (chosenTrait) {
             await animateExit();
             setContent('monkey'); // Change the content
-            await animateEnter();
+            setTimeout(() => {
+                animateEnter();
+            }, 500);
         }
     };
 
