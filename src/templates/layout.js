@@ -12,7 +12,7 @@ const BackgroundImage = styled.section`
     background-position: center;
     width: ${props => props.width};
     height: ${props => props.height};
-    max-height: ${props => props.height};
+    min-height: ${props => props.height};
     overflow: hidden;
     ${props => props.animation && `animation: ${props.animation};`}
     opacity: ${props => (props.loaded ? 1 : 0)};
@@ -22,9 +22,7 @@ const BackgroundImage = styled.section`
 const MalContainer = styled.div`
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: space-between; // evenly space the content
-    height: 100%; // take up the entire height of the screen
+    min-height: 100%;
 `;
 
 const fadeIn = keyframes`
@@ -36,15 +34,7 @@ const fadeIn = keyframes`
   }
 `;
 
-const Header = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 0.06;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  margin-top: 40px;
-  
+const Header = styled.div`  
   .icon-title {
     text-align: center;
     opacity: 0;
@@ -101,8 +91,8 @@ function Layout({ children }) {
                 transition={{ type: 'spring', stiffness: 90, damping: 20 }}
                 style={{ height }}>
                 <MalContainer className="mal-container mal-container-small mal-height-1-1">
-                    <Header>
-                        <h3 className="mal-margin-remove-top mal-padding-remove-top">&nbsp;</h3>
+                    <Header className="chapter-title">
+                        <h3>&nbsp;</h3>
                         <div className="icon-title mal-flex mal-flex-middle">
                             <img
                                 className="mal-margin-small-right"
