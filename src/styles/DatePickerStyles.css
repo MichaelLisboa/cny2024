@@ -1,0 +1,11 @@
+input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+}
+
+.rdp-caption_dropdowns * {
+    font-size: 1.5rem !important;
+}
+
+.datePickerPopup button {
+    font-size: 1.25rem !important;
+}
