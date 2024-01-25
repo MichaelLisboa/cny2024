@@ -18,6 +18,7 @@ import persevering from "../images/traits/persevering.png";
 import graceful from "../images/traits/graceful.png";
 import resourceful from "../images/traits/resourceful.png";
 import curiosity from "../images/traits/curiosity.png";
+import trait from "../images/tokens/trait.png";
 
 const traitsList = [
     {
@@ -155,9 +156,6 @@ const ChooseYourTrait = () => {
         return [...indices];
     }
 
-    // Get 5 unique random indices
-    const randomIndices = getRandomIndices(traitsList.length, 5);
-
     // Get 5 random items from traitsList
     const randomItems = useMemo(() => {
         // Get 5 unique random indices
@@ -167,8 +165,6 @@ const ChooseYourTrait = () => {
         return randomIndices.map(index => traitsList[index]);
     }, [traitsList]);
 
-    console.log("RANDOM ITEMS", randomItems);
-
     const initialSlide = {
         index: 0,
         title: randomItems[0].title,
@@ -177,8 +173,6 @@ const ChooseYourTrait = () => {
         subheadline: randomItems[0].subheadline,
         description: randomItems[0].description.replace(/\*element_noun\*/g, userElement)
     };
-
-    console.log("INITIAL SLIDE", initialSlide);
 
     const [currentSlide, setCurrentSlide] = useState(initialSlide);
 
@@ -216,8 +210,6 @@ const ChooseYourTrait = () => {
         });
     };
 
-    // const elementTokenImage = require(`../images/tokens/${selectedCard ? selectedCard.toLowerCase() : `element`}.png`);
-    const elementTokenImage = require(`../images/tokens/${`trait`}.png`);
     return (
         <Layout>
             <HeaderSection
@@ -246,7 +238,7 @@ const ChooseYourTrait = () => {
                     <div className="mal-padding-small mal-text-center">
                         <TraitTokenImage className="mal-padding">
                             <img
-                                src={elementTokenImage}
+                                src={trait}
                                 alt={`The Trait of ${selectedCard}`} />
                         </TraitTokenImage>
                         <h4 className="mal-margin-remove">{currentSlide.subheadline}</h4>
