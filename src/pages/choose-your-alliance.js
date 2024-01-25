@@ -316,8 +316,8 @@ const ChooseYourAlliance = () => {
                 ) : (
                     <div className="mal-flex mal-flex-column mal-flex-between">
                         <div className="mal-position-top mal-text-center mal-margin-auto mal-width-5-6">
-                            <h2 className="mal-text-bold">{currentSlide.reaction}</h2>
-                            <p className="mal-text-large mal-text-italic">"{currentSlide.text}"</p>
+                            <h3>{currentSlide.reaction}</h3>
+                            <p className="mal-text-medium mal-text-italic">"{currentSlide.text}"</p>
                         </div>
                         <StyledImage>
                             <img src={currentSlide.image} alt={currentSlide.title} />
