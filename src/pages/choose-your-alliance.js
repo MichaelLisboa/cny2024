@@ -148,7 +148,7 @@ const Container = styled.div`
 
 const StyledParagraph = styled(motion.p).attrs(() => ({
     variants: paragraphVariants,
-    initial: '',
+    initial: 'hidden',
     animate: 'show',
     exit: 'exit',
 }))`
