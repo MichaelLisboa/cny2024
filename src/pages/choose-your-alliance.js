@@ -332,7 +332,6 @@ const ChooseYourAlliance = () => {
                 {content === 'initial' ? (
                     <OrnateButton onClick={handleButtonClick}>
                         {currentSlide.title}
-                        <DescriptionText className="mal-text-small">{currentSlide.text}</DescriptionText>
                     </OrnateButton>
                 ) : null}
             </FooterSection>
