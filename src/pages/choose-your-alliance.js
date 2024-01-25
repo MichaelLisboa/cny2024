@@ -215,7 +215,6 @@ const ChooseYourAlliance = () => {
                 {content === 'initial' ? (
                     <div className="mal-margin-bottom-large mal-padding-remove-horizontal">
                         <h3 className="mal-margin-remove-top">Shortly after, you come across other spirits.</h3>
-                        <p className="mal-text-medium mal-margin-small-top">I've heard tales of mysterious artifacts hidden in the heart of the cliff. What do you say?</p>
                     </div>
                 ) : null}
             </HeaderSection>
@@ -224,7 +223,8 @@ const ChooseYourAlliance = () => {
                 className="body-section"
             >
                 {content === 'initial' ? (
-                    <div className="mal-padding">
+                    <div>
+                        <p className="mal-text-medium mal-margin-small-top mal-text-center mal-padding-small mal-padding-remove-vertical">I've heard tales of mysterious artifacts hidden in the heart of the cliff. What do you say?</p>
                         <StyledMalCarousel
                             elementsList={allianceList}
                             initialSlide={initialSlide.index}
