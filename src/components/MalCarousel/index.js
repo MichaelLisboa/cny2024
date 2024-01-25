@@ -116,9 +116,7 @@ const NextButton = styled.button`
 const MalCarousel = ({ elementsList, onCurrentSlideChange, handleCardClick, className }) => {
   const { getBrowserSize } = useContext(AppContext);
   const browserSize = getBrowserSize();
-  const { height, width } = browserSize; // Access the browserSize from AppContext
-
-  console.log(width)
+  const { height, width } = browserSize; 
 
   const carouselRef = useRef(null);
   const [currentSlide, setCurrentSlide] = useState(2);
