@@ -67,6 +67,7 @@ const StyledMalCarousel = styled(MalCarousel)`
     box-shadow: 0 0 16px rgba(0, 0, 0, 0.25);
 
     &.slide img {
+        max-height: 40vh;
         object-fit: cover;
     }
 
@@ -79,7 +80,6 @@ const StyledMalCarousel = styled(MalCarousel)`
     }
 
     &.slide-current img {
-        max-height: 40vh;
         object-fit: cover;
         animation: ${scaleAnimation} 30s ease-in-out infinite alternate;
       }
