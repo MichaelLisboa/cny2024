@@ -12,6 +12,7 @@ const BackgroundImage = styled.section`
     background-position: center;
     width: ${props => props.width};
     height: ${props => props.height};
+    max-height: ${props => props.height};
     overflow: hidden;
     ${props => props.animation && `animation: ${props.animation};`}
     opacity: ${props => (props.loaded ? 1 : 0)};
