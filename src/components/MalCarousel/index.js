@@ -133,7 +133,7 @@ const MalCarousel = ({ elementsList, onCurrentSlideChange, handleCardClick, clas
       ref={carouselRef}
       className={`carousel ${className}`}
       wrapAround={true}
-      slideIndex={2}
+      slideIndex={0}
       renderBottomCenterControls={null}
       renderCenterLeftControls={({ previousSlide }) => (
         <PreviousButton onClick={previousSlide}>
