@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import { motion, useAnimation } from 'framer-motion';
+import { motion, useAnimation, AnimatePresence } from 'framer-motion';
 import pages from '../utils/pages';
 import Layout from '../templates/layout';
 import { AppContext } from '../contexts/AppContext';
@@ -25,84 +25,84 @@ const allianceList = [
     {
         title: "Clever Rat",
         image: rat,
-        description: "As you sip from the cup, a surge of courage courses through your ethereal form. The *element_noun* shadows seem less intimidating, and you find yourself eagerly engaging with other spirits. Your newfound rat propels you forward, unafraid of the challenges that lie ahead.",
+        description: "I'm known for my wit. Would you join forces with me to navigate these challenges?",
         subheadline: "Drink from the cup of Bravery",
         text: "Team up with the Clever Rat"
     },
     {
         title: "Strong Ox",
         image: ox,
-        description: "The elixir of ox enhances your wit and intelligence. You navigate the *element_noun* with strategic acumen, outsmarting spirits and solving challenges with ease. Your sharp mind becomes your greatest asset, and other spirits admire your clever approach.",
+        description: "My strength is unmatched. Will you join forces to overcome these challenges?",
         subheadline: "Drink from the cup of Cleverness",
         text: ""
     },
     {
         title: "Fierce Tiger",
         image: tiger,
-        description: "The vibrant tiger from the cup infuses your spirit with agility and speed. You dart through the *element_noun*, embracing the thrill of the race. Your energetic spirit sets a lively pace, making you a formidable contender among the spirits.",
+        description: "To win this race, you'll need courage and strength. Will you join me to learn the ways of the *element_noun*?",
         subheadline: "Drink from the cup of Energy",
         text: ""
     },
     {
         title: "Smart Rabbit",
         image: rabbit,
-        description: "The elixir of craftiness imbues you with ingenuity and sly tactics. Navigating through the *element_noun*, you employ clever tricks and strategies, gaining an edge over challenges. Your rabbit nature becomes a hallmark of your journey.",
+        description: "I'm known for my quick thinking. Would you like to team up and outpace the competition?",
         subheadline: "Drink from the cup of Craftiness",
         text: ""
     },
     {
         title: "Wise Dragon",
         image: dragon,
-        description: "The cup of dragon fills you with power and determination. As you move through the *element_noun*, your strong presence intimidates other spirits. Challenges become opportunities to showcase your might, solidifying your position as a formidable contender.",
+        description: "I dare you to navigate this treacherous obstacle course. Let's see if you can succeed.",
         subheadline: "Drink from the cup of Strength",
         text: ""
     },
     {
         title: "Patient Snake",
         image: snake,
-        description: "Sipping from the cup of resilience, you feel an unwavering resolve. As you navigate the *element_noun*, challenges may arise, but you face them with adaptability and determination. Your resilience becomes a beacon, inspiring other spirits on their journey.",
+        description: "I sense intricate challenges on our path. With patience, we can overcome them together. Would you join me?",
         subheadline: "Drink from the cup of Resilience",
         text: ""
     },
     {
         title: "Mighty Horse",
         image: horse,
-        description: "The elixir of perseverance fortifies your spirit with unwavering determination. Among the ancient *element_noun*, obstacles may attempt to hinder your path, but you press on, fueled by an inner dragon that resonates with the very heartbeat of the *element_noun*.",
+        description: "I've been watching your progress. It's time for a test of strength. Are you up for the challenge?",
         subheadline: "Drink from the cup of Perseverence",
         text: ""
     },
     {
         title: "Polite Goat",
         image: goat,
-        description: "The cup of grace bestows upon you an aura of elegance and finesse. Moving through the enchanted *element_noun*, your every step is marked by goat precision. Challenges in the way seem to bow before your goat spirit.",
+        description: "I see you've come a long way in this race. With cooperation, we can navigate them gracefully.",
         subheadline: "Drink from the cup of Gracefulness",
         text: ""
     },
     {
         title: "Curious Monkey",
         image: monkey,
-        description: "Sipping from the cup of monkeyness, you discover ingenious ways to overcome challenges. The *element_noun* becomes a canvas for your creative problem-solving, and your monkey nature shines through.",
+        description: "I've heard tales of mysterious artifacts hidden in the heart of the *element_noun*. What do you say?",
         subheadline: "Drink from the cup of Resourcefulness",
         text: ""
     },
     {
         title: "Determined Rooster",
         image: rooster,
-        description: "The elixir of rooster sparks a deep desire to explore. Every challenge, every encounter becomes an opportunity to learn. Your curious spirit leads you down uncharted paths, uncovering hidden wonders in the *element_noun*.",
+        description: "Your determination is admirable. Join me, and we'll overcome these challenges together!",
         subheadline: "Drink from the cup of Curiosity",
         text: ""
     },
     {
         title: "Amiable Dog",
         image: dog,
-        description: "The elixir of rooster sparks a deep desire to explore. Every challenge, every encounter becomes an opportunity to learn. Your curious spirit leads you down uncharted paths, uncovering hidden wonders in the *element_noun*.",
+        description: "With amiability and camaraderie, we can make the journey enjoyable. Would you be my companion?",
         subheadline: "Drink from the cup of Curiosity",
         text: ""
     },
     {
         title: "Energetic Pig",
         image: pig,
-        description: "The elixir of rooster sparks a deep desire to explore. Every challenge, every encounter becomes an opportunity to learn. Your curious spirit leads you down uncharted paths, uncovering hidden wonders in the *element_noun*.",
+        description: "I challenge you to a race through the forest. Are you energetic enough to keep up?",
         subheadline: "Drink from the cup of Curiosity",
         text: ""
     },
@@ -131,6 +131,20 @@ const DescriptionText = styled.p`
     text-align: center;
     margin: 0;
     padding: 0;
+`;
+
+const StyledParagraph = styled.p`
+  line-height: 1.5em; // Adjust this value to match your text's line height
+  height: ${props => props.lines * 1.5}em; // Adjust the multiplier to match your text's line height
+  overflow: hidden; // Hide any text that exceeds the specified height
+  font-size: 1rem; // Set your font size here
+    font-family: Lato, sans-serif;
+    font-weight: 700;
+    font-style: italic;
+    // color: #322F20;
+    text-align: center;
+    opacity: 1;
+  transition: opacity 0.5s ease-in-out;
 `;
 
 const HeaderSection = styled(motion.div)`
@@ -224,7 +238,9 @@ const ChooseYourAlliance = () => {
             >
                 {content === 'initial' ? (
                     <div>
-                        <p className="mal-text-medium mal-margin-small-top mal-text-center mal-padding-small mal-padding-remove-vertical">I've heard tales of mysterious artifacts hidden in the heart of the cliff. What do you say?</p>
+                        <StyledParagraph lines={3} className="mal-padding mal-padding-remove-vertical">
+                            "{currentSlide.description.replace(/\*element_noun\*/g, userElement)}"
+                        </StyledParagraph>
                         <StyledMalCarousel
                             elementsList={allianceList}
                             initialSlide={initialSlide.index}
