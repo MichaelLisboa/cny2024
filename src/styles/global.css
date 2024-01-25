@@ -35,6 +35,7 @@
   flex: 0.58;
   align-items: center;
   justify-content: center;
+  max-height: 45vh;
 }
 
 .header-section:not(:empty) + .body-section {
