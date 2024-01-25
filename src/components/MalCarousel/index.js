@@ -113,7 +113,7 @@ const NextButton = styled.button`
   }
 `;
 
-const MalCarousel = ({ elementsList, onCurrentSlideChange, handleCardClick, className }) => {
+const MalCarousel = ({ elementsList, initialSlide, onCurrentSlideChange, handleCardClick, className }) => {
   const { getBrowserSize } = useContext(AppContext);
   const browserSize = getBrowserSize();
   const { height, width } = browserSize; 
@@ -133,7 +133,7 @@ const MalCarousel = ({ elementsList, onCurrentSlideChange, handleCardClick, clas
       ref={carouselRef}
       className={`carousel ${className}`}
       wrapAround={true}
-      slideIndex={0}
+      slideIndex={initialSlide}
       renderBottomCenterControls={null}
       renderCenterLeftControls={({ previousSlide }) => (
         <PreviousButton onClick={previousSlide}>

@@ -232,6 +232,7 @@ const ChooseYourAlliance = () => {
                     <div className="mal-padding">
                         <StyledMalCarousel
                             elementsList={allianceList}
+                            initialSlide={initialSlide.index}
                             onCurrentSlideChange={handleCurrentSlideChange}
                             handleCardClick={handleButtonClick}
                         />

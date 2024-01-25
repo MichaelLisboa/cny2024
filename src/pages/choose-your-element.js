@@ -205,6 +205,7 @@ const WhatIsYourElement = () => {
                     <div className="mal-padding">
                         <StyledMalCarousel
                             elementsList={elementsList}
+                            initialSlide={initialSlide.index}
                             onCurrentSlideChange={handleCurrentSlideChange}
                             handleCardClick={handleButtonClick}
                         />

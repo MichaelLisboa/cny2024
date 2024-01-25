@@ -233,6 +233,7 @@ const ChooseYourTrait = () => {
                     <div className="mal-padding">
                         <MalCarousel
                             elementsList={randomItems}
+                            initialSlide={initialSlide.index}
                             onCurrentSlideChange={handleCurrentSlideChange}
                             handleCardClick={handleButtonClick}
                         />
