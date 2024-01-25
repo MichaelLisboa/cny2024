@@ -216,6 +216,7 @@ const ChooseYourTrait = () => {
     const handleCurrentSlideChange = (newCurrentSlideIndex) => {
         setCurrentSlide({
             index: newCurrentSlideIndex,
+            image: traitsList[newCurrentSlideIndex].image,
             title: traitsList[newCurrentSlideIndex].title,
             text: traitsList[newCurrentSlideIndex].text,
             subheadline: traitsList[newCurrentSlideIndex].subheadline,

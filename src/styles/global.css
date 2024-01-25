@@ -49,7 +49,7 @@
 
 .chapter-title:empty,
 .header-section:empty,
-.footer:empty {
+.footer-section:empty {
   display: none;
 }
 

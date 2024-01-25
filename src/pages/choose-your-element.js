@@ -137,6 +137,7 @@ const WhatIsYourElement = () => {
 
     const initialSlide = {
         index: 2,
+        image: elementsList[2].image,
         title: elementsList[2].title,
         text: elementsList[2].text,
         subheadline: elementsList[2].subheadline,
@@ -176,6 +177,7 @@ const WhatIsYourElement = () => {
     const handleCurrentSlideChange = (newCurrentSlideIndex) => {
         setCurrentSlide({
             index: newCurrentSlideIndex,
+            image: elementsList[newCurrentSlideIndex].image,
             title: elementsList[newCurrentSlideIndex].title,
             text: elementsList[newCurrentSlideIndex].text,
             subheadline: elementsList[newCurrentSlideIndex].subheadline,

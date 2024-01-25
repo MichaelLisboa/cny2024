@@ -26,85 +26,85 @@ const allianceList = [
         title: "Clever Rat",
         image: rat,
         description: "I'm known for my wit. Would you join forces with me to navigate these challenges?",
-        subheadline: "Drink from the cup of Bravery",
-        text: "Team up with the Clever Rat"
+        reaction: "Rat scuttles excitedly, saying,",
+        text: "Ah, great choice, spirit! Let's outsmart the competition!"
     },
     {
         title: "Strong Ox",
         image: ox,
         description: "My strength is unmatched. Will you join forces to overcome these challenges?",
-        subheadline: "Drink from the cup of Cleverness",
-        text: ""
+        reaction: "With sturdy trot, Ox declares,",
+        text: "A worthy adversary! Brace yourself, spirit, for a test of strength."
     },
     {
         title: "Fierce Tiger",
         image: tiger,
         description: "To win this race, you'll need courage and strength. Will you join me to learn the ways of the *element_noun*?",
-        subheadline: "Drink from the cup of Energy",
-        text: ""
+        reaction: "Tiger prowls confidently, remarking,",
+        text: "Fearless! We'll tackle obstacles like the kings of the jungle."
     },
     {
         title: "Smart Rabbit",
         image: rabbit,
         description: "I'm known for my quick thinking. Would you like to team up and outpace the competition?",
-        subheadline: "Drink from the cup of Craftiness",
-        text: ""
+        reaction: "Rabbit hops gracefully, stating,",
+        text: "Smart move, spirit! Quick thinking will be our ticket to victory."
     },
     {
         title: "Wise Dragon",
         image: dragon,
         description: "I dare you to navigate this treacherous obstacle course. Let's see if you can succeed.",
-        subheadline: "Drink from the cup of Strength",
-        text: ""
+        reaction: "Dragon glides with majestic movements, chuckles,",
+        text: "Bravery, I like! Let's see if you can soar through challenges, spirit."
     },
     {
         title: "Patient Snake",
         image: snake,
         description: "I sense intricate challenges on our path. With patience, we can overcome them together. Would you join me?",
-        subheadline: "Drink from the cup of Resilience",
-        text: ""
+        reaction: "Snake slithers with finesse, hissing,",
+        text: "A brave choice, spirit! Let's slither through these challenges together."
     },
     {
         title: "Mighty Horse",
         image: horse,
         description: "I've been watching your progress. It's time for a test of strength. Are you up for the challenge?",
-        subheadline: "Drink from the cup of Perseverence",
-        text: ""
+        reaction: "Horse gallops energetically, neighing,",
+        text: "Fantastic! Our strength will carry us to success. repare for a true test of your spirit's might!"
     },
     {
         title: "Polite Goat",
         image: goat,
         description: "I see you've come a long way in this race. With cooperation, we can navigate them gracefully.",
-        subheadline: "Drink from the cup of Gracefulness",
-        text: ""
+        reaction: "Goat trots amiably, bleating,",
+        text: "A brave soul! Let's approach challenges with grace."
     },
     {
         title: "Curious Monkey",
         image: monkey,
         description: "I've heard tales of mysterious artifacts hidden in the heart of the *element_noun*. What do you say?",
-        subheadline: "Drink from the cup of Resourcefulness",
-        text: ""
+        reaction: "Monkey swings playfully, chattering,",
+        text: "Curiosity is our guide! Let's explore and triumph."
     },
     {
         title: "Determined Rooster",
         image: rooster,
         description: "Your determination is admirable. Join me, and we'll overcome these challenges together!",
-        subheadline: "Drink from the cup of Curiosity",
-        text: ""
+        reaction: "Rooster struts confidently, crowing,",
+        text: "Bravo! With determination, we'll conquer all obstacles."
     },
     {
         title: "Amiable Dog",
         image: dog,
         description: "With amiability and camaraderie, we can make the journey enjoyable. Would you be my companion?",
-        subheadline: "Drink from the cup of Curiosity",
-        text: ""
+        reaction: "Dog bounds joyfully, barking,",
+        text: "Loyal choice! We'll face challenges with endurance."
     },
     {
         title: "Energetic Pig",
         image: pig,
         description: "I challenge you to a race through the forest. Are you energetic enough to keep up?",
-        subheadline: "Drink from the cup of Curiosity",
-        text: ""
+        reaction: "Pig trots contentedly, oinking,",
+        text: "Delightful! Together, we'll navigate with ease."
     },
 ];
 
@@ -184,6 +184,15 @@ const paragraphVariants = {
     },
 };
 
+const StyledImage = styled(motion.div)`
+  position: absolute;
+  right: -15vw;
+  bottom: -30px;
+  width: 100%;
+  overflow: visible !important;
+  min-width: 130vw;
+  `;
+
 const HeaderSection = styled(motion.div)`
   // Add your header-section styles here.
 `;
@@ -217,7 +226,7 @@ const ChooseYourAlliance = () => {
         title: allianceList[0].title,
         image: allianceList[0].image,
         text: allianceList[0].text,
-        subheadline: allianceList[0].subheadline,
+        reaction: allianceList[0].reaction,
         description: allianceList[0].description.replace(/\*element_noun\*/g, userElement)
     };
 
@@ -254,9 +263,10 @@ const ChooseYourAlliance = () => {
     const handleCurrentSlideChange = (newCurrentSlideIndex) => {
         setCurrentSlide({
             index: newCurrentSlideIndex,
+            image: allianceList[newCurrentSlideIndex].image,
             title: allianceList[newCurrentSlideIndex].title,
             text: allianceList[newCurrentSlideIndex].text,
-            subheadline: allianceList[newCurrentSlideIndex].subheadline,
+            reaction: allianceList[newCurrentSlideIndex].reaction,
             description: allianceList[newCurrentSlideIndex].description.replace(/\*element_noun\*/g, userElement)
         });
     };
@@ -304,10 +314,14 @@ const ChooseYourAlliance = () => {
                         />
                     </div>
                 ) : (
-                    <div>
-                        <h4 className="mal-margin-remove">{currentSlide.subheadline}</h4>
-                        <h2 className="mal-margin-remove">{currentSlide.title}</h2>
-                        <p>{currentSlide.description}</p>
+                    <div className="mal-flex mal-flex-column mal-flex-between">
+                        <div className="mal-position-top mal-text-center mal-margin-auto mal-width-5-6">
+                            <h2 className="mal-text-bold">{currentSlide.reaction}</h2>
+                            <p className="mal-text-large mal-text-italic">"{currentSlide.text}"</p>
+                        </div>
+                        <StyledImage>
+                            <img src={currentSlide.image} alt={currentSlide.title} />
+                        </StyledImage>
                     </div>
                 )}
             </BodySection>
@@ -320,11 +334,7 @@ const ChooseYourAlliance = () => {
                         {currentSlide.title}
                         <DescriptionText className="mal-text-small">{currentSlide.text}</DescriptionText>
                     </OrnateButton>
-                ) : (
-                    <OrnateButton url={nextPage.url}>
-                        {nextPage.title}
-                    </OrnateButton>
-                )}
+                ) : null}
             </FooterSection>
         </Layout >
     );
