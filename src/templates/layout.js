@@ -58,9 +58,7 @@ const Header = styled.div`
 
 function Layout({ children }) {
     const { getBrowserSize } = useContext(AppContext);
-
     const browserSize = getBrowserSize();
-
     const { height, width } = browserSize; // Access the browserSize from AppContext
     const location = useLocation();
     const currentPage = useMemo(() => pages.find(page => page.url === location.pathname), [location.pathname]);

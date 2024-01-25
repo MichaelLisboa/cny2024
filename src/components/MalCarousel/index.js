@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
-import styled, { keyframes, css } from 'styled-components';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import styled from 'styled-components';
+import { AppContext } from '../../contexts/AppContext'; // Import AppContext
 import Carousel from "nuka-carousel";
 
 const Card = styled.div`
@@ -113,70 +114,79 @@ const NextButton = styled.button`
 `;
 
 const MalCarousel = ({ elementsList, onCurrentSlideChange, handleCardClick, className }) => {
-    
-    const carouselRef = useRef(null);
-    const [currentSlide, setCurrentSlide] = useState(2);
+  const { getBrowserSize } = useContext(AppContext);
+  const browserSize = getBrowserSize();
+  const { height, width } = browserSize; // Access the browserSize from AppContext
 
-    useEffect(() => {
-        if (carouselRef.current) {
-            carouselRef.current.focus({ preventScroll: true });
+  console.log(width)
+
+  const carouselRef = useRef(null);
+  const [currentSlide, setCurrentSlide] = useState(2);
+
+  useEffect(() => {
+    if (carouselRef.current) {
+      carouselRef.current.focus({ preventScroll: true });
+    }
+  }, []);
+
+  return (
+
+    <CarouselContainer
+      ref={carouselRef}
+      className={`carousel ${className}`}
+      wrapAround={true}
+      slideIndex={2}
+      renderBottomCenterControls={null}
+      renderCenterLeftControls={({ previousSlide }) => (
+        <PreviousButton onClick={previousSlide}>
+          <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <path opacity="0.3" d="M6.66699 16L14.667 28H24.0003L16.0003 16L24.0003 4H14.667L6.66699 16Z" fill="#9C1313" />
+            <path d="M6.66699 16L14.667 28H24.0003L16.0003 16L24.0003 4H14.667L6.66699 16ZM9.87233 16L16.095 6.66667H19.019L12.7963 16L19.019 25.3333H16.0937L9.87233 16Z" fill="#9C1313" />
+          </svg>
+        </PreviousButton>
+      )}
+      renderCenterRightControls={({ nextSlide }) => (
+        <NextButton onClick={nextSlide}>
+          <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <path opacity="0.3" d="M24 16L16 28H6.66667L14.6667 16L6.66667 4H16L24 16Z" fill="#9C1313" />
+            <path d="M24 16L16 28H6.66667L14.6667 16L6.66667 4H16L24 16ZM20.7947 16L14.572 6.66667H11.648L17.8707 16L11.648 25.3333H14.5733L20.7947 16Z" fill="#9C1313" />
+          </svg>
+        </NextButton>
+      )}
+      scrollMode="page"
+      dragging={true}
+      beforeSlide={(currentSlide, endSlide) => {
+        if (currentSlide < endSlide) {
+          return false;
         }
-    }, []);
-
-    return (
-
-        <CarouselContainer
-            ref={carouselRef}
-            className={`carousel ${className}`}
-            wrapAround={true}
-            slideIndex={2}
-            renderBottomCenterControls={null}
-            renderCenterLeftControls={({ previousSlide }) => (
-                <PreviousButton onClick={previousSlide}>
-                    <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                        <path opacity="0.3" d="M6.66699 16L14.667 28H24.0003L16.0003 16L24.0003 4H14.667L6.66699 16Z" fill="#9C1313" />
-                        <path d="M6.66699 16L14.667 28H24.0003L16.0003 16L24.0003 4H14.667L6.66699 16ZM9.87233 16L16.095 6.66667H19.019L12.7963 16L19.019 25.3333H16.0937L9.87233 16Z" fill="#9C1313" />
-                    </svg>
-                </PreviousButton>
-            )}
-            renderCenterRightControls={({ nextSlide }) => (
-                <NextButton onClick={nextSlide}>
-                    <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                        <path opacity="0.3" d="M24 16L16 28H6.66667L14.6667 16L6.66667 4H16L24 16Z" fill="#9C1313" />
-                        <path d="M24 16L16 28H6.66667L14.6667 16L6.66667 4H16L24 16ZM20.7947 16L14.572 6.66667H11.648L17.8707 16L11.648 25.3333H14.5733L20.7947 16Z" fill="#9C1313" />
-                    </svg>
-                </NextButton>
-            )}
-            scrollMode="page"
-            dragging={true}
-            beforeSlide={(currentSlide, endSlide) => {
-                if (currentSlide < endSlide) {
-                    return false;
-                }
-            }}
-            enableKeyboardControls={true}
-            getSlideProps={(slideIndex) => ({
-                'aria-label': `Element ${elementsList[slideIndex].title}`,
-            })}
-            afterSlide={(slideIndex) => {
-                setCurrentSlide(slideIndex);
-                if (onCurrentSlideChange) {
-                  onCurrentSlideChange(slideIndex);
-                }
-              }}>
-            {elementsList.map((element, index) => (
-                <Card
-                    key={index}
-                    selected={index === currentSlide}
-                    onClick={handleCardClick}
-                    >
-                    <img
-                        src={element.image}
-                        alt={element.title} />
-                </Card>
-            ))}
-        </CarouselContainer>
-    );
+      }}
+      enableKeyboardControls={true}
+      getSlideProps={(slideIndex) => ({
+        'aria-label': `Element ${elementsList[slideIndex].title}`,
+      })}
+      afterSlide={(slideIndex) => {
+        setCurrentSlide(slideIndex);
+        if (onCurrentSlideChange) {
+          onCurrentSlideChange(slideIndex);
+        }
+      }}>
+      {elementsList.map((element, index) => (
+        <Card
+          key={index}
+          selected={index === currentSlide}
+          onClick={() => {
+            if (width <= 768) {
+                handleCardClick();
+            }
+        }}
+        >
+          <img
+            src={element.image}
+            alt={element.title} />
+        </Card>
+      ))}
+    </CarouselContainer>
+  );
 };
 
 export default MalCarousel;
