@@ -13,36 +13,6 @@ import metal from '../images/elements/metal.png';
 import MalCarousel from '../components/MalCarousel';
 import { OrnateButton } from '../components/Button';
 
-const scaleAnimation = keyframes`
-  0% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(2);
-  }
-`;
-
-const StyledMalCarousel = styled(MalCarousel)`
-  .slide {
-    background-color: #fff;
-    overflow: hidden;
-    box-shadow: 0 0 16px rgba(0, 0, 0, 0.25);
-
-    &:not(.slide-current) {
-      box-shadow: 0 0 16px rgba(0, 0, 0, 0.25);
-    }
-
-    &.slide-current {
-      box-shadow: 0 0 40px rgba(0, 0, 0, 0.35);
-    }
-
-    &.slide-current img {
-        object-fit: cover;
-        animation: ${scaleAnimation} 30s ease-in-out infinite alternate;
-      }
-  }
-`;
-
 const elementsList = [
     {
         image: water,
@@ -81,6 +51,36 @@ const elementsList = [
     },
 ];
 
+const scaleAnimation = keyframes`
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(2);
+  }
+`;
+
+const StyledMalCarousel = styled(MalCarousel)`
+  .slide {
+    background-color: #fff;
+    overflow: hidden;
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.25);
+
+    &:not(.slide-current) {
+      box-shadow: 0 0 16px rgba(0, 0, 0, 0.25);
+    }
+
+    &.slide-current {
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.35);
+    }
+
+    &.slide-current img {
+        object-fit: cover;
+        animation: ${scaleAnimation} 30s ease-in-out infinite alternate;
+      }
+  }
+`;
+
 const DescriptionText = styled.p`
     display: block;
     font-size: 0.75rem;
@@ -98,6 +98,7 @@ const ElementTokenImage = styled.div`
     padding: 32px;
 
     img {
+        height: 100%;
         max-height: 30vh;
         object-fit: contain;
     }

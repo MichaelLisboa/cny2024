@@ -109,6 +109,7 @@ const TraitTokenImage = styled.div`
     padding: 32px;
 
     img {
+        height: 100%;
         max-height: 30vh;
         object-fit: contain;
     }
