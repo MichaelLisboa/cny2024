@@ -161,6 +161,7 @@ function WhenWereYouBorn() {
                                 className="dateInput"
                                 type="text"
                                 value={birthdate || 'YYYY-MM-DD'}
+                                disabled={showDatePicker}
                                 onChange={handleInputChange}
                                 onClick={(e) => {
                                     e.target.value = ''; // Clear the date input field
