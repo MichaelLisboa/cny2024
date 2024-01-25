@@ -22,7 +22,7 @@ const Card = styled.div`
 
   img {
     width: 100%;
-    max-height: 45vh;
+    max-height: 40vh;
     overflow: hidden;
     object-fit: contain;
     object-position: center;

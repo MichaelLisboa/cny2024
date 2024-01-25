@@ -79,6 +79,7 @@ const StyledMalCarousel = styled(MalCarousel)`
     }
 
     &.slide-current img {
+        max-height: 40vh;
         object-fit: cover;
         animation: ${scaleAnimation} 30s ease-in-out infinite alternate;
       }
@@ -177,8 +178,8 @@ const WhatIsYourElement = () => {
         });
     };
 
-    // const elementTokenImage = require(`../images/tokens/${selectedCard ? selectedCard.toLowerCase() : `element`}.png`);
-    const elementTokenImage = require(`../images/tokens/${`element`}.png`);
+    const elementTokenImage = require(`../images/tokens/${selectedCard ? selectedCard.toLowerCase() : `element`}.png`);
+    // const elementTokenImage = require(`../images/tokens/${`element`}.png`);
     return (
         <Layout>
             <HeaderSection
