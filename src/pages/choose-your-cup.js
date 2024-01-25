@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { motion, useAnimation } from 'framer-motion'; // Import useAnimation here
@@ -143,14 +143,39 @@ const ChooseYourTrait = () => {
     const bodyControls = useAnimation();
     const footerControls = useAnimation();
 
-    const middleIndex = Math.floor(traitsList.length / 2);
+    // Function to get random index
+    const getRandomIndex = (length) => Math.floor(Math.random() * length);
+
+    // Function to get unique random indices
+    const getRandomIndices = (length, count) => {
+        const indices = new Set();
+        while (indices.size < count) {
+            indices.add(getRandomIndex(length));
+        }
+        return [...indices];
+    }
+
+    // Get 5 unique random indices
+    const randomIndices = getRandomIndices(traitsList.length, 5);
+
+    // Get 5 random items from traitsList
+    const randomItems = useMemo(() => {
+        // Get 5 unique random indices
+        const randomIndices = getRandomIndices(traitsList.length, 5);
+    
+        // Get 5 random items from traitsList
+        return randomIndices.map(index => traitsList[index]);
+    }, [traitsList]);
+
+    console.log("RANDOM ITEMS", randomItems);
+
     const initialSlide = {
         index: 0,
-        title: traitsList[0].title,
-        image: traitsList[0].image,
-        text: traitsList[0].text,
-        subheadline: traitsList[0].subheadline,
-        description: traitsList[0].description.replace(/\*element_noun\*/g, userElement)
+        title: randomItems[0].title,
+        image: randomItems[0].image,
+        text: randomItems[0].text,
+        subheadline: randomItems[0].subheadline,
+        description: randomItems[0].description.replace(/\*element_noun\*/g, userElement)
     };
 
     console.log("INITIAL SLIDE", initialSlide);
@@ -213,7 +238,7 @@ const ChooseYourTrait = () => {
                 {content === 'initial' ? (
                     <div className="mal-padding">
                         <MalCarousel
-                            elementsList={traitsList}
+                            elementsList={randomItems}
                             onCurrentSlideChange={handleCurrentSlideChange}
                         />
                     </div>

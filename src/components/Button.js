@@ -29,7 +29,7 @@ const StyledLink = styled(Link)`
   box-sizing: border-box;
   background-color: transparent;
   white-space: nowrap;
-  transition: border-image 0.35s ease-in-out;
+  transition: border-image 0.35s ease-in-out, min-width 0.35s ease-in-out;
 
   border-image: ${props => props.isactive ? `url(${buttonActiveImage}) 48 40 repeat !important` : `url(${buttonDefaultImage}) 48 40 repeat !important`};
 
