@@ -43,7 +43,7 @@ const Header = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  margin-top: 32px;
+  margin-top: 40px;
   
   .icon-title {
     text-align: center;
