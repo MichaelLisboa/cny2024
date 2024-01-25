@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { motion, useAnimation, AnimatePresence } from 'framer-motion';
@@ -133,19 +133,57 @@ const DescriptionText = styled.p`
     padding: 0;
 `;
 
-const StyledParagraph = styled.p`
-  line-height: 1.5em; // Adjust this value to match your text's line height
-  height: ${props => props.lines * 1.5}em; // Adjust the multiplier to match your text's line height
-  overflow: hidden; // Hide any text that exceeds the specified height
-  font-size: 1rem; // Set your font size here
-    font-family: Lato, sans-serif;
-    font-weight: 700;
-    font-style: italic;
-    // color: #322F20;
-    text-align: center;
-    opacity: 1;
-  transition: opacity 0.5s ease-in-out;
+const Container = styled.div`
+  position: relative;
+  height: 5em;
+  width: 90%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  overflow: hidden;
+  auto-fit: contain;
 `;
+
+const StyledParagraph = styled(motion.p).attrs(() => ({
+    variants: paragraphVariants,
+    initial: 'hidden',
+    animate: 'show',
+    exit: 'exit',
+}))`
+  position: absolute;
+  top: 0;
+  width: 90%;
+  line-height: 1.2em;
+  overflow: hidden;
+  font-size: 1rem;
+  font-family: Lato, sans-serif;
+  font-weight: 700;
+  font-style: italic;
+  text-align: center;
+  margin: 0;
+
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 12px;
+  padding: 8px 8px;
+`;
+
+const paragraphVariants = {
+    hidden: { opacity: 0 },
+    show: {
+        opacity: 1,
+        transition: {
+            duration: 0.5,
+        },
+    },
+    exit: {
+        opacity: 0,
+        transition: {
+            duration: 0.5,
+        },
+    },
+};
 
 const HeaderSection = styled(motion.div)`
   // Add your header-section styles here.
@@ -173,6 +211,7 @@ const ChooseYourAlliance = () => {
     const headerControls = useAnimation();
     const bodyControls = useAnimation();
     const footerControls = useAnimation();
+    const paragraphControls = useAnimation();
 
     const initialSlide = {
         index: 0,
@@ -185,6 +224,9 @@ const ChooseYourAlliance = () => {
 
     const [currentSlide, setCurrentSlide] = useState(initialSlide);
 
+    useEffect(() => {
+        animateParagraph();
+    }, [currentSlide]); // This will trigger the animation whenever currentSlide changes
 
     const animateExit = async () => {
         await footerControls.start({ y: 100, opacity: 0 });
@@ -203,7 +245,7 @@ const ChooseYourAlliance = () => {
 
         if (chosenAlliance) {
             await animateExit();
-            setContent('monkey'); // Change the content
+            setContent('monkey');
             setTimeout(() => {
                 animateEnter();
             }, 500);
@@ -217,6 +259,14 @@ const ChooseYourAlliance = () => {
             text: allianceList[newCurrentSlideIndex].text,
             subheadline: allianceList[newCurrentSlideIndex].subheadline,
             description: allianceList[newCurrentSlideIndex].description.replace(/\*element_noun\*/g, userElement)
+        });
+    };
+
+    const animateParagraph = async () => {
+        await paragraphControls.start({
+            opacity: 1,
+            translateY: 0,
+            transition: { duration: 0.5 }
         });
     };
 
@@ -238,9 +288,15 @@ const ChooseYourAlliance = () => {
             >
                 {content === 'initial' ? (
                     <div>
-                        <StyledParagraph lines={3} className="mal-padding mal-padding-remove-vertical">
-                            "{currentSlide.description.replace(/\*element_noun\*/g, userElement)}"
-                        </StyledParagraph>
+                        <Container>
+                            <AnimatePresence>
+                                <StyledParagraph
+                                    key={currentSlide.index}
+                                    lines={3}>
+                                    "{currentSlide.description.replace(/\*element_noun\*/g, userElement)}"
+                                </StyledParagraph>
+                            </AnimatePresence>
+                        </Container>
                         <StyledMalCarousel
                             elementsList={allianceList}
                             initialSlide={initialSlide.index}
