@@ -67,7 +67,7 @@ const StyledMalCarousel = styled(MalCarousel)`
     box-shadow: 0 0 16px rgba(0, 0, 0, 0.25);
 
     &.slide img {
-        max-height: 45vh;
+        max-height: 40vh;
         object-fit: cover;
         object-position: center;
     }
@@ -105,7 +105,7 @@ const ElementTokenImage = styled.div`
 
     img {
         height: 100%;
-        max-height: 30vh;
+        max-height: 25vh;
         object-fit: contain;
     }
 `;
