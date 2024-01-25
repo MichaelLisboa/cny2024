@@ -15,7 +15,7 @@
 
 .chapter-title {
   margin-top: 72px;
-  height: calc(15% - 72px) !important;
+  height: calc(15%) !important;
   display: flex;
   align-items: center;
   justify-content: center;
