@@ -51,8 +51,11 @@ const Header = styled.div`
     animation: ${fadeIn} 2s ease-in-out forwards;
     animation-delay: .5s;
   }
-  h3 {
+  h4 {
     color: #337C76;
+  }
+  img {
+    height: 24px;
   }
 `;
 
@@ -105,7 +108,7 @@ function Layout({ children }) {
                                 className="mal-margin-small-right"
                                 src={currentPage?.sectionIcon?.default}
                                 alt={currentPage?.sectionTitle} />
-                            <h3 className="mal-margin-remove mal-padding-remove">{currentPage?.sectionTitle}</h3>
+                            <h4 className="mal-margin-remove mal-padding-remove">{currentPage?.sectionTitle}</h4>
                         </div>
                     </Header>
                     {children}
