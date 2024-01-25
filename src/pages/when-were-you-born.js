@@ -190,12 +190,12 @@ function WhenWereYouBorn() {
                 :
                 <>
                     <div className="header-section mal-text-center" />
-                    <div style={{ position: "relative" }} className="body-section mal-height-1-1">
+                    <div className="body-section">
                         <AnimatedZodiacInfo
                             animal={state.userInfo.zodiacAnimal}
                             element={state.userInfo.zodiacElement}
-                            initial={{ scale: 0, opacity: 0, clipPath: 'circle(0% at 50% 50%)' }}
-                            animate={{ scale: 1, opacity: 1, clipPath: 'circle(100% at 50% 50%)' }}
+                            initial={{ scale: 0, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
                             transition={{ delay: 3, duration: 2, ease: 'easeOut' }}
                         />
                     </div>

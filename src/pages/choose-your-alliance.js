@@ -148,7 +148,7 @@ const Container = styled.div`
 
 const StyledParagraph = styled(motion.p).attrs(() => ({
     variants: paragraphVariants,
-    initial: 'hidden',
+    initial: '',
     animate: 'show',
     exit: 'exit',
 }))`
@@ -163,7 +163,6 @@ const StyledParagraph = styled(motion.p).attrs(() => ({
   font-style: italic;
   text-align: center;
   margin: 0;
-
   background: rgba(255, 255, 255, 0.75);
   border-radius: 12px;
   padding: 8px 8px;
@@ -274,13 +273,13 @@ const ChooseYourAlliance = () => {
         <Layout>
             <HeaderSection
                 animate={headerControls}
-                className="header-section mal-text-center"
+                className="header-section"
             >
                 {content === 'initial' ? (
                     <div className="mal-margin-bottom-large mal-padding-remove-horizontal">
                         <h3 className="mal-margin-remove-top">Shortly after, you come across other spirits.</h3>
                     </div>
-                ) : null}
+                ) : ``}
             </HeaderSection>
             <BodySection
                 animate={bodyControls}
@@ -305,7 +304,7 @@ const ChooseYourAlliance = () => {
                         />
                     </div>
                 ) : (
-                    <div className="mal-padding-small mal-text-center">
+                    <div>
                         <h4 className="mal-margin-remove">{currentSlide.subheadline}</h4>
                         <h2 className="mal-margin-remove">{currentSlide.title}</h2>
                         <p>{currentSlide.description}</p>

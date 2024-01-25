@@ -229,14 +229,14 @@ const ChooseYourTrait = () => {
         <Layout>
             <HeaderSection
                 animate={headerControls}
-                className="header-section mal-text-center"
+                className="header-section"
             >
                 {content === 'initial' ? (
                     <div className="mal-margin-bottom-large mal-padding-remove-horizontal">
                         <h3 className="mal-margin-remove-top">Emperor Jade presents you with five shimmering cups, each radiating a unique essence of a distinct personality trait. </h3>
                         <p className="mal-text-medium mal-margin-small-top">Choose your cup wisely.</p>
                     </div>
-                ) : null}
+                ) : ``}
             </HeaderSection>
             <BodySection
                 animate={bodyControls}
