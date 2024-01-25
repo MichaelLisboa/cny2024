@@ -92,13 +92,13 @@ function Layout({ children }) {
         >
             <style>{currentPage?.styles || ''}</style>
             <motion.section
-                className="mal-section mal-width-1-1"
+                className="mal-width-1-1"
                 initial={{ y: height }}
                 animate={{ y: 0 }}
                 exit={{ y: height }}
                 transition={{ type: 'spring', stiffness: 90, damping: 20 }}
                 style={{ height }}>
-                <MalContainer className="mal-container mal-container-small mal-height-1-1">
+                <MalContainer className="mal-container mal-container-expand mal-height-1-1">
                     <Header>
                         <h3 className="mal-margin-remove-top mal-padding-remove-top">&nbsp;</h3>
                         <div className="icon-title mal-flex mal-flex-middle">
