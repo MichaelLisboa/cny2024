@@ -110,16 +110,19 @@ const allianceList = [
 
 const StyledMalCarousel = styled(MalCarousel)`
   .slide {
+    background-color: transparent;
+    overflow: hidden;
 
-    &img {
-      max-height: 45vh;
-      object-fit: cover;
+    &.slide img {
+        max-height: 45vh;
+        object-fit: contain;    
+        object-position: center;
     }
 
     &.slide-current img {
-      max-height: 45vh;
-      object-fit: contain;
-    }
+        object-fit: contain;
+      }
+
   }
 `;
 
