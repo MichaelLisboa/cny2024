@@ -16,8 +16,8 @@
 .header-section {
   display: flex;
   flex: 0.08;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: flex-start;
 }
 
 .header-section:empty {
@@ -45,8 +45,8 @@
 .footer-section {
   display: flex;
   flex: 0.25;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: flex-start;
 }
 
 /* ========================================================================
