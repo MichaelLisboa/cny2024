@@ -20,7 +20,7 @@ const StyledElementImage = styled.div`
 
 const ZodiacLabel = styled(motion.div)`
   position: relative;
-  margin-top: 32px;
+  margin-top: 48px;
   text-align: center;
 `;
 
@@ -53,7 +53,7 @@ const ZodiacInfo = ({ animal, element }) => {
 
     const zodiacLabelAnimation = {
         hidden: { opacity: 0, y: 100 },
-        visible: { opacity: 1, y: 80, transition: { duration: 1.5, delay: .8, ease: easeInOut } }
+        visible: { opacity: 1, y: 32, transition: { duration: 0.7, delay: .8, ease: easeInOut } }
     };
 
     return (
@@ -69,7 +69,7 @@ const ZodiacInfo = ({ animal, element }) => {
                 </StyledAnimalImage>
             </motion.div>
             <ZodiacLabel initial="hidden" animate="visible" variants={zodiacLabelAnimation}>
-                <h2>{element} {animal}</h2>
+                <h3>{element} {animal}</h3>
             </ZodiacLabel>
         </ImageContainer>
     );
