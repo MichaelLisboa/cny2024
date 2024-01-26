@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import defaultBackgroundImage from '../images/background/0-cover.jpg';
 import { AppContext } from '../contexts/AppContext';
 
-const BackgroundImage = styled.section`
+const BackgroundImage = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
@@ -16,10 +16,10 @@ const BackgroundImage = styled.section`
 const BackgroundImg = styled(motion.img)`
   position: absolute;
   z-index: -1;
-  top: 0;
+  bottom: 0;
   left: 0;
   width: 100%;
-  height: 120%;
+  height: 100%;
   object-fit: cover;
   will-change: transform;
 `;
@@ -44,15 +44,15 @@ const Header = styled.div`
 const startAnimation = (controls, animationConfig) => {
   switch (animationConfig.animationName) {
     case 'scaleDownAnimation':
-      controls.start({ scale: 1, transition: { duration: 20, ease: 'linear' } });
+      controls.start({ scale: 1.2, transition: { duration: 20, ease: 'easeInOut' } });
       break;
     case 'slideScaleAnimation':
-      controls.start({ x: '-20%', scale: 1, transition: { duration: 30, ease: 'linear' } });
+      controls.start({ x: '-10%', scale: 1.2, transition: { duration: 30, ease: 'easeInOut' } });
       break;
     // Add more cases for different animations
     default:
       // Default animation or no animation
-      controls.start({ scale: 1 });  // Add a default animation
+      controls.start({ scale: 2 });  // Add a default animation
       break;
   }
 };
@@ -94,7 +94,7 @@ function Layout({ children }) {
           ref={imageRef}
           src={currentPage?.bgImage || defaultBackgroundImage}
           animate={controls}
-          initial={{ scale: 1.2 }}
+          initial={{ scale: 2 }}
         />
         <motion.section
           initial={{ y: browserSize.height }}
