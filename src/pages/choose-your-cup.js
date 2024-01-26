@@ -255,7 +255,7 @@ const ChooseYourTrait = () => {
                     <div className="mal-padding-small mal-text-center">
                         <TraitTokenImage className="mal-padding">
                             <Image
-                                highResSrc={trait}
+                                src={trait}
                                 alt={`The Trait of ${selectedCard}`} />
                         </TraitTokenImage>
                         <h4 className="mal-margin-remove">{currentSlide.subheadline}</h4>

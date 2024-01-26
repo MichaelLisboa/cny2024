@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { AppContext } from '../../contexts/AppContext'; // Import AppContext
 import Carousel from "nuka-carousel";
+import Image from '../Image';
 
 const Card = styled.div`
   margin: 0px;
@@ -116,7 +117,7 @@ const NextButton = styled.button`
 const MalCarousel = ({ elementsList, initialSlide, onCurrentSlideChange, handleCardClick, className }) => {
   const { getBrowserSize } = useContext(AppContext);
   const browserSize = getBrowserSize();
-  const { height, width } = browserSize; 
+  const { width } = browserSize; 
 
   const carouselRef = useRef(null);
   const [currentSlide, setCurrentSlide] = useState(2);
@@ -178,7 +179,7 @@ const MalCarousel = ({ elementsList, initialSlide, onCurrentSlideChange, handleC
             }
         }}
         >
-          <img
+          <Image
             src={element.image}
             alt={element.title} />
         </Card>
