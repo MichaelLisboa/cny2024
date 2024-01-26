@@ -31,20 +31,20 @@ const Card = styled.div`
   `;
 
 const CarouselContainer = styled(Carousel)`
-  .slide {
-    border-radius: 16px;
-    background: transparent;
-  }
-  .slide:not(.slide-current) {
-    opacity: 0.8 !important;
-    transform: scale(0.8) !important;
-    transition: transform 0.3s, opacity 0.3s;
-  }
-
-  .slide-current {
-    transform: scale(1);
-    transition: transform 0.3s, opacity 0.3s;
-  }
+.slide {
+  border-radius: 16px;
+  background: transparent;
+  will-change: transform, opacity;
+}
+.slide:not(.slide-current) {
+  opacity: 0.8 !important;
+  transform: translate3d(0, 0, 0) scale(0.8) !important;
+  transition: transform 0.3s, opacity 0.3s;
+}
+.slide-current {
+  transform: translate3d(0, 0, 0) scale(1);
+  transition: transform 0.3s, opacity 0.3s;
+}
 `;
 
 const PreviousButton = styled.button`
