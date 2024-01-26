@@ -121,18 +121,6 @@ const StyledMalCarousel = styled(MalCarousel)`
   }
 `;
 
-const DescriptionText = styled.p`
-    display: block;
-    font-size: 0.75rem;
-    font-family: Lato, sans-serif;
-    font-weight: 400;
-    font-style: italic;
-    color: #322F20;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-`;
-
 const Container = styled.div`
   position: relative;
   height: 5em;
@@ -190,7 +178,16 @@ const StyledImage = styled(motion.div)`
   bottom: -30px;
   width: 100%;
   overflow: visible !important;
-  min-width: 130vw;
+  min-width: 120vw;
+
+  @media (min-width: 768px) {
+    position: relative;
+    max-height: 65vh;
+    min-width: auto;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
   `;
 
 const HeaderSection = styled(motion.div)`
@@ -322,6 +319,11 @@ const ChooseYourAlliance = () => {
                         <StyledImage>
                             <img src={currentSlide.image} alt={currentSlide.title} />
                         </StyledImage>
+                        <div className="footer-section mal-position-bottom">
+                        <OrnateButton onClick={handleButtonClick}>
+                            {currentSlide.title}
+                        </OrnateButton>
+                        </div>
                     </div>
                 )}
             </BodySection>
