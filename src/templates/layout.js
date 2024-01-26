@@ -1,111 +1,127 @@
-import React, { useEffect, useState, useMemo, useContext } from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useState, useMemo, useContext, useRef } from 'react';
+import { motion, useAnimation } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
 import pages from '../utils/pages';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import defaultBackgroundImage from '../images/background/0-cover.jpg';
-import { AppContext } from '../contexts/AppContext'; // Import AppContext
+import { AppContext } from '../contexts/AppContext';
 
 const BackgroundImage = styled.section`
-    background-image: url(${props => props.image});
-    background-size: cover;
-    background-position: center;
-    width: ${props => props.width};
-    height: ${props => props.height};
-    min-height: ${props => props.height};
-    overflow: hidden;
-    ${props => props.animation && `animation: ${props.animation};`}
-    opacity: ${props => (props.loaded ? 1 : 0)};
-    transition: opacity 0.5s ease-in-out;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+`;
+
+const BackgroundImg = styled(motion.img)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 120%;
+  object-fit: cover;
+  will-change: transform;
 `;
 
 const MalContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
 `;
 
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`;
-
-const Header = styled.div`  
+const Header = styled.div`
   .icon-title {
     text-align: center;
-    opacity: 0;
-    animation: ${fadeIn} 2s ease-in-out forwards;
-    animation-delay: .5s;
+    transition: opacity 2s ease-in-out forwards;
+    transition-delay: 0.5s;
   }
-  h4 {
-    color: #337C76;
-  }
-  img {
-    height: 24px;
-  }
+  h4 { color: #337C76; }
+  img { height: 24px; }
 `;
 
+// Animation utility function
+const startAnimation = (controls, animationConfig) => {
+  switch (animationConfig.animationName) {
+    case 'scaleDownAnimation':
+      controls.start({ scale: 1, transition: { duration: 20, ease: 'linear' } });
+      break;
+    case 'slideScaleAnimation':
+      controls.start({ x: '-20%', scale: 1, transition: { duration: 30, ease: 'linear' } });
+      break;
+    // Add more cases for different animations
+    default:
+      // Default animation or no animation
+      controls.start({ scale: 1 });  // Add a default animation
+      break;
+  }
+};
+
+
 function Layout({ children }) {
-    const { getBrowserSize } = useContext(AppContext);
-    const browserSize = getBrowserSize();
-    const { height, width } = browserSize; // Access the browserSize from AppContext
-    const location = useLocation();
-    const currentPage = useMemo(() => pages.find(page => page.url === location.pathname), [location.pathname]);
-    const animationString = useMemo(() => {
-        const { animationName = '', animationDuration = '', animationTimingFunction = '', animationIterationCount = '' } = currentPage?.backgroundAnimation || {};
-        return `${animationName} ${animationDuration} ${animationTimingFunction} ${animationIterationCount}`;
-    }, [currentPage]);
+  const location = useLocation();
+  const { getBrowserSize } = useContext(AppContext);
+  const browserSize = getBrowserSize();
 
-    const [loaded, setLoaded] = useState(false);
+  const currentPage = useMemo(() =>
+    pages.find(page => page.url === location.pathname),
+    [location.pathname]
+  );
 
+  const controls = useAnimation();
+  const [loaded, setLoaded] = useState(false);
+  const imageRef = useRef(new Image());
 
-    useEffect(() => {
-        const image = new Image();
-        image.src = currentPage?.bgImage || defaultBackgroundImage;
-        image.onload = () => {
-            setLoaded(true);
-        };
-    }, [currentPage]);
+  useEffect(() => {
+    if (!currentPage || imageRef.current.src === currentPage.bgImage) {
+      return;
+    }
 
-    // console.log('Layout currentPage:', sectionIcon);
+    setLoaded(false);
+    const img = imageRef.current;
+    img.src = currentPage.bgImage;
+    img.onload = () => {
+      setLoaded(true);
+      startAnimation(controls, currentPage.backgroundAnimation);
+    };
+    img.onerror = (e) => console.error('Failed to load image', e);
+  }, [currentPage, controls]);
 
-    return (
-        <BackgroundImage
-            image={currentPage?.bgImage || defaultBackgroundImage}
-            animation={animationString}
-            height={height}
-            width={width}
-            loaded={loaded}
-            className="layout-background"
+  console.log('Layout', currentPage, controls);
+
+  return (
+    <>
+      <BackgroundImage>
+        <BackgroundImg
+          ref={imageRef}
+          src={currentPage?.bgImage || defaultBackgroundImage}
+          animate={controls}
+          initial={{ scale: 1.2 }}
+        />
+        <motion.section
+          initial={{ y: browserSize.height }}
+          animate={{ y: 0 }}
+          exit={{ y: browserSize.height }}
+          transition={{ type: 'spring', stiffness: 90, damping: 20 }}
+          style={{ height: browserSize.height }}
         >
-            <style>{currentPage?.styles || ''}</style>
-            <motion.section
-                className="mal-width-1-1"
-                initial={{ y: height }}
-                animate={{ y: 0 }}
-                exit={{ y: height }}
-                transition={{ type: 'spring', stiffness: 90, damping: 20 }}
-                style={{ height }}>
-                <MalContainer className="mal-container mal-container-small mal-height-1-1">
-                    <Header className="chapter-title">
-                        <h3>&nbsp;</h3>
-                        <div className="icon-title mal-flex mal-flex-middle">
-                            <img
-                                className="mal-margin-small-right"
-                                src={currentPage?.sectionIcon?.default}
-                                alt={currentPage?.sectionTitle} />
-                            <h4 className="mal-margin-remove mal-padding-remove">{currentPage?.sectionTitle}</h4>
-                        </div>
-                    </Header>
-                    {children}
-                </MalContainer>
-            </motion.section>
-        </BackgroundImage>
-    );
+          <MalContainer className="mal-container mal-container-small mal-height-1-1">
+            <Header className="chapter-title">
+              <h3>&nbsp;</h3>
+              <div className="icon-title mal-flex mal-flex-middle">
+                <img
+                  className="mal-margin-small-right"
+                  src={currentPage?.sectionIcon?.default}
+                  alt={currentPage?.sectionTitle}
+                />
+                <h4 className="mal-margin-remove mal-padding-remove">{currentPage?.sectionTitle}</h4>
+              </div>
+            </Header>
+            {children}
+          </MalContainer>
+        </motion.section>
+      </BackgroundImage>
+    </>
+  );
 }
 
 export default Layout;
