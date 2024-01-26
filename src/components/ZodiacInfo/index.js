@@ -1,39 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
-import { motion, AnimatePresence, easeInOut } from 'framer-motion';
+import { motion, easeInOut } from 'framer-motion';
 import Image from '../Image';
 
-import rat from "../../images/zodiac_actual/animals/rat.png";
-import ox from "../../images/zodiac_actual/animals/ox.png";
-import tiger from "../../images/zodiac_actual/animals/tiger.png";
-import rabbit from "../../images/zodiac_actual/animals/rabbit.png";
-import dragon from "../../images/zodiac_actual/animals/dragon.png";
-import snake from "../../images/zodiac_actual/animals/snake.png";
-import horse from "../../images/zodiac_actual/animals/horse.png";
-import goat from "../../images/zodiac_actual/animals/goat.png";
-import monkey from "../../images/zodiac_actual/animals/monkey.png";
-import rooster from "../../images/zodiac_actual/animals/rooster.png";
-import dog from "../../images/zodiac_actual/animals/dog.png";
-import pig from "../../images/zodiac_actual/animals/pig.png";
-import earth from "../../images/zodiac_actual/elements/earth.png";
-import fire from "../../images/zodiac_actual/elements/fire.png";
-import metal from "../../images/zodiac_actual/elements/metal.png";
-import water from "../../images/zodiac_actual/elements/water.png";
-import wood from "../../images/zodiac_actual/elements/wood.png";
-
-const AnimalImage = styled(motion(Image))`
-  min-height: 100%;
-  max-height: 64vh;
+const StyledAnimalImage = styled.div`
+  height: 70vh !important;
+  max-height: 70vh;
   width: auto;
+  position: absolute;
+  top: 0;
   z-index: 2;
 `;
 
-const ElementImage = styled(motion(Image))`
-  width: 70%;
-  position: absolute;
-  z-index: -1;
-  left: -5%;
-  top: -30%;
+const StyledElementImage = styled.div`
+  width: 80%;
+  position: relative;
+  z-index: 1;
 `;
 
 const ZodiacLabel = styled(motion.div)`
@@ -48,104 +30,47 @@ const ImageContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  min-height: 60vh !important;
 `;
 
-// Create a mapping from animal names to images
-const animalImages = {
-    rat,
-    ox,
-    tiger,
-    rabbit,
-    dragon,
-    snake,
-    horse,
-    goat,
-    monkey,
-    rooster,
-    dog,
-    pig,
-  };
-  
-  // Create a mapping from element names to images
-  const elementImages = {
-    wood,
-    fire,
-    earth,
-    metal,
-    water,
-  };
-
 const ZodiacInfo = ({ animal, element }) => {
-    if (!animal || !element) return null;
+    if (!animal || !element) {
+        return null;
+    }
+
+    const animalImage = require(`../../images/zodiac_actual/animals/${animal.toLowerCase()}.png`);
+    const elementImage = require(`../../images/zodiac_actual/elements/${element.toLowerCase()}.png`);
 
     const elementVariants = {
-        // hidden: { opacity: 0, y: '200%' },
-        visible: {
-            opacity: 1,
-            y: '-30%',
-            transition: {
-                duration: 0.8,
-                ease: easeInOut
-            }
-        },
+        hidden: { opacity: 0, y: 100, x: -30 },
+        visible: { opacity: 1, y: -200, x: -30, transition: { duration: 1, delay: 0, ease: easeInOut } }
     };
 
     const animalVariants = {
-        // hidden: { opacity: 0, y: '200%' },
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: {
-                duration: 1.2,
-                ease: easeInOut,
-                delay: 1 // Delayed start
-            }
-        },
+        hidden: { opacity: 0, y: 100 },
+        visible: { opacity: 1, y: 30, transition: { duration: 0.7, delay: .4, ease: easeInOut } }
     };
 
     const zodiacLabelAnimation = {
-        hidden: { opacity: 0, y: '150%' },
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: {
-                duration: 1.3,
-                ease: easeInOut,
-                delay: 1.2 // Delayed start
-            }
-        },
+        hidden: { opacity: 0, y: 100 },
+        visible: { opacity: 1, y: 80, transition: { duration: 1.5, delay: .8, ease: easeInOut } }
     };
 
     return (
         <ImageContainer>
-            <AnimatePresence>
-                <ElementImage
-                    key="elementImage"
-                    src={elementImages[element.toLowerCase()]}
-                    alt={element}
-                    initial="hidden"
-                    animate="visible"
-                    exit="hidden"
-                    variants={elementVariants}
-                />
-                <AnimalImage
-                    key="animalImage"
-                    src={animalImages[animal.toLowerCase()]}
-                    alt={animal}
-                    initial="hidden"
-                    animate="visible"
-                    exit="hidden"
-                    variants={animalVariants}
-                />
-                <ZodiacLabel
-                    key="zodiacLabel"
-                    initial="hidden"
-                    animate="visible"
-                    exit="hidden"
-                    variants={zodiacLabelAnimation}>
-                    <h2>{element} {animal}</h2>
-                </ZodiacLabel>
-            </AnimatePresence>
+            <motion.div initial="hidden" animate="visible" variants={elementVariants}>
+                <StyledElementImage>
+                    <Image src={elementImage} alt={element} />
+                </StyledElementImage>
+            </motion.div>
+            <motion.div initial="hidden" animate="visible" variants={animalVariants} style={{ position: 'absolute', top: 0, width: '100%' }}>
+                <StyledAnimalImage>
+                    <Image src={animalImage} alt={animal} />
+                </StyledAnimalImage>
+            </motion.div>
+            <ZodiacLabel initial="hidden" animate="visible" variants={zodiacLabelAnimation}>
+                <h2>{element} {animal}</h2>
+            </ZodiacLabel>
         </ImageContainer>
     );
 };
