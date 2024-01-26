@@ -15,6 +15,7 @@ const BackgroundImage = styled.section`
 
 const BackgroundImg = styled(motion.img)`
   position: absolute;
+  z-index: -1;
   top: 0;
   left: 0;
   width: 100%;
@@ -86,8 +87,6 @@ function Layout({ children }) {
     img.onerror = (e) => console.error('Failed to load image', e);
   }, [currentPage, controls]);
 
-  console.log('Layout', currentPage, controls);
-
   return (
     <>
       <BackgroundImage>
@@ -104,7 +103,7 @@ function Layout({ children }) {
           transition={{ type: 'spring', stiffness: 90, damping: 20 }}
           style={{ height: browserSize.height }}
         >
-          <MalContainer className="mal-container mal-container-small mal-height-1-1">
+          <MalContainer className="mal-container mal-container-small">
             <Header className="chapter-title">
               <h3>&nbsp;</h3>
               <div className="icon-title mal-flex mal-flex-middle">
