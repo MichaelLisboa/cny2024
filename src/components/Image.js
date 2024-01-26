@@ -15,7 +15,6 @@ import styled from 'styled-components';
 
 const ImageContainer = styled.div`
   overflow: hidden; // Clips the image to its bounds
-  padding: 5px; // Adjust as needed to accommodate the blur
 `;
 
 const StyledImage = styled.img`
