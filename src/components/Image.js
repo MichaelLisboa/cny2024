@@ -14,12 +14,12 @@ import useProgressiveImg from '../hooks/useProgressiveImg';
 import styled from 'styled-components';
 
 const ImageContainer = styled.div`
-  overflow: hidden; // Clips the image to its bounds
+  overflow: loading && hidden;
 `;
 
 const StyledImage = styled.img`
-  width: 100%; // Ensures image stretches to container width
-  height: auto; // Maintains image aspect ratio
+  width: loading && 100%;
+  height: loading && auto;
   transition: filter 0.3s ease-out;
 `;
 
