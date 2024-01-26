@@ -24,6 +24,7 @@ const StyledImage = styled.img`
 `;
 
 const Image = ({ src, alt, ...props }) => {
+  console.log('Image src: ', src, props);
   const [source, loading] = useProgressiveImg(src);
   const blur = loading ? 'blur(20px)' : 'none';
 

@@ -1,22 +1,39 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { motion, easeInOut } from 'framer-motion';
+import { motion, AnimatePresence, easeInOut } from 'framer-motion';
 import Image from '../Image';
 
+import rat from "../../images/zodiac_actual/animals/rat.png";
+import ox from "../../images/zodiac_actual/animals/ox.png";
+import tiger from "../../images/zodiac_actual/animals/tiger.png";
+import rabbit from "../../images/zodiac_actual/animals/rabbit.png";
+import dragon from "../../images/zodiac_actual/animals/dragon.png";
+import snake from "../../images/zodiac_actual/animals/snake.png";
+import horse from "../../images/zodiac_actual/animals/horse.png";
+import goat from "../../images/zodiac_actual/animals/goat.png";
+import monkey from "../../images/zodiac_actual/animals/monkey.png";
+import rooster from "../../images/zodiac_actual/animals/rooster.png";
+import dog from "../../images/zodiac_actual/animals/dog.png";
+import pig from "../../images/zodiac_actual/animals/pig.png";
+import earth from "../../images/zodiac_actual/elements/earth.png";
+import fire from "../../images/zodiac_actual/elements/fire.png";
+import metal from "../../images/zodiac_actual/elements/metal.png";
+import water from "../../images/zodiac_actual/elements/water.png";
+import wood from "../../images/zodiac_actual/elements/wood.png";
+
 const AnimalImage = styled(motion(Image))`
-  min-height: 100% !important;
+  min-height: 100%;
   max-height: 64vh;
   width: auto;
-  position: relative;
   z-index: 2;
 `;
 
 const ElementImage = styled(motion(Image))`
   width: 70%;
   position: absolute;
+  z-index: -1;
   left: -5%;
   top: -30%;
-  z-index: 1;
 `;
 
 const ZodiacLabel = styled(motion.div)`
@@ -33,65 +50,102 @@ const ImageContainer = styled.div`
   align-items: center;
 `;
 
+// Create a mapping from animal names to images
+const animalImages = {
+    rat,
+    ox,
+    tiger,
+    rabbit,
+    dragon,
+    snake,
+    horse,
+    goat,
+    monkey,
+    rooster,
+    dog,
+    pig,
+  };
+  
+  // Create a mapping from element names to images
+  const elementImages = {
+    wood,
+    fire,
+    earth,
+    metal,
+    water,
+  };
+
 const ZodiacInfo = ({ animal, element }) => {
-    const [animalVisible, setAnimalVisible] = useState(false);
-    const [elementVisible, setElementVisible] = useState(false);
-    const [zodiacLabelVisible, setZodiacLabelVisible] = useState(false);
-
-    useEffect(() => {
-
-        const timer1 = setTimeout(() => setElementVisible(true), 500);
-        const timer2 = setTimeout(() => setAnimalVisible(true), 5000);
-        const timer3 = setTimeout(() => setZodiacLabelVisible(true), 1800);
-
-        return () => {
-            clearTimeout(timer1);
-            clearTimeout(timer2);
-            clearTimeout(timer3);
-        };
-    }, []);
-
-    if (!animal || !element) {
-        return null;
-    }
-
-    const animalImage = require(`../../images/zodiac_actual/animals/${animal.toLowerCase()}.png`);
-    const elementImage = require(`../../images/zodiac_actual/elements/${element.toLowerCase()}.png`);
-
-
-    const animalVariants = {
-        visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: easeInOut } }
-    };
+    if (!animal || !element) return null;
 
     const elementVariants = {
-        visible: { opacity: 1, y: '-30%', transition: { duration: 1, ease: easeInOut } },
+        // hidden: { opacity: 0, y: '200%' },
+        visible: {
+            opacity: 1,
+            y: '-30%',
+            transition: {
+                duration: 0.8,
+                ease: easeInOut
+            }
+        },
+    };
+
+    const animalVariants = {
+        // hidden: { opacity: 0, y: '200%' },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: {
+                duration: 1.2,
+                ease: easeInOut,
+                delay: 1 // Delayed start
+            }
+        },
     };
 
     const zodiacLabelAnimation = {
-        hidden: { opacity: 0, y: "150%" },
-        visible: { opacity: 1, y: 0, transition: { duration: 1.5, ease: easeInOut } }
+        hidden: { opacity: 0, y: '150%' },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: {
+                duration: 1.3,
+                ease: easeInOut,
+                delay: 1.2 // Delayed start
+            }
+        },
     };
 
     return (
         <ImageContainer>
-            <ElementImage
-                src={elementImage}
-                alt={element}
-                initial="hidden"
-                animate="visible"
-                variants={elementVariants}
-            />
-            <AnimalImage
-                src={animalImage}
-                alt={animal}
-                variants={animalVariants}
-            />
-            <ZodiacLabel
-                initial="hidden"
-                animate="visible"
-                variants={zodiacLabelAnimation}>
-                <h2>{element} {animal}</h2>
-            </ZodiacLabel>
+            <AnimatePresence>
+                <ElementImage
+                    key="elementImage"
+                    src={elementImages[element.toLowerCase()]}
+                    alt={element}
+                    initial="hidden"
+                    animate="visible"
+                    exit="hidden"
+                    variants={elementVariants}
+                />
+                <AnimalImage
+                    key="animalImage"
+                    src={animalImages[animal.toLowerCase()]}
+                    alt={animal}
+                    initial="hidden"
+                    animate="visible"
+                    exit="hidden"
+                    variants={animalVariants}
+                />
+                <ZodiacLabel
+                    key="zodiacLabel"
+                    initial="hidden"
+                    animate="visible"
+                    exit="hidden"
+                    variants={zodiacLabelAnimation}>
+                    <h2>{element} {animal}</h2>
+                </ZodiacLabel>
+            </AnimatePresence>
         </ImageContainer>
     );
 };
