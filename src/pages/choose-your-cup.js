@@ -5,6 +5,7 @@ import { motion, useAnimation } from 'framer-motion'; // Import useAnimation her
 import pages from '../utils/pages';
 import Layout from '../templates/layout';
 import { AppContext } from '../contexts/AppContext';
+import Image from '../components/Image';
 import MalCarousel from '../components/MalCarousel';
 import { OrnateButton } from '../components/Button';
 
@@ -253,8 +254,8 @@ const ChooseYourTrait = () => {
                 ) : (
                     <div className="mal-padding-small mal-text-center">
                         <TraitTokenImage className="mal-padding">
-                            <img
-                                src={trait}
+                            <Image
+                                highResSrc={trait}
                                 alt={`The Trait of ${selectedCard}`} />
                         </TraitTokenImage>
                         <h4 className="mal-margin-remove">{currentSlide.subheadline}</h4>

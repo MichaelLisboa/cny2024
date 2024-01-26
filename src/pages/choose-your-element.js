@@ -186,7 +186,7 @@ const WhatIsYourElement = () => {
     };
 
     const elementTokenImage = require(`../images/tokens/${selectedCard ? selectedCard.toLowerCase() : `element`}.png`);
-    // const elementTokenImage = require(`../images/tokens/${`element`}.png`);
+
     return (
         <Layout>
             <HeaderSection
@@ -217,7 +217,8 @@ const WhatIsYourElement = () => {
                         <ElementTokenImage className="mal-padding">
                             <img
                                 src={elementTokenImage}
-                                alt={`The Element of ${selectedCard}`} />
+                                alt={`The Element of ${selectedCard}`}
+                                loading="lazy" />
                         </ElementTokenImage>
                         <h4 className="mal-margin-remove">{currentSlide.subheadline}</h4>
                         <h2 className="mal-margin-remove">{currentSlide.title}</h2>
