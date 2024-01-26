@@ -67,7 +67,7 @@ const StyledMalCarousel = styled(MalCarousel)`
     box-shadow: 0 0 16px rgba(0, 0, 0, 0.25);
 
     &.slide img {
-        max-height: 40vh;
+        max-height: 45vh;
         object-fit: cover;
         object-position: center;
     }
