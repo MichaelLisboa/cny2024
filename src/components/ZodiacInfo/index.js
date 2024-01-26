@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { motion, easeInOut } from 'framer-motion';
+import Image from '../Image';
 
-const AnimalImage = styled(motion.img)`
-  height: auto;
-  max-height: 45vh;
+const AnimalImage = styled(motion(Image))`
+  min-height: 100% !important;
+  max-height: 64vh;
+  width: auto;
   position: relative;
   z-index: 2;
 `;
 
-const ElementImage = styled(motion.img)`
+const ElementImage = styled(motion(Image))`
   width: 70%;
   position: absolute;
   left: -5%;
@@ -32,6 +34,23 @@ const ImageContainer = styled.div`
 `;
 
 const ZodiacInfo = ({ animal, element }) => {
+    const [animalVisible, setAnimalVisible] = useState(false);
+    const [elementVisible, setElementVisible] = useState(false);
+    const [zodiacLabelVisible, setZodiacLabelVisible] = useState(false);
+
+    useEffect(() => {
+
+        const timer1 = setTimeout(() => setElementVisible(true), 500);
+        const timer2 = setTimeout(() => setAnimalVisible(true), 5000);
+        const timer3 = setTimeout(() => setZodiacLabelVisible(true), 1800);
+
+        return () => {
+            clearTimeout(timer1);
+            clearTimeout(timer2);
+            clearTimeout(timer3);
+        };
+    }, []);
+
     if (!animal || !element) {
         return null;
     }
@@ -39,14 +58,13 @@ const ZodiacInfo = ({ animal, element }) => {
     const animalImage = require(`../../images/zodiac_actual/animals/${animal.toLowerCase()}.png`);
     const elementImage = require(`../../images/zodiac_actual/elements/${element.toLowerCase()}.png`);
 
-    const containerVariants = {
-        hidden: { opacity: 0, y: "150%" },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: easeInOut } }
-    };
 
     const animalVariants = {
-        hidden: { opacity: 0, y: "150%" },
         visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: easeInOut } }
+    };
+
+    const elementVariants = {
+        visible: { opacity: 1, y: '-30%', transition: { duration: 1, ease: easeInOut } },
     };
 
     const zodiacLabelAnimation = {
@@ -59,17 +77,13 @@ const ZodiacInfo = ({ animal, element }) => {
             <ElementImage
                 src={elementImage}
                 alt={element}
-                loading="lazy"
                 initial="hidden"
                 animate="visible"
-                variants={containerVariants}
+                variants={elementVariants}
             />
             <AnimalImage
                 src={animalImage}
                 alt={animal}
-                loading="lazy"
-                initial="hidden"
-                animate="visible"
                 variants={animalVariants}
             />
             <ZodiacLabel

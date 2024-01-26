@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const useProgressiveImage = (highResSrc) => {
+export default function useProgressiveImg(highResSrc) {
   const deriveLowResSrc = (src) => 
     typeof src === 'string' || (src && src.default)
       ? (src.default || src).replace(/([^/]+)(?=\.\w+$)/, 'tiny-$1')
@@ -21,6 +21,4 @@ const useProgressiveImage = (highResSrc) => {
 
   return [src, loading];
 };
-
-export default useProgressiveImage;
 

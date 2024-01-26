@@ -12,6 +12,7 @@ import earth from '../images/elements/earth.png';
 import metal from '../images/elements/metal.png';
 import MalCarousel from '../components/MalCarousel';
 import { OrnateButton } from '../components/Button';
+import Image from '../components/Image';
 
 const elementsList = [
     {
@@ -215,7 +216,7 @@ const WhatIsYourElement = () => {
                 ) : (
                     <div className="mal-padding-small mal-text-center">
                         <ElementTokenImage className="mal-padding">
-                            <img
+                            <Image
                                 src={elementTokenImage}
                                 alt={`The Element of ${selectedCard}`}
                                 loading="lazy" />
