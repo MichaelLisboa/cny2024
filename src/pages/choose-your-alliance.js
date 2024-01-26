@@ -174,21 +174,22 @@ const paragraphVariants = {
 
 const StyledImage = styled(motion.div)`
   position: absolute;
-  right: -15vw;
+  left: 50%;
+  transform: translateX(-50%);
   bottom: -30px;
-  width: 100%;
+  width: 135%;
   overflow: visible !important;
   min-width: 120vw;
 
   @media (min-width: 768px) {
     position: relative;
     max-height: 65vh;
+    width: auto;
     min-width: auto;
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-  }
-  `;
+  }`;
 
 const HeaderSection = styled(motion.div)`
   // Add your header-section styles here.
@@ -319,7 +320,7 @@ const ChooseYourAlliance = () => {
                         <StyledImage>
                             <img src={currentSlide.image} alt={currentSlide.title} />
                         </StyledImage>
-                        <div className="footer-section mal-position-bottom">
+                        <div className="footer-section mal-position-bottom mal-position-large">
                         <OrnateButton onClick={handleButtonClick}>
                             {currentSlide.title}
                         </OrnateButton>
