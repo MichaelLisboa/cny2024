@@ -39,9 +39,9 @@ const DateInput = styled.input`
 
 const DatePicker = styled(DayPicker)`
   position: absolute;
-  top: 50%;
+  top: 0;
   left: 50%;
-  transform: translate(-55%, -50%);
+  transform: translate(-55%, -80%);
   background: white;
   box-shadow: 2px 4px 16px rgba(0, 0, 0, 0.15);
   border-radius: 4px;

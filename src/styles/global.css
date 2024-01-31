@@ -87,52 +87,19 @@
   color: #666;
 }
 
-@media only screen and (max-height: 768px) {
+@media only screen and (max-height: 680px) {
   html {
-    font-size: 14px !important; /* Reduced base font size */
+    font-size: 12px !important; /* Reduced base font size */
   }
 }
 
 html,
-body {
+body,
+#root {
   height: 100%;
   margin: 0;
   padding: 0;
-}
-
-@media only screen and (max-height: 600px) {
-  #root {
-      /* Adjust styles to fit smaller screens */
-      width: 100%;
-      box-sizing: border-box;
-      /* other styles */
-  }
-}
-
-@media only screen and (max-height: 640px) {
-  h1, .mal-h1 { 
-    font-size: calc(1rem + 2vh); /* Adjusted size */
-  }
-
-  h2, .mal-h2 { 
-    font-size: calc(0.8rem + 1.5vh); /* Adjusted size */
-  }
-
-  h3, .mal-h3 { 
-    font-size: calc(0.6rem + 1vh); /* Adjusted size */
-  }
-
-  h4, .mal-h4 { 
-    font-size: calc(0.5rem + 0.8vh); /* Adjusted size */
-  }
-
-  h5, .mal-h5 { 
-    font-size: calc(0.4rem + 0.6vh); /* Adjusted size */
-  }
-
-  h6, .mal-h6 { 
-    font-size: calc(0.3rem + 0.4vh); /* Adjusted size */
-  }
+  overflow: hidden !important;
 }
 
 
