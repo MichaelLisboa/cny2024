@@ -142,10 +142,11 @@ const StyledParagraph = styled(motion.p).attrs(() => ({
 }))`
   position: absolute;
   top: 0;
-  width: 90%;
+  width: auto;
+  max-width: 90%;
   line-height: 1.2em;
   overflow: hidden;
-  font-size: 1rem;
+  font-size: 0.75rem;
   font-family: Lato, sans-serif;
   font-weight: 700;
   font-style: italic;
@@ -313,7 +314,7 @@ const ChooseYourAlliance = () => {
                     </div>
                 ) : (
                     <div className="mal-flex mal-flex-column mal-flex-between">
-                        <div className="mal-position-top mal-text-center mal-margin-auto mal-width-5-6">
+                        <div className="mal-position-top mal-text-center mal-margin-auto mal-width-auto">
                             <h3>{currentSlide.reaction}</h3>
                             <p className="mal-text-medium mal-text-italic">"{currentSlide.text}"</p>
                         </div>

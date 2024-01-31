@@ -10,7 +10,8 @@ const BackgroundImage = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
-  overflow: hidden;
+  overflow-y: ${({ height }) => height < 630 ? 'auto' : 'hidden'};
+  overflow-x: hidden;
 `;
 
 const BackgroundImg = styled(motion.img)`
@@ -89,7 +90,7 @@ function Layout({ children }) {
 
   return (
     <>
-      <BackgroundImage>
+      <BackgroundImage height={browserSize.height}>
         <BackgroundImg
           ref={imageRef}
           src={currentPage?.bgImage || defaultBackgroundImage}
