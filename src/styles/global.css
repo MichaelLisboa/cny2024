@@ -13,10 +13,11 @@
   transform: translate3d(0, 0, 0); /* Enables hardware acceleration */
 }
 
-.slide > img {
-  -webkit-user-drag: none; /* Specific to WebKit/Blink browsers */
-  user-select: none; /* Standard CSS property to prevent text selection */
-}
+/* .slide .card-image-container {
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 32px rgba(0, 0, 0, 0.125);
+} */
 
 .slider-frame {
   overflow: visible !important;

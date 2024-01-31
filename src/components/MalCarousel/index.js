@@ -9,7 +9,6 @@ const Card = styled(motion.div)`
   margin: 0px;
   border-radius: 16px;
   background: transparent;
-  overflow: hidden;
 
   &:hover {
     cursor: url("data:image/svg+xml,%3Csvg width='48' height='48' viewBox='0 0 120 120' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg clip-path='url(%23a)'%3E%3Cpath d='m57.899 10.063 11.133-4.771 6.362 7.953h7.953l6.362 3.71 2.65 6.893h10.074l4.771 4.241v29.69l-4.771 38.702-10.073 19.616H48.356L25.028 91.179l-14.845-33.4 2.651-6.362 7.953-2.651L36.692 64.67h5.832V13.244l9.543-3.18h5.832Z' fill='%23fff' stroke='%23000'/%3E%3Cpath d='M110.774 30.28a10.995 10.995 0 0 0-10.361-11.038 10.992 10.992 0 0 0-5.403 1.071 11.274 11.274 0 0 0-16.47-9.33 11.628 11.628 0 0 0-22.691-2.687 11.416 11.416 0 0 0-5.867-1.626A11.558 11.558 0 0 0 38.459 18.3v44.746c-4.524-5.655-8.942-11.24-9.614-12.194a11.276 11.276 0 0 0-9.613-5.266 11.91 11.91 0 0 0-12.265 12.3c.318 6.362 12.618 28.841 20.889 41.07 12.512 18.521 24.458 21.207 24.988 21.207h37.183a3.25 3.25 0 0 0 1.944-.672 46.404 46.404 0 0 0 13.254-21.666c3.535-10.921 5.408-26.614 5.585-47.927l-.036-19.616ZM99.181 95.846A44.039 44.039 0 0 1 88.79 113.8H53.763c-1.66-.495-10.85-3.888-20.747-18.556-9.896-14.668-19.51-34.214-19.687-37.677a5.302 5.302 0 0 1 1.59-3.994 5.372 5.372 0 0 1 4.03-1.626 5.053 5.053 0 0 1 4.665 2.51c1.025 1.52 8.342 10.603 12.618 16.01l8.59-5.796V18.299a5.23 5.23 0 1 1 10.426 0v39.374h6.362V11.725a5.337 5.337 0 0 1 10.603 0v46.407h6.362V21.197a5.054 5.054 0 1 1 10.073 0v40.434h6.362V30.174a4.7 4.7 0 0 1 9.367 0v19.617c-.106 20.889-1.803 35.769-5.196 46.054Z' fill='%231C1C1C'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='a'%3E%3Cpath fill='%23fff' d='M0 0h120v120H0z'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E"), grab;
@@ -19,7 +18,7 @@ const Card = styled(motion.div)`
   }
 
   @media (min-width: 768px) {
-    // height: 45vh;
+    height: 45vh;
   }
 
   img {
@@ -33,15 +32,17 @@ const Card = styled(motion.div)`
 const CarouselContainer = styled(Carousel)`
   .slide {
     border-radius: 16px;
-    background: transparent;
   }
-  .slide:not(.slide-current) {
-    opacity: 0.8 !important;
+`;
+
+const ImageContainer = styled.div`
+  margin: 0px;
+  border-radius: 16px;
 `;
 
 const PreviousButton = styled.button`
   position: fixed;
-  left: 16px !important;
+  left: -12px !important;
   border: none;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.5);
@@ -74,7 +75,7 @@ const PreviousButton = styled.button`
 
 const NextButton = styled.button`
   position: fixed;
-  right: 16px !important;
+  right: -12px !important;
   border: none;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.5);
@@ -196,9 +197,11 @@ const MalCarousel = ({ elementsList, initialSlide, onCurrentSlideChange, handleC
             }
           }}
         >
-          <Image
-            src={element.image}
-            alt={element.title} />
+          <ImageContainer className="card-image-container mal-overflow-hidden">
+            <Image
+              src={element.image}
+              alt={element.title} />
+          </ImageContainer>
         </Card>
       ))}
     </CarouselContainer>

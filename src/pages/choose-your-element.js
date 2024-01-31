@@ -61,31 +61,39 @@ const scaleAnimation = keyframes`
   }
 `;
 
+const shadowAnimation = keyframes`
+    0% {
+        box-shadow: 0 0 16px rgba(0, 0, 0, 0.25);
+    }
+    100% {
+        box-shadow: 0 0 48px rgba(0, 0, 0, 0.35);
+    }
+`;
+
 const StyledMalCarousel = styled(MalCarousel)`
-  .slide {
-    background-color: transparent;
-    overflow: hidden;
-    // box-shadow: 0 0 16px rgba(0, 0, 0, 0.25);
+    .slide {
+        background-color: transparent;
 
-    &.slide img {
-        max-height: 45vh;
-        object-fit: cover;
-        object-position: center;
+        &.slide img {
+                max-height: 45vh;
+                height: 100%;
+                object-fit: cover;
+                object-position: center;
+                border-radius: 16px;
+        }
+
+        &.slide-current img {
+                animation: ${scaleAnimation} 30s ease-in-out infinite alternate;
+            }
+        
+        &.slide .card-image-container {
+            box-shadow: 0 0 16px rgba(0, 0, 0, 0.25);
+        }
+
+        &.slide-current .card-image-container {
+            animation: ${shadowAnimation} 0.3s ease-in-out forwards;
+        }
     }
-
-    &:not(.slide-current) {
-    //   box-shadow: 0 0 16px rgba(0, 0, 0, 0.25);
-    }
-
-    &.slide-current {
-    //   box-shadow: 0 0 40px rgba(0, 0, 0, 0.35);
-    }
-
-    &.slide-current img {
-        object-fit: cover;
-        // animation: ${scaleAnimation} 30s ease-in-out infinite alternate;
-      }
-  }
 `;
 
 const DescriptionText = styled.p`
