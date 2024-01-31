@@ -321,8 +321,8 @@ const ChooseYourAlliance = () => {
                             <img src={currentSlide.image} alt={currentSlide.title} />
                         </StyledImage>
                         <div className="footer-section mal-position-bottom mal-position-large">
-                        <OrnateButton onClick={handleButtonClick}>
-                            {currentSlide.title}
+                        <OrnateButton url={nextPage.url}>
+                            {nextPage.title}
                         </OrnateButton>
                         </div>
                     </div>
