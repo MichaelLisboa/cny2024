@@ -65,7 +65,7 @@ const StyledMalCarousel = styled(MalCarousel)`
   .slide {
     background-color: transparent;
     overflow: hidden;
-    box-shadow: 0 0 16px rgba(0, 0, 0, 0.25);
+    // box-shadow: 0 0 16px rgba(0, 0, 0, 0.25);
 
     &.slide img {
         max-height: 45vh;
@@ -74,16 +74,16 @@ const StyledMalCarousel = styled(MalCarousel)`
     }
 
     &:not(.slide-current) {
-      box-shadow: 0 0 16px rgba(0, 0, 0, 0.25);
+    //   box-shadow: 0 0 16px rgba(0, 0, 0, 0.25);
     }
 
     &.slide-current {
-      box-shadow: 0 0 40px rgba(0, 0, 0, 0.35);
+    //   box-shadow: 0 0 40px rgba(0, 0, 0, 0.35);
     }
 
     &.slide-current img {
         object-fit: cover;
-        animation: ${scaleAnimation} 30s ease-in-out infinite alternate;
+        // animation: ${scaleAnimation} 30s ease-in-out infinite alternate;
       }
   }
 `;
@@ -168,7 +168,7 @@ const WhatIsYourElement = () => {
 
         if (chosenElement) {
             await animateExit();
-            setContent('monkey'); // Change the content
+            setContent(''); // Change the content
             setTimeout(() => {
                 animateEnter();
             }, 500);

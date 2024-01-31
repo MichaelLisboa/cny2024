@@ -9,6 +9,15 @@
   outline: none !important;
 }
 
+.slider-container {
+  transform: translate3d(0, 0, 0); /* Enables hardware acceleration */
+}
+
+.slide > img {
+  -webkit-user-drag: none; /* Specific to WebKit/Blink browsers */
+  user-select: none; /* Standard CSS property to prevent text selection */
+}
+
 .slider-frame {
   overflow: visible !important;
 }
