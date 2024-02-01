@@ -5,7 +5,6 @@ import pages from '../utils/pages';
 import styled from 'styled-components';
 import defaultBackgroundImage from '../images/background/0-cover.jpg';
 import { AppContext } from '../contexts/AppContext';
-import DragToRefresh from '../components/dragToRefresh';
 
 const BackgroundImage = styled(motion.div)`
   position: relative;
@@ -103,9 +102,19 @@ function Layout({ children }) {
         dragConstraints={{ top: 0, bottom: 0 }}
         dragElastic={0.2}
         onDragEnd={(event, info) => {
-          if (info.point.y > 50) { // Adjust based on desired sensitivity
-            console.log('Refresh action triggered', event, info);
-            refreshPage();
+          // Calculate the distance dragged in both x and y directions
+          const distanceX = Math.abs(info.offset.x);
+          const distanceY = Math.abs(info.offset.y);
+        
+          // Set a threshold for what you consider a "significant" vertical drag
+          const verticalThreshold = 50; // Adjust based on desired sensitivity
+          
+          // Optionally, set a threshold for horizontal movement to filter out diagonal drags
+          const horizontalThreshold = 30; // This helps to ignore purely horizontal swipes or minor horizontal movements
+        
+          // Check if the vertical drag is significant and the horizontal drag is within an acceptable range
+          if (distanceY > verticalThreshold && distanceX < horizontalThreshold) {
+            refreshPage(); // Call the refresh logic only if the drag meets these conditions
           }
         }}
         style={{ overflow: 'hidden' }} // Prevent scrolling during drag
