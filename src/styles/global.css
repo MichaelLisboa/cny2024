@@ -83,8 +83,8 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: transparent;
-  background: rgba(253, 243, 230, 1);
-  color: #666;
+  background: rgba(243,220,191,1);
+  color: #333;
 }
 
 @media only screen and (max-height: 680px) {

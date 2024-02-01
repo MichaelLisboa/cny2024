@@ -12,6 +12,7 @@ const BackgroundImage = styled(motion.div)`
   height: 100%;
   overflow-y: ${({ height }) => height < 630 ? 'auto' : 'hidden'};
   overflow-x: hidden;
+  box-shadow: 0 0 24px rgba(0, 0, 0, 0.15);
 `;
 
 const BackgroundImg = styled(motion.img)`
@@ -95,7 +96,6 @@ function Layout({ children }) {
   }, [currentPage, controls]);
 
   return (
-    <>
       <BackgroundImage
         height={browserSize.height}
         drag="y"
@@ -108,7 +108,7 @@ function Layout({ children }) {
           const offsetY = info.offset.y; // The vertical distance dragged
         
           // Set a threshold for what you consider a "significant" vertical drag
-          const verticalThreshold = 50; // Adjust based on desired sensitivity
+          const verticalThreshold = 30; // Adjust based on desired sensitivity
           
           // Optionally, set a threshold for horizontal movement to filter out diagonal drags
           const horizontalThreshold = 30; // This helps to ignore purely horizontal swipes or minor horizontal movements
@@ -150,7 +150,6 @@ function Layout({ children }) {
           </MalContainer>
         </motion.section>
       </BackgroundImage>
-    </>
   );
 }
 
