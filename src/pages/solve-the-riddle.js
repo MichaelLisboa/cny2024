@@ -9,51 +9,17 @@ import MalCarousel from '../components/MalCarousel/MalCarousel2';
 import Image from '../components/Image';
 import { riddlesList } from '../data';
 import { OrnateButton } from '../components/Button';
-import trait from "../images/tokens/trait.png";
-
-const scaleAnimation = keyframes`
-  0% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(2);
-  }
-`;
-
-const shadowAnimation = keyframes`
-    0% {
-        box-shadow: 0 0 16px rgba(0, 0, 0, 0.25);
-    }
-    100% {
-        box-shadow: 0 0 48px rgba(0, 0, 0, 0.35);
-    }
-`;
+import trait from "../images/tokens/riddle.png";
 
 const StyledMalCarousel = styled(MalCarousel)`
-    .slide {
-        background-color: transparent;
-        border-radius: 16px !important;
+  .slide {
+    margin: 0 !important;
+    padding: 0 !important;
 
-        &.slide img {
-                max-height: 45vh;
-                height: 100%;
-                object-fit: cover;
-                object-position: center;
-                border-radius: 16px;
-        }
-
-        &.slide-current img {
-                animation: ${scaleAnimation} 30s ease-in-out infinite alternate;
-            }
-        
-        &.slide .card-image-container {
-            box-shadow: 0 0 16px rgba(0, 0, 0, 0.25);
-        }
-
-        &.slide-current .card-image-container {
-            animation: ${shadowAnimation} 0.3s ease-in-out forwards;
-        }
+    &.slide img {
+        max-height: 35vh;
     }
+  }
 `;
 
 const DescriptionText = styled.p`
@@ -88,7 +54,7 @@ const HeaderSection = styled(motion.div)`
 const BodySection = styled(motion.div)`
   // Add your body-section styles here.
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   padding-top: 32px;
 `;
 
@@ -216,23 +182,23 @@ const SolveTheRiddle = () => {
         ) :
           getUserInfo().answeredRiddle ? (
             <div className="mal-padding-small mal-text-center">
-            <TraitTokenImage className="mal-padding">
-              <Image
-                src={trait}
-                alt={`The Trait of ${selectedCard}`} />
-            </TraitTokenImage>
-            <h4 className="mal-margin-remove">{initialSlide.result}</h4>
-            <h2 className="mal-margin-remove">{currentSlide.title}</h2>
-          </div>
+              <TraitTokenImage className="mal-padding">
+                <Image
+                  src={trait}
+                  alt={`The Trait of ${selectedCard}`} />
+              </TraitTokenImage>
+              <h4 className="mal-margin-remove">{initialSlide.result}</h4>
+              <h2 className="mal-margin-remove">{currentSlide.title}</h2>
+            </div>
           ) :
-          <div className="mal-padding-small mal-text-center">
-            <h3 className="mal-margin-remove">{initialSlide.result}</h3>
-          <TraitTokenImage className="mal-padding">
-            <Image
-              src={trait}
-              alt={`The Trait of ${selectedCard}`} />
-          </TraitTokenImage>
-          </div>
+            <div className="mal-padding-small mal-text-center">
+              <h3 className="mal-margin-remove">{initialSlide.result}</h3>
+              <TraitTokenImage className="mal-padding">
+                <Image
+                  src={trait}
+                  alt={`The Trait of ${selectedCard}`} />
+              </TraitTokenImage>
+            </div>
         }
       </BodySection>
       <FooterSection

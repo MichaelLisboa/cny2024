@@ -205,19 +205,19 @@ export const riddlesList = [
         choices: [
             {
                 answer: "I am a breath",
-                image: require('../images/riddle/breath.jpg')
+                image: require('../images/riddle/breath.png')
             },
             {
                 answer: "I am an echo",
-                image: require('../images/riddle/echo.jpg')
+                image: require('../images/riddle/echo.png')
             },
             {
                 answer: "I am the shadows",
-                image: require('../images/riddle/shadow.jpg')
+                image: require('../images/riddle/shadow.png')
             },
             {
                 answer: "I am a whisper",
-                image: require('../images/riddle/whisper.jpg')
+                image: require('../images/riddle/whisper.png')
             },
         ]
     },
@@ -229,19 +229,19 @@ export const riddlesList = [
         choices: [
             {
                 answer: "I am a breath",
-                image: require('../images/riddle/breath.jpg')
+                image: require('../images/riddle/breath.png')
             },
             {
                 answer: "I am footsteps",
-                image: require('../images/riddle/footsteps.jpg')
+                image: require('../images/riddle/footsteps.png')
             },
             {
                 answer: "I am time",
-                image: require('../images/riddle/time.jpg')
+                image: require('../images/riddle/time.png')
             },
             {
                 answer: "I am memories",
-                image: require('../images/riddle/memories.jpg')
+                image: require('../images/riddle/memories.png')
             },
         ]
     },
@@ -253,19 +253,19 @@ export const riddlesList = [
         choices: [
             {
                 answer: "I am a cloud",
-                image: require('../images/riddle/cloud.jpg')
+                image: require('../images/riddle/cloud.png')
             },
             {
                 answer: "I am wind",
-                image: require('../images/riddle/wind.jpg')
+                image: require('../images/riddle/wind.png')
             },
             {
                 answer: "I am the moon",
-                image: require('../images/riddle/moon.jpg')
+                image: require('../images/riddle/moon.png')
             },
             {
                 answer: "I am the night",
-                image: require('../images/riddle/night.jpg')
+                image: require('../images/riddle/night.png')
             },
         ]
     }

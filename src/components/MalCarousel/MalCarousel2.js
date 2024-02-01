@@ -21,13 +21,6 @@ const Card = styled(motion.div)`
   @media (min-width: 768px) {
     height: 45vh;
   }
-
-  img {
-    width: 100%;
-    // max-height: 30vh;
-    object-fit: contain;
-    object-position: center;
-  }
 `;
 
 const MemoizedCard = React.memo(Card);
@@ -40,7 +33,14 @@ const CarouselContainer = styled(Carousel)`
 
 const ImageContainer = styled.div`
   margin: 0px;
+  overflow: hidden;
   border-radius: 16px;
+  max-height: 35vh;
+
+
+  @media (min-width: 768px) {
+    max-height: 45vh;
+  }
 `;
 
 const PreviousButton = styled.button`
