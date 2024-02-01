@@ -1,98 +1,15 @@
 import React, { useContext, useState, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import { motion, useAnimation } from 'framer-motion'; // Import useAnimation here
+import { motion, useAnimation } from 'framer-motion';
 import pages from '../utils/pages';
 import Layout from '../templates/layout';
 import { AppContext } from '../contexts/AppContext';
 import Image from '../components/Image';
 import MalCarousel from '../components/MalCarousel';
 import { OrnateButton } from '../components/Button';
-
-import bravery from "../images/traits/bravery.png";
-import cleverness from "../images/traits/cleverness.png";
-import energy from "../images/traits/energy.png";
-import crafty from "../images/traits/crafty.png";
-import strength from "../images/traits/strength.png";
-import resilient from "../images/traits/resilient.png";
-import persevering from "../images/traits/persevering.png";
-import graceful from "../images/traits/graceful.png";
-import resourceful from "../images/traits/resourceful.png";
-import curiosity from "../images/traits/curiosity.png";
+import { traitsList } from '../data';
 import trait from "../images/tokens/trait.png";
-
-const traitsList = [
-    {
-        title: "Brave Character",
-        image: bravery,
-        description: "As you sip from the cup, a surge of courage courses through your ethereal form. The *element_noun* shadows seem less intimidating, and you find yourself eagerly engaging with other spirits. Your newfound bravery propels you forward, unafraid of the challenges that lie ahead.",
-        subheadline: "Drink from the cup of Bravery",
-        text: ""
-    },
-    {
-        title: "Clever Minded",
-        image: cleverness,
-        description: "The elixir of cleverness enhances your wit and intelligence. You navigate the *element_noun* with strategic acumen, outsmarting spirits and solving challenges with ease. Your sharp mind becomes your greatest asset, and other spirits admire your clever approach.",
-        subheadline: "Drink from the cup of Cleverness",
-        text: ""
-    },
-    {
-        title: "Energetic Spirit",
-        image: energy,
-        description: "The vibrant energy from the cup infuses your spirit with agility and speed. You dart through the *element_noun*, embracing the thrill of the race. Your energetic spirit sets a lively pace, making you a formidable contender among the spirits.",
-        subheadline: "Drink from the cup of Energy",
-        text: ""
-    },
-    {
-        title: "Crafty Nature",
-        image: crafty,
-        description: "The elixir of craftiness imbues you with ingenuity and sly tactics. Navigating through the *element_noun*, you employ clever tricks and strategies, gaining an edge over challenges. Your crafty nature becomes a hallmark of your journey.",
-        subheadline: "Drink from the cup of Craftiness",
-        text: ""
-    },
-    {
-        title: "Strong Contender",
-        image: strength,
-        description: "The cup of strength fills you with power and determination. As you move through the *element_noun*, your strong presence intimidates other spirits. Challenges become opportunities to showcase your might, solidifying your position as a formidable contender.",
-        subheadline: "Drink from the cup of Strength",
-        text: ""
-    },
-    {
-        title: "Resilient Character",
-        image: resilient,
-        description: "Sipping from the cup of resilience, you feel an unwavering resolve. As you navigate the *element_noun*, challenges may arise, but you face them with adaptability and determination. Your resilience becomes a beacon, inspiring other spirits on their journey.",
-        subheadline: "Drink from the cup of Resilience",
-        text: ""
-    },
-    {
-        title: "Persevering Spirit",
-        image: persevering,
-        description: "The elixir of perseverance fortifies your spirit with unwavering determination. Among the ancient *element_noun*, obstacles may attempt to hinder your path, but you press on, fueled by an inner strength that resonates with the very heartbeat of the *element_noun*.",
-        subheadline: "Drink from the cup of Perseverence",
-        text: ""
-    },
-    {
-        title: "Walks with Grace",
-        image: graceful,
-        description: "The cup of grace bestows upon you an aura of elegance and finesse. Moving through the enchanted *element_noun*, your every step is marked by graceful precision. Challenges in the way seem to bow before your graceful spirit.",
-        subheadline: "Drink from the cup of Gracefulness",
-        text: ""
-    },
-    {
-        title: "Resourceful Nature",
-        image: resourceful,
-        description: "Sipping from the cup of resourcefulness, you discover ingenious ways to overcome challenges. The *element_noun* becomes a canvas for your creative problem-solving, and your resourceful nature shines through.",
-        subheadline: "Drink from the cup of Resourcefulness",
-        text: ""
-    },
-    {
-        title: "Curious Soul",
-        image: curiosity,
-        description: "The elixir of curiosity sparks a deep desire to explore. Every challenge, every encounter becomes an opportunity to learn. Your curious spirit leads you down uncharted paths, uncovering hidden wonders in the *element_noun*.",
-        subheadline: "Drink from the cup of Curiosity",
-        text: ""
-    },
-];
 
 const StyledMalCarousel = styled(MalCarousel)`
   .slide {
@@ -177,16 +94,16 @@ const ChooseYourTrait = () => {
         return randomIndices.map(index => traitsList[index]);
     }, [traitsList]);
 
-    const initialSlide = {
-        index: 0,
-        title: randomItems[0].title,
-        image: randomItems[0].image,
-        text: randomItems[0].text,
-        subheadline: randomItems[0].subheadline,
-        description: randomItems[0].description.replace(/\*element_noun\*/g, userElement)
-    };
-
-    const [currentSlide, setCurrentSlide] = useState(initialSlide);
+    const [currentSlide, setCurrentSlide] = useState(
+        {
+            index: 0,
+            title: randomItems[0].title,
+            image: randomItems[0].image,
+            text: randomItems[0].text,
+            subheadline: randomItems[0].subheadline,
+            description: randomItems[0].description.replace(/\*element_noun\*/g, userElement)
+        }
+    );
 
 
     const animateExit = async () => {
@@ -246,7 +163,7 @@ const ChooseYourTrait = () => {
                     <div>
                         <StyledMalCarousel
                             elementsList={randomItems}
-                            initialSlide={initialSlide.index}
+                            initialSlide={0}
                             onCurrentSlideChange={handleCurrentSlideChange}
                             handleCardClick={handleButtonClick}
                         />

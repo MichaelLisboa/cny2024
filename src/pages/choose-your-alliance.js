@@ -7,106 +7,7 @@ import Layout from '../templates/layout';
 import { AppContext } from '../contexts/AppContext';
 import MalCarousel from '../components/MalCarousel';
 import { OrnateButton } from '../components/Button';
-
-import rat from "../images/zodiac_actual/animals/rat.png";
-import ox from "../images/zodiac_actual/animals/ox.png";
-import tiger from "../images/zodiac_actual/animals/tiger.png";
-import rabbit from "../images/zodiac_actual/animals/rabbit.png";
-import dragon from "../images/zodiac_actual/animals/dragon.png";
-import snake from "../images/zodiac_actual/animals/snake.png";
-import horse from "../images/zodiac_actual/animals/horse.png";
-import goat from "../images/zodiac_actual/animals/goat.png";
-import monkey from "../images/zodiac_actual/animals/monkey.png";
-import rooster from "../images/zodiac_actual/animals/rooster.png";
-import dog from "../images/zodiac_actual/animals/dog.png";
-import pig from "../images/zodiac_actual/animals/pig.png";
-
-const allianceList = [
-    {
-        title: "Clever Rat",
-        image: rat,
-        description: "I'm known for my wit. Would you join forces with me to navigate these challenges?",
-        reaction: "Rat scuttles excitedly, saying,",
-        text: "Ah, great choice, spirit! Let's outsmart the competition!"
-    },
-    {
-        title: "Strong Ox",
-        image: ox,
-        description: "My strength is unmatched. Will you join forces to overcome these challenges?",
-        reaction: "With sturdy trot, Ox declares,",
-        text: "A worthy adversary! Brace yourself, spirit, for a test of strength."
-    },
-    {
-        title: "Fierce Tiger",
-        image: tiger,
-        description: "To win this race, you'll need courage and strength. Will you join me to learn the ways of the *element_noun*?",
-        reaction: "Tiger prowls confidently, remarking,",
-        text: "Fearless! We'll tackle obstacles like the kings of the jungle."
-    },
-    {
-        title: "Smart Rabbit",
-        image: rabbit,
-        description: "I'm known for my quick thinking. Would you like to team up and outpace the competition?",
-        reaction: "Rabbit hops gracefully, stating,",
-        text: "Smart move, spirit! Quick thinking will be our ticket to victory."
-    },
-    {
-        title: "Wise Dragon",
-        image: dragon,
-        description: "I dare you to navigate this treacherous obstacle course. Let's see if you can succeed.",
-        reaction: "Dragon glides with majestic movements, chuckles,",
-        text: "Bravery, I like! Let's see if you can soar through challenges, spirit."
-    },
-    {
-        title: "Patient Snake",
-        image: snake,
-        description: "I sense intricate challenges on our path. With patience, we can overcome them together. Would you join me?",
-        reaction: "Snake slithers with finesse, hissing,",
-        text: "A brave choice, spirit! Let's slither through these challenges together."
-    },
-    {
-        title: "Mighty Horse",
-        image: horse,
-        description: "I've been watching your progress. It's time for a test of strength. Are you up for the challenge?",
-        reaction: "Horse gallops energetically, neighing,",
-        text: "Fantastic! Our strength will carry us to success. repare for a true test of your spirit's might!"
-    },
-    {
-        title: "Polite Goat",
-        image: goat,
-        description: "I see you've come a long way in this race. With cooperation, we can navigate them gracefully.",
-        reaction: "Goat trots amiably, bleating,",
-        text: "A brave soul! Let's approach challenges with grace."
-    },
-    {
-        title: "Curious Monkey",
-        image: monkey,
-        description: "I've heard tales of mysterious artifacts hidden in the heart of the *element_noun*. What do you say?",
-        reaction: "Monkey swings playfully, chattering,",
-        text: "Curiosity is our guide! Let's explore and triumph."
-    },
-    {
-        title: "Determined Rooster",
-        image: rooster,
-        description: "Your determination is admirable. Join me, and we'll overcome these challenges together!",
-        reaction: "Rooster struts confidently, crowing,",
-        text: "Bravo! With determination, we'll conquer all obstacles."
-    },
-    {
-        title: "Amiable Dog",
-        image: dog,
-        description: "With amiability and camaraderie, we can make the journey enjoyable. Would you be my companion?",
-        reaction: "Dog bounds joyfully, barking,",
-        text: "Loyal choice! We'll face challenges with endurance."
-    },
-    {
-        title: "Energetic Pig",
-        image: pig,
-        description: "I challenge you to a race through the forest. Are you energetic enough to keep up?",
-        reaction: "Pig trots contentedly, oinking,",
-        text: "Delightful! Together, we'll navigate with ease."
-    },
-];
+import { allianceList } from '../data';
 
 const StyledMalCarousel = styled(MalCarousel)`
   .slide {
@@ -146,7 +47,7 @@ const StyledParagraph = styled(motion.p).attrs(() => ({
   max-width: 90%;
   line-height: 1.2em;
   overflow: hidden;
-  font-size: 0.75rem;
+  font-size: 1.25rem;
   font-family: Lato, sans-serif;
   font-weight: 700;
   font-style: italic;
@@ -155,6 +56,7 @@ const StyledParagraph = styled(motion.p).attrs(() => ({
   background: rgba(255, 255, 255, 0.75);
   border-radius: 12px;
   padding: 8px 8px;
+  width: 75%;
 `;
 
 const paragraphVariants = {
@@ -252,7 +154,7 @@ const ChooseYourAlliance = () => {
 
         if (chosenAlliance) {
             await animateExit();
-            setContent('monkey');
+            setContent('');
             setTimeout(() => {
                 animateEnter();
             }, 500);

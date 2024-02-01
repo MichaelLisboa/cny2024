@@ -1,28 +1,254 @@
-import React, { useContext } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useContext, useMemo, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import styled, { keyframes, css } from 'styled-components';
+import { motion, useAnimation } from 'framer-motion';
 import pages from '../utils/pages';
 import Layout from '../templates/layout';
 import { AppContext } from '../contexts/AppContext';
+import MalCarousel from '../components/MalCarousel/MalCarousel2';
+import Image from '../components/Image';
+import { riddlesList } from '../data';
+import { OrnateButton } from '../components/Button';
+import trait from "../images/tokens/trait.png";
+
+const scaleAnimation = keyframes`
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(2);
+  }
+`;
+
+const shadowAnimation = keyframes`
+    0% {
+        box-shadow: 0 0 16px rgba(0, 0, 0, 0.25);
+    }
+    100% {
+        box-shadow: 0 0 48px rgba(0, 0, 0, 0.35);
+    }
+`;
+
+const StyledMalCarousel = styled(MalCarousel)`
+    .slide {
+        background-color: transparent;
+        border-radius: 16px !important;
+
+        &.slide img {
+                max-height: 45vh;
+                height: 100%;
+                object-fit: cover;
+                object-position: center;
+                border-radius: 16px;
+        }
+
+        &.slide-current img {
+                animation: ${scaleAnimation} 30s ease-in-out infinite alternate;
+            }
+        
+        &.slide .card-image-container {
+            box-shadow: 0 0 16px rgba(0, 0, 0, 0.25);
+        }
+
+        &.slide-current .card-image-container {
+            animation: ${shadowAnimation} 0.3s ease-in-out forwards;
+        }
+    }
+`;
+
+const DescriptionText = styled.p`
+    display: block;
+    font-size: 1.25rem;
+    font-family: Lato, sans-serif;
+    font-weight: 400;
+    font-style: italic;
+    color: #322F20;
+    text-align: center;
+    margin: 0 auto;
+    padding: 0;
+    width: 75%;
+`;
+
+const TraitTokenImage = styled.div`
+    width: auto;
+    padding: 32px;
+
+    img {
+        height: 100%;
+        max-height: 25vh;
+        object-fit: contain;
+    }
+`;
+
+const HeaderSection = styled(motion.div)`
+  // Add your header-section styles here.
+  text-align: center !important;
+`;
+
+const BodySection = styled(motion.div)`
+  // Add your body-section styles here.
+  align-items: center;
+  justify-content: center;
+  padding-top: 32px;
+`;
+
+const FooterSection = styled(motion.div)`
+  // Add your footer-section styles here.
+`;
 
 const SolveTheRiddle = () => {
-    const { userState, updateUserInfo } = useContext(AppContext) || JSON.parse(localStorage.getItem('userState'));
-    const location = useLocation();
-    const currentPage = pages.find(page => page.url === location.pathname);
-    const nextPage = pages.find(page => page.url === currentPage.nextPage);
-    const previousPage = pages.find(page => page.url === currentPage.previousPage);
+  const { updateUserSelection, getUserInfo } = useContext(AppContext);
+  const [content, setContent] = useState('initial');
+  const [selectedCard, setSelectedCard] = useState(null);
 
-    return (
-        // make this component full screen
+  const userInfo = getUserInfo();
+  const userElement = userInfo.chosenElement;
 
-        <Layout>
-            {/* using framer-motion make the carousel swipe and stick to each card. the focused card should be centered and
-            fill the width 80% and the height should be 80% of the parent container the cards to the left and right of the focused card should be 
-            visible slightly smaller and at 80% opacity but not centered. the cards should snap to the center when the user stops dragging
-            */}
-            <h1>{currentPage ? currentPage.title : ''}</h1>
-            <Link to={`${nextPage.url}`}>Go to {nextPage.title}</Link>
-        </Layout>
-    );
+  const location = useLocation();
+  const currentPage = pages.find(page => page.url === location.pathname);
+  const nextPage = pages.find(page => page.url === currentPage.nextPage);
+  const previousPage = pages.find(page => page.url === currentPage.previousPage);
+  const headerControls = useAnimation();
+  const bodyControls = useAnimation();
+  const footerControls = useAnimation();
+  const paragraphControls = useAnimation();
+
+  const getRandomIndex = (length) => Math.floor(Math.random() * length);
+
+  const getRandomIndices = (length, count) => {
+    const indices = new Set();
+    while (indices.size < count) {
+      indices.add(getRandomIndex(length));
+    }
+    return [...indices];
+  }
+
+  const randomItems = useMemo(() => {
+    const randomIndices = getRandomIndices(riddlesList.length, 1);
+    return randomIndices.map(index => riddlesList[index]);
+  }, [riddlesList]);
+
+  const initialSlide = {
+    index: 0,
+    title: randomItems[0].title.replace(/\*element_noun\*/g, userElement),
+    question: randomItems[0].question,
+    correctAnswer: randomItems[0].correctAnswer,
+    choices: randomItems[0].choices,
+    result: randomItems[0].result.replace(/\*element_noun\*/g, userElement)
+  }
+
+  const [currentSlide, setCurrentSlide] = useState(
+    {
+      index: 0,
+      choices: initialSlide.choices,
+    }
+  );
+
+  const currentChoice = useRef(currentSlide.choices[currentSlide.index]);
+
+
+  const animateExit = async () => {
+    await footerControls.start({ y: 100, opacity: 0 });
+    await bodyControls.start({ y: 100, opacity: 0 });
+    await headerControls.start({ y: 100, opacity: 0 });
+  };
+
+  const animateEnter = async () => {
+    await bodyControls.start({ y: 0, opacity: 1, transition: { delay: 0.025 } });
+    await footerControls.start({ y: 0, opacity: 1, transition: { delay: 0.05 } });
+  };
+
+  const handleCurrentSlideChange = (newCurrentSlideIndex) => {
+    currentChoice.current = currentSlide.choices[newCurrentSlideIndex];
+    setCurrentSlide({
+      index: newCurrentSlideIndex,
+      title: randomItems[0].title.replace(/\*element_noun\*/g, userElement),
+      question: randomItems[0].question,
+      correctAnswer: randomItems[0].correctAnswer,
+      choices: initialSlide.choices,
+      result: randomItems[0].result.replace(/\*element_noun\*/g, userElement)
+    });
+  };
+
+  const handleButtonClick = async (isCorrect) => {
+    const chosenAnswer = currentChoice.current.answer;
+    setSelectedCard(currentChoice.index);
+    updateUserSelection('answeredRiddle', isCorrect);
+
+    if (chosenAnswer) {
+      await animateExit();
+      setContent(true);
+      setTimeout(() => {
+        animateEnter();
+      }, 500);
+    }
+  };
+
+  console.log(getUserInfo().answeredRiddle);
+
+  return (
+    <Layout>
+      <HeaderSection
+        animate={headerControls}
+        className="header-section"
+      >
+        {content === 'initial' ? (
+          <div className="mal-margin-bottom-large mal-padding-remove-horizontal">
+            <h3 className="mal-margin-remove-top">{initialSlide.title}</h3>
+            <DescriptionText className="mal-text-medium mal-margin-small-top">{initialSlide.question}</DescriptionText>
+          </div>
+        ) : ``}
+      </HeaderSection>
+      <BodySection
+        animate={bodyControls}
+        className="body-section"
+      >
+        {content === 'initial' ? (
+          <div>
+            <StyledMalCarousel
+              elementsList={initialSlide.choices}
+              initialSlide={0}
+              correctAnswer={initialSlide.correctAnswer}
+              onCurrentSlideChange={handleCurrentSlideChange}
+              handleCardClick={handleButtonClick}
+            />
+          </div>
+        ) :
+          getUserInfo().answeredRiddle ? (
+            <div className="mal-padding-small mal-text-center">
+            <TraitTokenImage className="mal-padding">
+              <Image
+                src={trait}
+                alt={`The Trait of ${selectedCard}`} />
+            </TraitTokenImage>
+            <h4 className="mal-margin-remove">{initialSlide.result}</h4>
+            <h2 className="mal-margin-remove">{currentSlide.title}</h2>
+          </div>
+          ) :
+          <div className="mal-padding-small mal-text-center">
+            <h3 className="mal-margin-remove">{initialSlide.result}</h3>
+          <TraitTokenImage className="mal-padding">
+            <Image
+              src={trait}
+              alt={`The Trait of ${selectedCard}`} />
+          </TraitTokenImage>
+          </div>
+        }
+      </BodySection>
+      <FooterSection
+        animate={footerControls}
+        className="footer-section"
+      >
+        {content === 'initial' ? (
+          <OrnateButton
+            onClick={() => { handleButtonClick(currentChoice.current.answer === initialSlide.correctAnswer) }}
+          >
+            {currentChoice.current.answer}
+          </OrnateButton>
+        ) : null}
+      </FooterSection>
+    </Layout >
+  );
 };
 
 export default SolveTheRiddle;

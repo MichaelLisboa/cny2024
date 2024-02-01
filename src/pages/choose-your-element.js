@@ -1,56 +1,14 @@
 import React, { useContext, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import styled, { keyframes, css } from 'styled-components';
-import { motion, useAnimation } from 'framer-motion'; // Import useAnimation here
+import styled, { keyframes } from 'styled-components';
+import { motion, useAnimation } from 'framer-motion';
 import pages from '../utils/pages';
 import Layout from '../templates/layout';
 import { AppContext } from '../contexts/AppContext';
-import water from '../images/elements/water.png';
-import wood from '../images/elements/wood.png';
-import fire from '../images/elements/fire.png';
-import earth from '../images/elements/earth.png';
-import metal from '../images/elements/metal.png';
+import { elementsList } from '../data';
 import MalCarousel from '../components/MalCarousel';
 import { OrnateButton } from '../components/Button';
 import Image from '../components/Image';
-
-const elementsList = [
-    {
-        image: water,
-        title: "Water",
-        text: "Misty lakeside with soothing ripples",
-        subheadline: "You've risen from",
-        description: "As you embrace the Water element, a serene energy envelops you. Ripples of adaptability and resilience flow through your essence. Now, let the currents guide your journey."
-    },
-    {
-        image: wood,
-        title: "Wood",
-        text: "Towering trees in an enchanted forest",
-        subheadline: "You've risen from",
-        description: "You feel the essence of growth and creativity. Your spirit aligns with the flourishing trees, ready to weave a tale of blossoming possibilities. Let the branches of creativity guide your course."
-    },
-    {
-        image: fire,
-        title: "Fire",
-        text: "Blaze-lit cavern glowing with warmth",
-        subheadline: "You've risen from",
-        description: "It blazes within you, igniting passion and determination. Flames of courage flicker, ready to illuminate the path ahead. Embrace the warmth and stride with determination."
-    },
-    {
-        image: earth,
-        title: "Earth",
-        text: "Cliffside overlooking the horizon",
-        subheadline: "You've risen from",
-        description: "The sturdy foundation beneath your feet, anchors your spirit. With stability and responsibility, you embark on a journey grounded in purpose. Feel the solidity of the earth as you step into the unknown."
-    },
-    {
-        image: metal,
-        title: "Metal",
-        text: "Shimmering scape under moonlight",
-        subheadline: "You've risen from",
-        description: "It shapes your being with discipline and precision. Your spirit, akin to a well-forged blade, is ready to cut through challenges. Embrace the strength of metal as you carve your destiny."
-    },
-];
 
 const scaleAnimation = keyframes`
   0% {
@@ -176,7 +134,7 @@ const WhatIsYourElement = () => {
 
         if (chosenElement) {
             await animateExit();
-            setContent(''); // Change the content
+            setContent('');
             setTimeout(() => {
                 animateEnter();
             }, 500);

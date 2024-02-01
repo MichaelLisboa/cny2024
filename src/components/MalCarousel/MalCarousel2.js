@@ -1,224 +1,223 @@
-import React, { useEffect, useState, useCallback, useRef, useContext, useMemo } from 'react';
+import React, { useContext, useEffect, useRef, useState, useCallback } from 'react';
 import styled from 'styled-components';
-import { motion } from 'framer-motion';
-import Image from '../Image';
 import { AppContext } from '../../contexts/AppContext';
+import Carousel from "nuka-carousel";
+import Image from '../Image';
+import { motion } from 'framer-motion';
 
-const CarouselWrapper = styled.div`
-  display: flex;
-  overflow: visible;
-  position: relative;
-  width: 100%;
-  justify-content: center; /* Ensure slides are centered */
-`;
+const Card = styled(motion.div)`
+  margin: 0px;
+  border-radius: 16px;
+  background: transparent;
+  text-align: center;
 
-const CarouselContainer = styled.div`
-  display: flex;
-  overflow: visible;
-  transition: transform 0.5s ease;
-  will-change: transform;
-`;
-
-const Slide = styled(motion.div)`
-  display: flex;
-  flex: 0 0 auto; /* Do not grow or shrink */
-  width: calc(100% - 100px); /* Subtracting 100px as an example, adjust as needed */
-  margin-right: 50px; /* Half of the subtracted width to space slides */
-  margin-left: 50px; /* Half of the subtracted width to space slides */
-  overflow: visible !important;
-  position: relative;
-  align-items: center;
-  justify-content: center;
-
-  &:first-child {
-    margin-left: 50px; /* Set to half of the margin-right to center the first slide */
+  &:hover {
+    cursor: url("data:image/svg+xml,%3Csvg width='48' height='48' viewBox='0 0 120 120' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg clip-path='url(%23a)'%3E%3Cpath d='m57.899 10.063 11.133-4.771 6.362 7.953h7.953l6.362 3.71 2.65 6.893h10.074l4.771 4.241v29.69l-4.771 38.702-10.073 19.616H48.356L25.028 91.179l-14.845-33.4 2.651-6.362 7.953-2.651L36.692 64.67h5.832V13.244l9.543-3.18h5.832Z' fill='%23fff' stroke='%23000'/%3E%3Cpath d='M110.774 30.28a10.995 10.995 0 0 0-10.361-11.038 10.992 10.992 0 0 0-5.403 1.071 11.274 11.274 0 0 0-16.47-9.33 11.628 11.628 0 0 0-22.691-2.687 11.416 11.416 0 0 0-5.867-1.626A11.558 11.558 0 0 0 38.459 18.3v44.746c-4.524-5.655-8.942-11.24-9.614-12.194a11.276 11.276 0 0 0-9.613-5.266 11.91 11.91 0 0 0-12.265 12.3c.318 6.362 12.618 28.841 20.889 41.07 12.512 18.521 24.458 21.207 24.988 21.207h37.183a3.25 3.25 0 0 0 1.944-.672 46.404 46.404 0 0 0 13.254-21.666c3.535-10.921 5.408-26.614 5.585-47.927l-.036-19.616ZM99.181 95.846A44.039 44.039 0 0 1 88.79 113.8H53.763c-1.66-.495-10.85-3.888-20.747-18.556-9.896-14.668-19.51-34.214-19.687-37.677a5.302 5.302 0 0 1 1.59-3.994 5.372 5.372 0 0 1 4.03-1.626 5.053 5.053 0 0 1 4.665 2.51c1.025 1.52 8.342 10.603 12.618 16.01l8.59-5.796V18.299a5.23 5.23 0 1 1 10.426 0v39.374h6.362V11.725a5.337 5.337 0 0 1 10.603 0v46.407h6.362V21.197a5.054 5.054 0 1 1 10.073 0v40.434h6.362V30.174a4.7 4.7 0 0 1 9.367 0v19.617c-.106 20.889-1.803 35.769-5.196 46.054Z' fill='%231C1C1C'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='a'%3E%3Cpath fill='%23fff' d='M0 0h120v120H0z'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E"), grab;
+  }
+  &:active {
+    cursor: url('data:image/svg+xml;utf8,<svg width="40" height="40" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(%23a)"><path d="m49 9 12-4 11 4 13.5 1.5L94 20l17 2 1.5 39.5-8 34.5-14 20-41.5 2-19-17.5L12 72 8.5 53.5l10-24.5L31 20l2-11h16Z" fill="%23fff" stroke="%23000"/><path d="M101.388 14.925c-1.707.025-3.4.303-5.025.823-.823-5.37-6.713-9.442-14.163-9.442a17.325 17.325 0 0 0-6.626 1.083A14.596 14.596 0 0 0 62.017.026a14.942 14.942 0 0 0-12.43 5.717 15.809 15.809 0 0 0-8.187-2.21 13.21 13.21 0 0 0-14.033 12.042v3.941c-4.59 1.733-17.8 7.796-21.266 20.963-3.465 13.167 1.473 34.65 11.651 51.022a109.2 109.2 0 0 0 25.554 27.763 3.905 3.905 0 0 0 2.296.736h44.784a3.981 3.981 0 0 0 2.383-.823 56.87 56.87 0 0 0 16.242-26.55 111.744 111.744 0 0 0 6.756-41.926V26.879a13.34 13.34 0 0 0-14.379-11.954Zm6.583 35.776a103.937 103.937 0 0 1-6.367 39.63 53.969 53.969 0 0 1-12.734 21.873H46.728a102.874 102.874 0 0 1-22.523-24.775c-10.264-16.718-12.993-35.646-10.74-45a24.688 24.688 0 0 1 13.902-14.424V61.14a3.898 3.898 0 0 0 7.796 0V15.575c0-2.036 2.556-4.332 6.324-4.332s6.453 2.253 6.453 4.332v24.774h7.797V10.897c0-1.213 2.512-3.075 6.323-3.075 3.812 0 6.627 2.079 6.627 3.248v29.842h7.796v-24.86l.736-.52a9.096 9.096 0 0 1 5.111-1.387c4.028 0 6.497 1.906 6.497 2.946v28.152h7.84V24.15a8.273 8.273 0 0 1 4.851-1.429c3.724 0 6.583 2.209 6.583 4.071l-.13 23.909Z" fill="%231C1C1C"/></g><defs><clipPath id="a"><path fill="%23fff" d="M0 0h120v120H0z"/></clipPath></defs></svg>'), grabbing;
   }
 
-  &:last-child {
-    margin-right: 50px; /* Set to half of the margin-left to center the last slide */
+  @media (min-width: 768px) {
+    height: 45vh;
   }
 
   img {
-    width: auto;
-    height: 100%;
-    max-height: 45vh;
-    border-radius: 16px;
-    // box-shadow: 0 0 24px rgba(0, 0, 0, 0.25);
-  }
-
-  .current-slide img {
-    // box-shadow: 0 0 40px rgba(0, 0, 0, 0.75) !important;
+    width: 100%;
+    // max-height: 30vh;
+    object-fit: contain;
+    object-position: center;
   }
 `;
 
-const Button = styled.button`
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 2;
-  background: rgba(255, 255, 255, 0.5);
+const MemoizedCard = React.memo(Card);
+
+const CarouselContainer = styled(Carousel)`
+  .slide {
+    border-radius: 16px;
+  }
+`;
+
+const ImageContainer = styled.div`
+  margin: 0px;
+  border-radius: 16px;
+`;
+
+const PreviousButton = styled.button`
+  position: fixed;
+  left: -8px !important;
   border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 8px;
+  left: 0;
+
+  svg {
+    height: 24px;
+    width: 24px;
+  }
 
   @media (min-width: 768px) {
+    position:relative;
+    left: -48px !important;
     background: rgba(0,0,0, 0.75);
+
+    svg {
+        height: 48px;
+        width: 48px;
+      }
+
+    svg path {
+        fill: #fff;
+    }
   }
 `;
 
-const PreviousButton = styled(Button)`
-  left: 16px;
+const NextButton = styled.button`
+  position: fixed;
+  right: -8px !important;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  right: 0;
+
+  svg {
+    height: 24px;
+    width: 24px;
+  }
+
+  @media (min-width: 768px) {
+    position:relative;
+    right: -48px !important;
+    background: rgba(0,0,0, 0.75);
+
+    svg {
+        height: 48px;
+        width: 48px;
+      }
+
+    svg path {
+        fill: #fff;
+    }
+  }
 `;
 
-const NextButton = styled(Button)`
-  right: 16px;
-`;
+const slideVariants = {
+  current: {
+    scale: 1,
+    opacity: 1,
+    transition: {
+      duration: 0.3,
+      ease: [0.25, 0.8, 0.25, 1]
+    }
+  },
+  notCurrent: {
+    scale: 0.9,
+    opacity: 0.8,
+    transition: {
+      duration: 0.3,
+      ease: [0.25, 0.8, 0.25, 1]
+    }
+  }
+};
 
 const MalCarousel = ({
   elementsList,
-  handleCardClick,
-  className
+  initialSlide,
+  onCurrentSlideChange,
+  handleCardClick: handleCardClickProp,
+  correctAnswer,
+  className,
 }) => {
-  const carouselRef = useRef();
 
-  const [initialSlide, setInitialSlide] = useState(0);
-  const [currentSlide, setCurrentSlide] = useState(initialSlide + 1); // Start at the first "real" slide
+  const { getBrowserSize } = useContext(AppContext);
+  const browserSize = getBrowserSize();
+  const { width } = browserSize;
+  const carouselRef = useRef(null);
+  const [currentSlide, setCurrentSlide] = useState(initialSlide);
 
-  // Define onCurrentSlideChange as a function
-  const onCurrentSlideChange = useCallback((newSlideIndex) => {
-    // Update the state to reflect the new slide index
-    setInitialSlide(newSlideIndex);
-    // Add any additional logic you need when the current slide changes
+  useEffect(() => {
+    if (carouselRef.current) {
+      carouselRef.current.focus({ preventScroll: true });
+    }
   }, []);
 
-  // Add "clone" slides at the beginning and end
-  // const slides = useMemo(() => 
-  //   [elementsList[elementsList.length - 1], ...elementsList, elementsList[0]], [elementsList]
-  //   );
-
-    const slides = useMemo(() => {
-      // Assuming you want 1 duplicate at each end for seamless transition
-      const firstSlide = elementsList[0];
-      const lastSlide = elementsList[elementsList.length - 1];
-      return [lastSlide, ...elementsList, firstSlide];
-    }, [elementsList]);
-    
-
-  const handleSlideChange = useCallback((newSlideIndex, shouldAnimate = true) => {
-    console.log('newCurrentSlideIndex:', newSlideIndex);
-    if (carouselRef.current) {
-      carouselRef.current.style.transition = shouldAnimate ? 'transform 0.5s ease' : 'none';
-    }
-
-    setCurrentSlide(newSlideIndex);
-
-    // If the new slide is the last real slide, set it to the first cloned slide
-    if (newSlideIndex === slides.length - 2) {
-      const transitionEndHandler = () => {
-        if (carouselRef.current) {
-          carouselRef.current.style.transition = 'none';
-          setCurrentSlide(1);
-          carouselRef.current.removeEventListener('transitionend', transitionEndHandler);
-        }
-      };
-      carouselRef.current.addEventListener('transitionend', transitionEndHandler);
-    }
-    // If the new slide is the first cloned slide, set it to the last real slide
-    else if (newSlideIndex === 0) {
-      const transitionEndHandler = () => {
-        if (carouselRef.current) {
-          carouselRef.current.style.transition = 'none';
-          setCurrentSlide(slides.length - 2);
-          carouselRef.current.removeEventListener('transitionend', transitionEndHandler);
-        }
-      };
-      carouselRef.current.addEventListener('transitionend', transitionEndHandler);
-    }
-
-    // Adjust the index for the callback
-    let callbackIndex = newSlideIndex - 1;
-    if (callbackIndex < 0) {
-      callbackIndex = slides.length - 1;
-    } else if (callbackIndex >= slides.length) {
-      callbackIndex = 0;
-    }
-
-    // Check if slides[callbackIndex] is defined before accessing its properties
-    if (slides[callbackIndex]) {
-      onCurrentSlideChange?.(slides[callbackIndex], callbackIndex);
-    }
-  }, [onCurrentSlideChange, slides]);
-
-  const goToPreviousSlide = () => {
-    let newSlideIndex = currentSlide - 1;
-    if (newSlideIndex < 0) {
-      handleSlideChange(slides.length - 2, false); // Jump to the last "real" slide
-      return;
-    }
-    handleSlideChange(newSlideIndex);
-  };
-
-  const goToNextSlide = () => {
-    let newSlideIndex = currentSlide + 1;
-    if (newSlideIndex >= slides.length) {
-      handleSlideChange(1, false); // Jump to the first "real" slide
-      return;
-    }
-    handleSlideChange(newSlideIndex);
-  };
-
-  const offset = -(currentSlide * 100);
-
-  const handleDragStart = (e) => {
-    e.preventDefault();
-  };
+  const handleCardClick = useCallback((userChoice) => {
+    const isCorrect = userChoice === correctAnswer;
+    handleCardClickProp(isCorrect);
+  }, [handleCardClickProp, correctAnswer]);
 
   return (
-    <CarouselWrapper className={`carousel-wrapper ${className}`}>
-      <PreviousButton onClick={goToPreviousSlide}>
-        <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-          <path opacity="0.3" d="M6.66699 16L14.667 28H24.0003L16.0003 16L24.0003 4H14.667L6.66699 16Z" fill="#9C1313" />
-          <path d="M6.66699 16L14.667 28H24.0003L16.0003 16L24.0003 4H14.667L6.66699 16ZM9.87233 16L16.095 6.66667H19.019L12.7963 16L19.019 25.3333H16.0937L9.87233 16Z" fill="#9C1313" />
-        </svg>
-      </PreviousButton>
-      <CarouselContainer
-        ref={carouselRef}
-        style={{ transform: `translateX(${offset}%)` }}
-      >
-        {slides.map((element, index) => (
-          <Slide
-            className={`slide ${index === currentSlide ? 'current-slide' : ''}`}
-            key={index}
-            initial={false}
-            animate={{ scale: index === currentSlide ? 1.2 : 0.7 }}
-            transition={{ type: 'tween' }}
-            onClick={() => handleCardClick(element, index)}
 
-        drag="x" // Enable drag
-        dragConstraints={{ left: 0, right: 0 }}
-        dragElastic={0.5}
-        onDragEnd={(e, info) => {
-          const offsetX = info.offset.x;
-          if (offsetX > 100) { // if drag distance is more than 100px to the right
-            goToPreviousSlide();
-          } else if (offsetX < -100) { // if drag distance is more than 100px to the left
-            goToNextSlide();
-          }
-        }}
-          >
-            <Image onDragStart={handleDragStart} src={element.image} alt={element.title} />
-          </Slide>
-        ))}
-      </CarouselContainer>
-      <NextButton onClick={goToNextSlide}>
-        <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-          <path opacity="0.3" d="M24 16L16 28H6.66667L14.6667 16L6.66667 4H16L24 16Z" fill="#9C1313" />
-          <path d="M24 16L16 28H6.66667L14.6667 16L6.66667 4H16L24 16ZM20.7947 16L14.572 6.66667H11.648L17.8707 16L11.648 25.3333H14.5733L20.7947 16Z" fill="#9C1313" />
-        </svg>
-      </NextButton>
-    </CarouselWrapper>
+    <CarouselContainer
+      ref={carouselRef}
+      className={`carousel ${className}`}
+      wrapAround={true}
+      slideIndex={initialSlide}
+      cellAlign={"center"}
+      cellSpacing={24}
+      dragThreshold={0.2}
+      zoomScale={1}
+      autoplay={false}
+      autoplayInterval={5000}
+      pauseOnHover={true}
+      renderBottomCenterControls={null}
+      renderCenterLeftControls={({ previousSlide }) => (
+        <PreviousButton onClick={previousSlide}>
+          <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <path opacity="0.3" d="M6.66699 16L14.667 28H24.0003L16.0003 16L24.0003 4H14.667L6.66699 16Z" fill="#9C1313" />
+            <path d="M6.66699 16L14.667 28H24.0003L16.0003 16L24.0003 4H14.667L6.66699 16ZM9.87233 16L16.095 6.66667H19.019L12.7963 16L19.019 25.3333H16.0937L9.87233 16Z" fill="#9C1313" />
+          </svg>
+        </PreviousButton>
+      )}
+      renderCenterRightControls={({ nextSlide }) => (
+        <NextButton onClick={nextSlide}>
+          <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <path opacity="0.3" d="M24 16L16 28H6.66667L14.6667 16L6.66667 4H16L24 16Z" fill="#9C1313" />
+            <path d="M24 16L16 28H6.66667L14.6667 16L6.66667 4H16L24 16ZM20.7947 16L14.572 6.66667H11.648L17.8707 16L11.648 25.3333H14.5733L20.7947 16Z" fill="#9C1313" />
+          </svg>
+        </NextButton>
+      )}
+      dragging={true}
+      beforeSlide={(currentSlide, endSlide) => {
+        if (currentSlide < endSlide) {
+          return false;
+        }
+        setCurrentSlide(endSlide);
+        if (onCurrentSlideChange) {
+          onCurrentSlideChange(endSlide);
+        }
+      }}
+      enableKeyboardControls={true}
+      afterSlide={(slideIndex) => {
+        setCurrentSlide(slideIndex);
+        if (onCurrentSlideChange) {
+          onCurrentSlideChange(slideIndex);
+        }
+      }}>
+      {elementsList.map((element, index) => (
+        <MemoizedCard
+          key={index}
+          selected={index === currentSlide}
+          variants={slideVariants}
+          animate={currentSlide === index ? "current" : "notCurrent"}
+          onClick={() => { handleCardClick(element.answer) }}
+        >
+          <ImageContainer className="card-image-container mal-overflow-hidden">
+            <Image
+              src={element.image}
+              alt={element.answer} />
+          </ImageContainer>
+        </MemoizedCard>
+      ))}
+    </CarouselContainer>
   );
 };
 
