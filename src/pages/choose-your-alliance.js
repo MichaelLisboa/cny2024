@@ -25,7 +25,7 @@ const StyledMalCarousel = styled(MalCarousel)`
 const Container = styled.div`
   position: relative;
   height: 5em;
-  width: 90%;
+  width: 100%;
   text-align: center;
   display: flex;
   align-items: center;
@@ -44,10 +44,9 @@ const StyledParagraph = styled(motion.p).attrs(() => ({
   position: absolute;
   top: 0;
   width: auto;
-  max-width: 90%;
   line-height: 1.2em;
   overflow: hidden;
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-family: Lato, sans-serif;
   font-weight: 700;
   font-style: italic;

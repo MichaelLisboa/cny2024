@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useMemo, useContext, useRef } from 'react';
 import { motion, useAnimation } from 'framer-motion';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import pages from '../utils/pages';
 import styled from 'styled-components';
 import defaultBackgroundImage from '../images/background/0-cover.jpg';
 import { AppContext } from '../contexts/AppContext';
+import DragToRefresh from '../components/dragToRefresh';
 
-const BackgroundImage = styled.div`
+const BackgroundImage = styled(motion.div)`
   position: relative;
   width: 100%;
   height: 100%;
@@ -60,9 +61,15 @@ const startAnimation = (controls, animationConfig) => {
 
 
 function Layout({ children }) {
+  const navigate = useNavigate();
   const location = useLocation();
   const { getBrowserSize } = useContext(AppContext);
   const browserSize = getBrowserSize();
+
+  const refreshPage = () => {
+    // Method to refresh the current page
+    navigate(0); // This will refresh the page in React Router v6
+  };
 
   const currentPage = useMemo(() =>
     pages.find(page => page.url === location.pathname),
@@ -90,7 +97,19 @@ function Layout({ children }) {
 
   return (
     <>
-      <BackgroundImage height={browserSize.height}>
+      <BackgroundImage
+        height={browserSize.height}
+        drag="y"
+        dragConstraints={{ top: 0, bottom: 0 }}
+        dragElastic={0.2}
+        onDragEnd={(event, info) => {
+          if (info.point.y > 50) { // Adjust based on desired sensitivity
+            console.log('Refresh action triggered', event, info);
+            refreshPage();
+          }
+        }}
+        style={{ overflow: 'hidden' }} // Prevent scrolling during drag
+      >
         <BackgroundImg
           ref={imageRef}
           src={currentPage?.bgImage || defaultBackgroundImage}
