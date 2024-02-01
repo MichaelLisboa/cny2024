@@ -199,8 +199,12 @@ export const allianceList = [
 export const riddlesList = [
     {
         title: "As you venture deeper into the *element_noun*, you encounter a wise creature who challenges you with a riddle:",
-        result: "Your wit shone as you answered the riddle with ease",
         question: "I speak without a mouth and hear without ears. I have no body, but I come alive with the wind. What am I?",
+        result: "Sharp Mind",
+        successTitle: "The wise creature praises your intellectual prowess.",
+        successMessage: "Ah, you possess a sharp mind! Your understanding of mysteries will serve you well on this journey.",
+        failTitle: "The creature shakes its head, saying,",
+        failMessage: "A valiant attempt, but not quite the solution. Fear not, for the journey holds more challenges, and wisdom is gained through experience.",
         correctAnswer: "I am an echo",
         choices: [
             {
@@ -223,8 +227,12 @@ export const riddlesList = [
     },
     {
         title: "As you venture deeper into the *element_noun*, you encounter a wise creature who challenges you with a riddle:",
-        result: "Your wit shone as you answered the riddle with ease",
         question: "The more you take, the more you leave behind. What am I?",
+        result: "Sharp Mind",
+        successTitle: "The wise creature praises your intellectual prowess.",
+        successMessage: "Ah, you possess a sharp mind! Your understanding of mysteries will serve you well on this journey.",
+        failTitle: "The creature shakes its head, saying,",
+        failMessage: "A valiant attempt, but not quite the solution. Fear not, for the journey holds more challenges, and wisdom is gained through experience.",
         correctAnswer: "I am footsteps",
         choices: [
             {
@@ -247,16 +255,20 @@ export const riddlesList = [
     },
     {
         title: "As you venture deeper into the *element_noun*, you encounter a wise creature who challenges you with a riddle:",
-        result: "Your wit shone as you answered the riddle with ease",
         question: "I fly without wings. I cry without eyes. Wherever I go, darkness follows me. What am I?",
-        correctAnswer: "I am a cloud",
+        result: "Sharp Mind",
+        successTitle: "The wise creature praises your intellectual prowess.",
+        successMessage: "Ah, you possess a sharp mind! Your understanding of mysteries will serve you well on this journey.",
+        failTitle: "The creature shakes its head, saying,",
+        failMessage: "A valiant attempt, but not quite the solution. Fear not, for the journey holds more challenges, and wisdom is gained through experience.",
+        correctAnswer: "I am the clouds",
         choices: [
             {
-                answer: "I am a cloud",
+                answer: "I am the clouds",
                 image: require('../images/riddle/cloud.png')
             },
             {
-                answer: "I am wind",
+                answer: "I am the wind",
                 image: require('../images/riddle/wind.png')
             },
             {

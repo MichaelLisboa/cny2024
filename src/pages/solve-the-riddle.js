@@ -9,7 +9,8 @@ import MalCarousel from '../components/MalCarousel/MalCarousel2';
 import Image from '../components/Image';
 import { riddlesList } from '../data';
 import { OrnateButton } from '../components/Button';
-import trait from "../images/tokens/riddle.png";
+import success from "../images/tokens/riddle.png";
+import fail from "../images/tokens/failed_riddle.png";
 
 const StyledMalCarousel = styled(MalCarousel)`
   .slide {
@@ -100,7 +101,11 @@ const SolveTheRiddle = () => {
     question: randomItems[0].question,
     correctAnswer: randomItems[0].correctAnswer,
     choices: randomItems[0].choices,
-    result: randomItems[0].result.replace(/\*element_noun\*/g, userElement)
+    result: randomItems[0].result.replace(/\*element_noun\*/g, userElement),
+    successTitle: randomItems[0].successTitle.replace(/\*element_noun\*/g, userElement),
+    successMessage: randomItems[0].successMessage.replace(/\*element_noun\*/g, userElement),
+    failTitle: randomItems[0].failTitle.replace(/\*element_noun\*/g, userElement),
+    failMessage: randomItems[0].failMessage.replace(/\*element_noun\*/g, userElement),
   }
 
   const [currentSlide, setCurrentSlide] = useState(
@@ -132,7 +137,11 @@ const SolveTheRiddle = () => {
       question: randomItems[0].question,
       correctAnswer: randomItems[0].correctAnswer,
       choices: initialSlide.choices,
-      result: randomItems[0].result.replace(/\*element_noun\*/g, userElement)
+      result: randomItems[0].result.replace(/\*element_noun\*/g, userElement),
+      successTitle: randomItems[0].successTitle.replace(/\*element_noun\*/g, userElement),
+      successMessage: randomItems[0].successMessage.replace(/\*element_noun\*/g, userElement),
+      failTitle: randomItems[0].failTitle.replace(/\*element_noun\*/g, userElement),
+      failMessage: randomItems[0].failMessage.replace(/\*element_noun\*/g, userElement),
     });
   };
 
@@ -150,7 +159,10 @@ const SolveTheRiddle = () => {
     }
   };
 
-  console.log(getUserInfo().answeredRiddle);
+  const handleReset = () => {
+    updateUserSelection('answeredRiddle', false);
+    setContent("initial")
+  }
 
   return (
     <Layout>
@@ -158,12 +170,12 @@ const SolveTheRiddle = () => {
         animate={headerControls}
         className="header-section"
       >
-        {content === 'initial' ? (
+        {content === 'initial' ? 
           <div className="mal-margin-bottom-large mal-padding-remove-horizontal">
             <h3 className="mal-margin-remove-top">{initialSlide.title}</h3>
             <DescriptionText className="mal-text-medium mal-margin-small-top">{initialSlide.question}</DescriptionText>
           </div>
-        ) : ``}
+         : null}
       </HeaderSection>
       <BodySection
         animate={bodyControls}
@@ -184,20 +196,23 @@ const SolveTheRiddle = () => {
             <div className="mal-padding-small mal-text-center">
               <TraitTokenImage className="mal-padding">
                 <Image
-                  src={trait}
-                  alt={`The Trait of ${selectedCard}`} />
+                  src={success}
+                  alt={initialSlide.result} />
               </TraitTokenImage>
-              <h4 className="mal-margin-remove">{initialSlide.result}</h4>
-              <h2 className="mal-margin-remove">{currentSlide.title}</h2>
+              <h2 className="mal-h3 mal-margin-remove">{initialSlide.successTitle}</h2>
+              <h3 className="mal-h2 mal-margin-remove">{initialSlide.result}</h3>
+              <p className="mal-text-medium mal-text-italic">"{initialSlide.successMessage}"</p>
             </div>
           ) :
             <div className="mal-padding-small mal-text-center">
-              <h3 className="mal-margin-remove">{initialSlide.result}</h3>
               <TraitTokenImage className="mal-padding">
                 <Image
-                  src={trait}
-                  alt={`The Trait of ${selectedCard}`} />
+                  src={fail}
+                  alt={initialSlide.failMessage} />
               </TraitTokenImage>
+              <h2 className="mal-h3 mal-margin-remove">{initialSlide.failTitle}</h2>
+              <p className="mal-text-medium mal-text-italic">"{initialSlide.failMessage}"</p>
+              <button onClick={handleReset}> Would you like to try again?</button>
             </div>
         }
       </BodySection>
@@ -207,11 +222,20 @@ const SolveTheRiddle = () => {
       >
         {content === 'initial' ? (
           <OrnateButton
-            onClick={() => { handleButtonClick(currentChoice.current.answer === initialSlide.correctAnswer) }}
-          >
+            onClick={() => { handleButtonClick(currentChoice.current.answer === initialSlide.correctAnswer) }}>
             {currentChoice.current.answer}
           </OrnateButton>
-        ) : null}
+        ) : 
+          getUserInfo().answeredRiddle ? (
+            <OrnateButton url={nextPage.url}>
+              {nextPage.title}
+            </OrnateButton>
+          ) : (
+            
+            <OrnateButton url={nextPage.url}>
+              {nextPage.title}
+            </OrnateButton>
+          )}
       </FooterSection>
     </Layout >
   );
