@@ -104,7 +104,8 @@ function Layout({ children }) {
         onDragEnd={(event, info) => {
           // Calculate the distance dragged in both x and y directions
           const distanceX = Math.abs(info.offset.x);
-          const distanceY = Math.abs(info.offset.y);
+          // Use the raw y offset value to determine the direction of the drag
+          const offsetY = info.offset.y; // The vertical distance dragged
         
           // Set a threshold for what you consider a "significant" vertical drag
           const verticalThreshold = 50; // Adjust based on desired sensitivity
@@ -112,11 +113,12 @@ function Layout({ children }) {
           // Optionally, set a threshold for horizontal movement to filter out diagonal drags
           const horizontalThreshold = 30; // This helps to ignore purely horizontal swipes or minor horizontal movements
         
-          // Check if the vertical drag is significant and the horizontal drag is within an acceptable range
-          if (distanceY > verticalThreshold && distanceX < horizontalThreshold) {
-            refreshPage(); // Call the refresh logic only if the drag meets these conditions
+          // Check if the drag is downwards, significant in the y direction, and within an acceptable range in the x direction
+          if (offsetY > verticalThreshold && distanceX < horizontalThreshold) {
+            refreshPage(); // Call the refresh logic only for significant drags downwards
           }
         }}
+        
         style={{ overflow: 'hidden' }} // Prevent scrolling during drag
       >
         <BackgroundImg
