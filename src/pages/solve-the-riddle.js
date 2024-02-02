@@ -174,8 +174,8 @@ const SolveTheRiddle = () => {
     setCurrentSlide({
       index: 0,
       title: newRiddle.title.replace(/\*element_noun\*/g, userElement),
-      question: newRiddle.question,
-      correctAnswer: newRiddle.correctAnswer,
+      question: newRiddle.question.replace(/\*element_noun\*/g, userElement),
+      correctAnswer: newRiddle.correctAnswer.replace(/\*element_noun\*/g, userElement),
       choices: newRiddle.choices,
       result: newRiddle.result.replace(/\*element_noun\*/g, userElement),
       successTitle: newRiddle.successTitle.replace(/\*element_noun\*/g, userElement),
