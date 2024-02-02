@@ -62,12 +62,11 @@ const FooterSection = styled(motion.div)`
 
 const SolveTheRiddle = () => {
   const { updateUserSelection, getUserInfo } = useContext(AppContext);
+  
   const [content, setContent] = useState('initial');
   const [selectedCard, setSelectedCard] = useState(null);
-
+  
   const userInfo = getUserInfo();
-  const userElement = userInfo.chosenElement;
-
   const location = useLocation();
   const currentPage = pages.find(page => page.url === location.pathname);
   const nextPage = pages.find(page => page.url === currentPage.nextPage);
@@ -76,6 +75,8 @@ const SolveTheRiddle = () => {
   const bodyControls = useAnimation();
   const footerControls = useAnimation();
   const paragraphControls = useAnimation();
+
+  const userElement = userInfo.chosenElement;
 
   const getRandomIndex = (length) => Math.floor(Math.random() * length);
 
@@ -91,8 +92,6 @@ const SolveTheRiddle = () => {
     const randomIndices = getRandomIndices(riddlesList.length, 1);
     return randomIndices.map(index => riddlesList[index]);
   }, [riddlesList]);
-
-  console.log("chosen element: ", userElement);
 
   const initialRiddleRef = useRef({
     index: 0,
@@ -119,7 +118,6 @@ const SolveTheRiddle = () => {
 
   const [currentSlide, setCurrentSlide] = useState(initialRiddleRef.current);
   const currentChoice = useRef(currentSlide.choices[currentSlide.index]);
-
 
   const animateExit = async () => {
     await footerControls.start({ y: 100, opacity: 0 });
@@ -152,7 +150,7 @@ const SolveTheRiddle = () => {
   const handleButtonClick = async (isCorrect) => {
     const chosenAnswer = currentChoice.current.answer;
     setSelectedCard(currentChoice.index);
-    updateUserSelection('answeredRiddle', isCorrect);
+    updateUserSelection('riddleResult', isCorrect);
 
     if (chosenAnswer) {
       await animateExit();
@@ -164,7 +162,7 @@ const SolveTheRiddle = () => {
   };
 
   const handleReset = async () => {
-    updateUserSelection('answeredRiddle', false);
+    updateUserSelection('riddleResult', false);
   
     const newRiddle = getRandomRiddle();
   
@@ -189,6 +187,8 @@ const SolveTheRiddle = () => {
       animateEnter();
     }, 500);
   }
+
+  console.log("chosen element: ", userElement);
 
   return (
     <Layout>
@@ -218,7 +218,7 @@ const SolveTheRiddle = () => {
             />
           </div>
         ) :
-          getUserInfo().answeredRiddle ? (
+          getUserInfo().riddleResult ? (
             <div className="mal-text-center">
               <TraitTokenImage>
                 <Image
@@ -254,7 +254,7 @@ const SolveTheRiddle = () => {
             {currentChoice.current.answer}
           </OrnateButton>
         ) : 
-          getUserInfo().answeredRiddle ? (
+          getUserInfo().riddleResult ? (
             <OrnateButton url={nextPage.url}>
               {nextPage.title}
             </OrnateButton>
