@@ -117,7 +117,6 @@ function Layout({ children }) {
 
   const onDragStart = enableDragRefresh ? (event, info) => {
     setIsDragging(true);
-    // Initially, no direction is set
     setDragDirection(null);
   } : undefined;
 

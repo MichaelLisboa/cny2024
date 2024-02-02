@@ -1,6 +1,6 @@
 import React, { useContext, useMemo, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import styled, { keyframes, css } from 'styled-components';
+import styled from 'styled-components';
 import { motion, useAnimation } from 'framer-motion';
 import pages from '../utils/pages';
 import Layout from '../templates/layout';
@@ -54,9 +54,6 @@ const HeaderSection = styled(motion.div)`
 
 const BodySection = styled(motion.div)`
   // Add your body-section styles here.
-  align-items: center;
-  justify-content: flex-start;
-  padding-top: 32px;
 `;
 
 const FooterSection = styled(motion.div)`
@@ -94,6 +91,8 @@ const SolveTheRiddle = () => {
     const randomIndices = getRandomIndices(riddlesList.length, 1);
     return randomIndices.map(index => riddlesList[index]);
   }, [riddlesList]);
+
+  console.log("chosen element: ", userElement);
 
   const initialRiddleRef = useRef({
     index: 0,
@@ -138,15 +137,15 @@ const SolveTheRiddle = () => {
     currentChoice.current = currentSlide.choices[newCurrentSlideIndex];
     setCurrentSlide({
       index: newCurrentSlideIndex,
-      title: randomItems[0].title.replace(/\*element_noun\*/g, userElement),
-      question: randomItems[0].question,
-      correctAnswer: randomItems[0].correctAnswer,
-      choices: initialRiddleRef.current.choices,
-      result: randomItems[0].result.replace(/\*element_noun\*/g, userElement),
-      successTitle: randomItems[0].successTitle.replace(/\*element_noun\*/g, userElement),
-      successMessage: randomItems[0].successMessage.replace(/\*element_noun\*/g, userElement),
-      failTitle: randomItems[0].failTitle.replace(/\*element_noun\*/g, userElement),
-      failMessage: randomItems[0].failMessage.replace(/\*element_noun\*/g, userElement),
+      title: currentSlide.title.replace(/\*element_noun\*/g, userElement),
+      question: currentSlide.question,
+      correctAnswer: currentSlide.correctAnswer,
+      choices: currentSlide.choices,
+      result: currentSlide.result.replace(/\*element_noun\*/g, userElement),
+      successTitle: currentSlide.successTitle.replace(/\*element_noun\*/g, userElement),
+      successMessage: currentSlide.successMessage.replace(/\*element_noun\*/g, userElement),
+      failTitle: currentSlide.failTitle.replace(/\*element_noun\*/g, userElement),
+      failMessage: currentSlide.failMessage.replace(/\*element_noun\*/g, userElement),
     });
   };
 
@@ -220,24 +219,24 @@ const SolveTheRiddle = () => {
           </div>
         ) :
           getUserInfo().answeredRiddle ? (
-            <div className="mal-padding-small mal-text-center">
-              <TraitTokenImage className="mal-padding">
+            <div className="mal-text-center">
+              <TraitTokenImage>
                 <Image
                   src={success}
                   alt={initialRiddleRef.current.result} />
               </TraitTokenImage>
-              <h2 className="mal-h3 mal-margin-remove">{initialRiddleRef.current.successTitle}</h2>
-              <h3 className="mal-h2 mal-margin-remove">{initialRiddleRef.current.result}</h3>
+              <h2 className="mal-h3 mal-margin-remove-vertical">{initialRiddleRef.current.successTitle}</h2>
+              <h3 className="mal-h2 mal-margin-remove-vertical">{initialRiddleRef.current.result}</h3>
               <p className="mal-text-medium mal-text-italic">"{initialRiddleRef.current.successMessage}"</p>
             </div>
           ) :
-            <div className="mal-padding-small mal-text-center">
+            <div className="mal-text-center">
               <TraitTokenImage className="mal-padding">
                 <Image
                   src={fail}
                   alt={initialRiddleRef.current.failMessage} />
               </TraitTokenImage>
-              <h2 className="mal-h3 mal-margin-remove">{initialRiddleRef.current.failTitle}</h2>
+              <h2 className="mal-h3 mal-margin-remove-vertical">{initialRiddleRef.current.failTitle}</h2>
               <p className="mal-text-medium mal-text-italic">"{initialRiddleRef.current.failMessage}"</p>
               <button
                 className="mal-button mal-button-small mal-button-primary mal-border-rounded"
