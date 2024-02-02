@@ -59,6 +59,7 @@ const startAnimation = (controls, animationConfig) => {
   }
 };
 
+const isTouchDevice = () => window.matchMedia('(hover: none)').matches;
 
 function Layout({ children }) {
   const navigate = useNavigate();
@@ -66,9 +67,74 @@ function Layout({ children }) {
   const { getBrowserSize } = useContext(AppContext);
   const browserSize = getBrowserSize();
 
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragDirection, setDragDirection] = useState(null);
+  // Add this state to manage whether the device is a touch device
+  const [enableDragRefresh, setEnableDragRefresh] = useState(isTouchDevice());
+
+  useEffect(() => {
+    const html = document.documentElement;
+    let timeoutId; // Declare timeoutId at the top of the useEffect to ensure it's accessible throughout
+  
+    if (isDragging) {
+      // Apply the class to change the background color
+      html.classList.add('html-drag-refresh');
+    } else {
+      // Use setTimeout to delay the removal of the class
+      timeoutId = setTimeout(() => {
+        html.classList.remove('html-drag-refresh');
+      }, 500);
+    }
+  
+    // Cleanup function to ensure we remove the class when the component unmounts
+    // or if isDragging changes before the timeout completes
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId); // Make sure to clear the timeout here as well
+      html.classList.remove('html-drag-refresh');
+    };
+  }, [isDragging]);
+
+  useEffect(() => {
+    // Update the state based on actual device capability when component mounts or when window resizes
+    const updateDeviceCapability = () => setEnableDragRefresh(isTouchDevice());
+    window.addEventListener('resize', updateDeviceCapability);
+    return () => window.removeEventListener('resize', updateDeviceCapability);
+  }, []);
+
   const refreshPage = () => {
-    // Method to refresh the current page
-    navigate(0); // This will refresh the page in React Router v6
+    navigate(0);
+  };
+
+  const onDrag = enableDragRefresh ? (event, info) => {
+    const offsetY = info.offset.y;
+    const offsetX = Math.abs(info.offset.x);
+    if (offsetY > 0 && offsetY > offsetX) {
+      setDragDirection('down');
+    } else {
+      setDragDirection(null);
+    }
+  } : undefined;
+
+  const onDragStart = enableDragRefresh ? (event, info) => {
+    setIsDragging(true);
+    // Initially, no direction is set
+    setDragDirection(null);
+  } : undefined;
+
+  const onDragEnd = enableDragRefresh ? (event, info) => {
+    setIsDragging(false);
+    if (dragDirection === 'down' && info.offset.y > 100) {
+      refreshPage();
+    }
+    setDragDirection(null);
+  } : undefined;
+  
+  const getOverflowStyle = () => {
+    let overflow = browserSize.height < 668 ? 'auto' : 'hidden';
+    if (isDragging && dragDirection === 'down') {
+      overflow = 'hidden';
+    }
+    return overflow;
   };
 
   const currentPage = useMemo(() =>
@@ -96,60 +162,48 @@ function Layout({ children }) {
   }, [currentPage, controls]);
 
   return (
-      <BackgroundImage
-        height={browserSize.height}
-        drag="y"
-        dragConstraints={{ top: 0, bottom: 0 }}
-        dragElastic={0.2}
-        onDragEnd={(event, info) => {
-          // Calculate the distance dragged in both x and y directions
-          const distanceX = Math.abs(info.offset.x);
-          // Use the raw y offset value to determine the direction of the drag
-          const offsetY = info.offset.y; // The vertical distance dragged
-        
-          // Set a threshold for what you consider a "significant" vertical drag
-          const verticalThreshold = 30; // Adjust based on desired sensitivity
-          
-          // Optionally, set a threshold for horizontal movement to filter out diagonal drags
-          const horizontalThreshold = 30; // This helps to ignore purely horizontal swipes or minor horizontal movements
-        
-          // Check if the drag is downwards, significant in the y direction, and within an acceptable range in the x direction
-          if (offsetY > verticalThreshold && distanceX < horizontalThreshold) {
-            refreshPage(); // Call the refresh logic only for significant drags downwards
-          }
-        }}
-        
-        style={{ overflow: 'hidden' }} // Prevent scrolling during drag
+    <BackgroundImage
+      height={browserSize.height}
+      drag={enableDragRefresh ? "y" : undefined}
+      dragConstraints={enableDragRefresh ? { top: 0, bottom: 0 } : undefined}
+      dragElastic={enableDragRefresh ? 0.2 : 0}
+      onDragStart={onDragStart}
+      onDragEnd={onDragEnd}
+      onDrag={onDrag}
+      style={{
+        overflow: getOverflowStyle(),
+        overflowX: 'hidden'
+      }}
+    >
+      <BackgroundImg
+        ref={imageRef}
+        src={currentPage?.bgImage || defaultBackgroundImage}
+        animate={controls}
+        initial={{ scale: 2 }}
+      />
+      <motion.section
+        initial={{ y: browserSize.height }}
+        animate={{ y: 0 }}
+        exit={{ y: browserSize.height }}
+        transition={{ type: 'spring', stiffness: 90, damping: 20 }}
+        style={{ height: browserSize.height }}
       >
-        <BackgroundImg
-          ref={imageRef}
-          src={currentPage?.bgImage || defaultBackgroundImage}
-          animate={controls}
-          initial={{ scale: 2 }}
-        />
-        <motion.section
-          initial={{ y: browserSize.height }}
-          animate={{ y: 0 }}
-          exit={{ y: browserSize.height }}
-          transition={{ type: 'spring', stiffness: 90, damping: 20 }}
-          style={{ height: browserSize.height }}
-        >
-          <MalContainer className="mal-container mal-container-small">
-            <Header className="chapter-title">
-              <h3>&nbsp;</h3>
-              <div className="icon-title mal-flex mal-flex-middle">
-                <img
-                  className="mal-margin-small-right"
-                  src={currentPage?.sectionIcon?.default}
-                  alt={currentPage?.sectionTitle}
-                />
-                <h4 className="mal-margin-remove mal-padding-remove">{currentPage?.sectionTitle}</h4>
-              </div>
-            </Header>
-            {children}
-          </MalContainer>
-        </motion.section>
-      </BackgroundImage>
+        <MalContainer className="mal-container mal-container-small">
+          <Header className="chapter-title">
+            <h3>&nbsp;</h3>
+            <div className="icon-title mal-flex mal-flex-middle">
+              <img
+                className="mal-margin-small-right"
+                src={currentPage?.sectionIcon?.default}
+                alt={currentPage?.sectionTitle}
+              />
+              <h4 className="mal-margin-remove mal-padding-remove">{currentPage?.sectionTitle}</h4>
+            </div>
+          </Header>
+          {children}
+        </MalContainer>
+      </motion.section>
+    </BackgroundImage>
   );
 }
 

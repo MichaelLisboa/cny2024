@@ -84,7 +84,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: transparent;
-  background: rgba(243,220,191,1);
+  background: rgba(254,252,245,1);
   color: #333;
 }
 
@@ -92,6 +92,11 @@
   html {
     font-size: 12px !important; /* Reduced base font size */
   }
+}
+
+.html-drag-refresh {
+  -webkit-overflow-scrolling: touch;
+  background-color: rgba(243,220,191,1);
 }
 
 html,
