@@ -198,13 +198,13 @@ export const allianceList = [
 
 export const riddlesList = [
     {
-        title: "As you venture deeper into the *element_noun*, you encounter a wise creature who challenges you with a riddle:",
-        question: "I speak without a mouth and hear without ears. I have no body, but I come alive with the wind. What am I?",
+        title: "As you venture deeper into the *element_noun*, the *alliance_noun* challenges you",
+        question: "*trait_noun* of the *element_noun*, riddle me this: I speak without a mouth and hear without ears. I have no body, but I come alive with the wind. What am I?",
         result: "Sharp Mind",
-        successTitle: "The wise creature praises your intellectual prowess.",
+        successTitle: "*alliance_noun* praises your intellectual prowess. You are the *trait_noun*.",
         successMessage: "Ah, you possess a sharp mind! Your understanding of mysteries will serve you well on this journey.",
-        failTitle: "The creature shakes its head, saying,",
-        failMessage: "A valiant attempt, but not quite the solution. Fear not, for the journey holds more challenges, and wisdom is gained through experience.",
+        failTitle: "*alliance_noun* shakes its head, saying,",
+        failMessage: "A valiant attempt, *trait_noun* of the *element_noun*, but not quite the solution.\rFear not, for the journey holds more challenges, and wisdom is gained through experience.",
         correctAnswer: "I am an echo",
         choices: [
             {
@@ -226,13 +226,13 @@ export const riddlesList = [
         ]
     },
     {
-        title: "As you venture deeper into the *element_noun*, you encounter a wise creature who challenges you with a riddle:",
-        question: "The more you take, the more you leave behind. What am I?",
+        title: "As you venture deeper into the *element_noun*, the *alliance_noun* challenges you",
+        question: "*trait_noun* of the *element_noun*, riddle me this: the more you take, the more you leave behind. What am I?",
         result: "Sharp Mind",
-        successTitle: "The wise creature praises your intellectual prowess.",
+        successTitle: "*alliance_noun* praises your intellectual prowess. You are the *trait_noun*.",
         successMessage: "Ah, you possess a sharp mind! Your understanding of mysteries will serve you well on this journey.",
-        failTitle: "The creature shakes its head, saying,",
-        failMessage: "A valiant attempt, but not quite the solution. Fear not, for the journey holds more challenges, and wisdom is gained through experience.",
+        failTitle: "*alliance_noun* shakes its head, saying,",
+        failMessage: "A valiant attempt, *trait_noun* of the *element_noun*, but not quite the solution.\rFear not, for the journey holds more challenges, and wisdom is gained through experience.",
         correctAnswer: "I am footsteps",
         choices: [
             {
@@ -254,13 +254,13 @@ export const riddlesList = [
         ]
     },
     {
-        title: "As you venture deeper into the *element_noun*, you encounter a wise creature who challenges you with a riddle:",
-        question: "I fly without wings. I cry without eyes. Wherever I go, darkness follows me. What am I?",
+        title: "As you venture deeper into the *element_noun*, the *alliance_noun* challenges you",
+        question: "*trait_noun* of the *element_noun*, riddle me this: I fly without wings. I cry without eyes. Wherever I go, darkness follows me. What am I?",
         result: "Sharp Mind",
-        successTitle: "The wise creature praises your intellectual prowess.",
+        successTitle: "*alliance_noun* praises your intellectual prowess. You are the *trait_noun*.",
         successMessage: "Ah, you possess a sharp mind! Your understanding of mysteries will serve you well on this journey.",
-        failTitle: "The creature shakes its head, saying,",
-        failMessage: "A valiant attempt, but not quite the solution. Fear not, for the journey holds more challenges, and wisdom is gained through experience.",
+        failTitle: "The *alliance_noun* shakes its head, saying,",
+        failMessage: "A valiant attempt, *trait_noun* of the *element_noun*, but not quite the solution.\rFear not, for the journey holds more challenges, and wisdom is gained through experience.",
         correctAnswer: "I am the clouds",
         choices: [
             {

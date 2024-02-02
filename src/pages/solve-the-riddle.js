@@ -2,6 +2,7 @@ import React, { useContext, useMemo, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { motion, useAnimation } from 'framer-motion';
+import { useDynamicTextReplacer } from '../hooks/useDynamicTextReplacer';
 import pages from '../utils/pages';
 import Layout from '../templates/layout';
 import { AppContext } from '../contexts/AppContext';
@@ -62,10 +63,10 @@ const FooterSection = styled(motion.div)`
 
 const SolveTheRiddle = () => {
   const { updateUserSelection, getUserInfo } = useContext(AppContext);
-  
+  const replaceElementNoun = useDynamicTextReplacer();
   const [content, setContent] = useState('initial');
   const [selectedCard, setSelectedCard] = useState(null);
-  
+
   const userInfo = getUserInfo();
   const location = useLocation();
   const currentPage = pages.find(page => page.url === location.pathname);
@@ -95,24 +96,27 @@ const SolveTheRiddle = () => {
 
   const initialRiddleRef = useRef({
     index: 0,
-    title: randomItems[0].title.replace(/\*element_noun\*/g, userElement),
-    question: randomItems[0].question,
-    correctAnswer: randomItems[0].correctAnswer,
-    choices: randomItems[0].choices,
-    result: randomItems[0].result.replace(/\*element_noun\*/g, userElement),
-    successTitle: randomItems[0].successTitle.replace(/\*element_noun\*/g, userElement),
-    successMessage: randomItems[0].successMessage.replace(/\*element_noun\*/g, userElement),
-    failTitle: randomItems[0].failTitle.replace(/\*element_noun\*/g, userElement),
-    failMessage: randomItems[0].failMessage.replace(/\*element_noun\*/g, userElement),
+    title: replaceElementNoun(randomItems[0].title),
+    question: replaceElementNoun(randomItems[0].question),
+    correctAnswer: replaceElementNoun(randomItems[0].correctAnswer),
+    choices: randomItems[0].choices.map(choice => ({
+      ...choice,
+      answer: replaceElementNoun(choice.answer),
+    })),
+    result: replaceElementNoun(randomItems[0].result),
+    successTitle: replaceElementNoun(randomItems[0].successTitle),
+    successMessage: replaceElementNoun(randomItems[0].successMessage),
+    failTitle: replaceElementNoun(randomItems[0].failTitle),
+    failMessage: replaceElementNoun(randomItems[0].failMessage),
   })
-  
+
   function getRandomRiddle() {
     let newRiddle;
     do {
       const randomIndex = getRandomIndices(riddlesList.length, 1);
       newRiddle = riddlesList[randomIndex[0]];
     } while (newRiddle === initialRiddleRef.current);
-  
+
     return newRiddle;
   }
 
@@ -135,15 +139,18 @@ const SolveTheRiddle = () => {
     currentChoice.current = currentSlide.choices[newCurrentSlideIndex];
     setCurrentSlide({
       index: newCurrentSlideIndex,
-      title: currentSlide.title.replace(/\*element_noun\*/g, userElement),
-      question: currentSlide.question,
-      correctAnswer: currentSlide.correctAnswer,
-      choices: currentSlide.choices,
-      result: currentSlide.result.replace(/\*element_noun\*/g, userElement),
-      successTitle: currentSlide.successTitle.replace(/\*element_noun\*/g, userElement),
-      successMessage: currentSlide.successMessage.replace(/\*element_noun\*/g, userElement),
-      failTitle: currentSlide.failTitle.replace(/\*element_noun\*/g, userElement),
-      failMessage: currentSlide.failMessage.replace(/\*element_noun\*/g, userElement),
+      title: replaceElementNoun(currentSlide.title),
+      question: replaceElementNoun(currentSlide.question),
+      correctAnswer: replaceElementNoun(currentSlide.correctAnswer),
+      choices: currentSlide.choices.map(choice => ({
+        ...choice,
+        answer: replaceElementNoun(choice.answer),
+      })),
+      result: replaceElementNoun(currentSlide.result),
+      successTitle: replaceElementNoun(currentSlide.successTitle),
+      successMessage: replaceElementNoun(currentSlide.successMessage),
+      failTitle: replaceElementNoun(currentSlide.failTitle),
+      failMessage: replaceElementNoun(currentSlide.failMessage),
     });
   };
 
@@ -162,23 +169,24 @@ const SolveTheRiddle = () => {
   };
 
   const handleReset = async () => {
-    updateUserSelection('riddleResult', false);
-  
+    updateUserSelection('riddleResult', null);
     const newRiddle = getRandomRiddle();
-  
-    initialRiddleRef.current = newRiddle;
+    const content = initialRiddleRef.current = newRiddle;
   
     setCurrentSlide({
       index: 0,
-      title: newRiddle.title.replace(/\*element_noun\*/g, userElement),
-      question: newRiddle.question.replace(/\*element_noun\*/g, userElement),
-      correctAnswer: newRiddle.correctAnswer.replace(/\*element_noun\*/g, userElement),
-      choices: newRiddle.choices,
-      result: newRiddle.result.replace(/\*element_noun\*/g, userElement),
-      successTitle: newRiddle.successTitle.replace(/\*element_noun\*/g, userElement),
-      successMessage: newRiddle.successMessage.replace(/\*element_noun\*/g, userElement),
-      failTitle: newRiddle.failTitle.replace(/\*element_noun\*/g, userElement),
-      failMessage: newRiddle.failMessage.replace(/\*element_noun\*/g, userElement),
+      title: replaceElementNoun(content.title),
+      question: replaceElementNoun(content.question),
+      correctAnswer: replaceElementNoun(content.correctAnswer),
+      choices: content.choices.map(choice => ({
+        ...choice,
+        answer: replaceElementNoun(choice.answer),
+      })),
+      result: replaceElementNoun(content.result),
+      successTitle: replaceElementNoun(content.successTitle),
+      successMessage: replaceElementNoun(content.successMessage),
+      failTitle: replaceElementNoun(content.failTitle),
+      failMessage: replaceElementNoun(content.failMessage),
     });
   
     await animateExit();
@@ -196,12 +204,12 @@ const SolveTheRiddle = () => {
         animate={headerControls}
         className="header-section"
       >
-        {content === 'initial' ? 
+        {content === 'initial' ?
           <div className="mal-margin-bottom-large mal-padding-remove-horizontal">
             <h3 className="mal-margin-remove-top">{initialRiddleRef.current.title}</h3>
             <DescriptionText className="mal-text-medium mal-margin-small-top">{initialRiddleRef.current.question}</DescriptionText>
           </div>
-         : null}
+          : null}
       </HeaderSection>
       <BodySection
         animate={bodyControls}
@@ -220,13 +228,13 @@ const SolveTheRiddle = () => {
         ) :
           getUserInfo().riddleResult ? (
             <div className="mal-text-center">
+              <h3 className="mal-h2 mal-margin-remove-vertical">{initialRiddleRef.current.result}</h3>
               <TraitTokenImage>
                 <Image
                   src={success}
                   alt={initialRiddleRef.current.result} />
               </TraitTokenImage>
               <h2 className="mal-h3 mal-margin-remove-vertical">{initialRiddleRef.current.successTitle}</h2>
-              <h3 className="mal-h2 mal-margin-remove-vertical">{initialRiddleRef.current.result}</h3>
               <p className="mal-text-medium mal-text-italic">"{initialRiddleRef.current.successMessage}"</p>
             </div>
           ) :
@@ -253,13 +261,13 @@ const SolveTheRiddle = () => {
             onClick={() => { handleButtonClick(currentChoice.current.answer === initialRiddleRef.current.correctAnswer) }}>
             {currentChoice.current.answer}
           </OrnateButton>
-        ) : 
+        ) :
           getUserInfo().riddleResult ? (
             <OrnateButton url={nextPage.url}>
               {nextPage.title}
             </OrnateButton>
           ) : (
-            
+
             <OrnateButton url={nextPage.url}>
               {nextPage.title}
             </OrnateButton>
