@@ -5,6 +5,7 @@ import pages from '../utils/pages';
 import styled from 'styled-components';
 import defaultBackgroundImage from '../images/background/0-cover.jpg';
 import { AppContext } from '../contexts/AppContext';
+import { LayoutProvider } from '../contexts/LayoutContext';
 
 const BackgroundImage = styled(motion.div)`
   position: relative;
@@ -75,7 +76,7 @@ function Layout({ children }) {
   useEffect(() => {
     const html = document.documentElement;
     let timeoutId; // Declare timeoutId at the top of the useEffect to ensure it's accessible throughout
-  
+
     if (isDragging) {
       // Apply the class to change the background color
       html.classList.add('html-drag-refresh');
@@ -85,7 +86,7 @@ function Layout({ children }) {
         html.classList.remove('html-drag-refresh');
       }, 500);
     }
-  
+
     // Cleanup function to ensure we remove the class when the component unmounts
     // or if isDragging changes before the timeout completes
     return () => {
@@ -127,7 +128,7 @@ function Layout({ children }) {
     }
     setDragDirection(null);
   } : undefined;
-  
+
   const getOverflowStyle = () => {
     let overflow = browserSize.height < 668 ? 'auto' : 'hidden';
     if (isDragging && dragDirection === 'down') {
@@ -161,48 +162,50 @@ function Layout({ children }) {
   }, [currentPage, controls]);
 
   return (
-    <BackgroundImage
-      height={browserSize.height}
-      drag={enableDragRefresh ? "y" : undefined}
-      dragConstraints={enableDragRefresh ? { top: 0, bottom: 0 } : undefined}
-      dragElastic={enableDragRefresh ? 0.2 : 0}
-      onDragStart={onDragStart}
-      onDragEnd={onDragEnd}
-      onDrag={onDrag}
-      style={{
-        overflow: getOverflowStyle(),
-        overflowX: 'hidden'
-      }}
-    >
-      <BackgroundImg
-        ref={imageRef}
-        src={currentPage?.bgImage || defaultBackgroundImage}
-        animate={controls}
-        initial={{ scale: 2 }}
-      />
-      <motion.section
-        initial={{ y: browserSize.height }}
-        animate={{ y: 0 }}
-        exit={{ y: browserSize.height }}
-        transition={{ type: 'spring', stiffness: 90, damping: 20 }}
-        style={{ height: browserSize.height }}
+    <LayoutProvider>
+      <BackgroundImage
+        height={browserSize.height}
+        drag={enableDragRefresh ? "y" : undefined}
+        dragConstraints={enableDragRefresh ? { top: 0, bottom: 0 } : undefined}
+        dragElastic={enableDragRefresh ? 0.2 : 0}
+        onDragStart={onDragStart}
+        onDragEnd={onDragEnd}
+        onDrag={onDrag}
+        style={{
+          overflow: getOverflowStyle(),
+          overflowX: 'hidden'
+        }}
       >
-        <MalContainer className="mal-container mal-container-small">
-          <Header className="chapter-title">
-            <h3>&nbsp;</h3>
-            <div className="icon-title mal-flex mal-flex-middle">
-              <img
-                className="mal-margin-small-right"
-                src={currentPage?.sectionIcon?.default}
-                alt={currentPage?.sectionTitle}
-              />
-              <h4 className="mal-margin-remove mal-padding-remove">{currentPage?.sectionTitle}</h4>
-            </div>
-          </Header>
-          {children}
-        </MalContainer>
-      </motion.section>
-    </BackgroundImage>
+        <BackgroundImg
+          ref={imageRef}
+          src={currentPage?.bgImage || defaultBackgroundImage}
+          animate={controls}
+          initial={{ scale: 2 }}
+        />
+        <motion.section
+          initial={{ y: browserSize.height }}
+          animate={{ y: 0 }}
+          exit={{ y: browserSize.height }}
+          transition={{ type: 'spring', stiffness: 90, damping: 20 }}
+          style={{ height: browserSize.height }}
+        >
+          <MalContainer className="mal-container mal-container-small">
+            <Header className="chapter-title">
+              <h3>&nbsp;</h3>
+              <div className="icon-title mal-flex mal-flex-middle">
+                <img
+                  className="mal-margin-small-right"
+                  src={currentPage?.sectionIcon?.default}
+                  alt={currentPage?.sectionTitle}
+                />
+                <h4 className="mal-margin-remove mal-padding-remove">{currentPage?.sectionTitle}</h4>
+              </div>
+            </Header>
+            {children}
+          </MalContainer>
+        </motion.section>
+      </BackgroundImage>
+    </LayoutProvider>
   );
 }
 

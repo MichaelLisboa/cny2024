@@ -65,19 +65,34 @@ const SolveTheRiddle = () => {
   const { updateUserSelection, getUserInfo } = useContext(AppContext);
   const replaceElementNoun = useDynamicTextReplacer();
   const [content, setContent] = useState('initial');
-  const [selectedCard, setSelectedCard] = useState(null);
 
   const userInfo = getUserInfo();
   const location = useLocation();
-  const currentPage = pages.find(page => page.url === location.pathname);
-  const nextPage = pages.find(page => page.url === currentPage.nextPage);
-  const previousPage = pages.find(page => page.url === currentPage.previousPage);
+  const currentPage = useMemo(() => pages.find(page => page.url === location.pathname), [location.pathname]);
+  const nextPage = useMemo(() => pages.find(page => page.url === currentPage.nextPage), [currentPage]);
+  const previousPage = useMemo(() => pages.find(page => page.url === currentPage.previousPage), [currentPage]);
   const headerControls = useAnimation();
   const bodyControls = useAnimation();
   const footerControls = useAnimation();
   const paragraphControls = useAnimation();
 
-  const userElement = userInfo.chosenElement;
+  const setCurrentSlideState = (content) => {
+    setCurrentSlide({
+      index: 0,
+      title: replaceElementNoun(content.title),
+      question: replaceElementNoun(content.question),
+      correctAnswer: replaceElementNoun(content.correctAnswer),
+      choices: content.choices.map(choice => ({
+        ...choice,
+        answer: replaceElementNoun(choice.answer),
+      })),
+      result: replaceElementNoun(content.result),
+      successTitle: replaceElementNoun(content.successTitle),
+      successMessage: replaceElementNoun(content.successMessage),
+      failTitle: replaceElementNoun(content.failTitle),
+      failMessage: replaceElementNoun(content.failMessage),
+    });
+  };
 
   const getRandomIndex = (length) => Math.floor(Math.random() * length);
 
@@ -137,26 +152,37 @@ const SolveTheRiddle = () => {
 
   const handleCurrentSlideChange = (newCurrentSlideIndex) => {
     currentChoice.current = currentSlide.choices[newCurrentSlideIndex];
-    setCurrentSlide({
-      index: newCurrentSlideIndex,
-      title: replaceElementNoun(currentSlide.title),
-      question: replaceElementNoun(currentSlide.question),
-      correctAnswer: replaceElementNoun(currentSlide.correctAnswer),
-      choices: currentSlide.choices.map(choice => ({
+    setCurrentSlideState(currentSlide);
+  };
+
+  const handleReset = async () => {
+    updateUserSelection('riddleResult', null);
+    const newRiddle = getRandomRiddle();
+    initialRiddleRef.current = {
+      ...newRiddle,
+      title: replaceElementNoun(newRiddle.title),
+      question: replaceElementNoun(newRiddle.question),
+      correctAnswer: replaceElementNoun(newRiddle.correctAnswer),
+      choices: newRiddle.choices.map(choice => ({
         ...choice,
         answer: replaceElementNoun(choice.answer),
       })),
-      result: replaceElementNoun(currentSlide.result),
-      successTitle: replaceElementNoun(currentSlide.successTitle),
-      successMessage: replaceElementNoun(currentSlide.successMessage),
-      failTitle: replaceElementNoun(currentSlide.failTitle),
-      failMessage: replaceElementNoun(currentSlide.failMessage),
-    });
-  };
+      result: replaceElementNoun(newRiddle.result),
+      successTitle: replaceElementNoun(newRiddle.successTitle),
+      successMessage: replaceElementNoun(newRiddle.successMessage),
+      failTitle: replaceElementNoun(newRiddle.failTitle),
+      failMessage: replaceElementNoun(newRiddle.failMessage),
+    };
+    setCurrentSlide(initialRiddleRef.current);
+    await animateExit();
+    setContent("initial");
+    setTimeout(() => {
+      animateEnter();
+    }, 500);
+  }
 
   const handleButtonClick = async (isCorrect) => {
     const chosenAnswer = currentChoice.current.answer;
-    setSelectedCard(currentChoice.index);
     updateUserSelection('riddleResult', isCorrect);
 
     if (chosenAnswer) {
@@ -167,36 +193,6 @@ const SolveTheRiddle = () => {
       }, 500);
     }
   };
-
-  const handleReset = async () => {
-    updateUserSelection('riddleResult', null);
-    const newRiddle = getRandomRiddle();
-    const content = initialRiddleRef.current = newRiddle;
-  
-    setCurrentSlide({
-      index: 0,
-      title: replaceElementNoun(content.title),
-      question: replaceElementNoun(content.question),
-      correctAnswer: replaceElementNoun(content.correctAnswer),
-      choices: content.choices.map(choice => ({
-        ...choice,
-        answer: replaceElementNoun(choice.answer),
-      })),
-      result: replaceElementNoun(content.result),
-      successTitle: replaceElementNoun(content.successTitle),
-      successMessage: replaceElementNoun(content.successMessage),
-      failTitle: replaceElementNoun(content.failTitle),
-      failMessage: replaceElementNoun(content.failMessage),
-    });
-  
-    await animateExit();
-    setContent("initial");
-    setTimeout(() => {
-      animateEnter();
-    }, 500);
-  }
-
-  console.log("chosen element: ", userElement);
 
   return (
     <Layout>
