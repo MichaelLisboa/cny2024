@@ -1,4 +1,4 @@
-import React, { useContext, useState, useMemo } from 'react';
+import React, { useContext, useState, useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { motion, useAnimation } from 'framer-motion';
@@ -7,20 +7,43 @@ import { useDynamicTextReplacer } from '../hooks/useDynamicTextReplacer';
 import pages from '../utils/pages';
 import Layout from '../templates/layout';
 import Image from '../components/Image';
-import MalCarousel from '../components/MalCarousel';
+import { pathsList } from '../data';
 import { OrnateButton } from '../components/Button';
-import { traitsList } from '../data';
-import trait from "../images/tokens/trait.png";
+import path from "../images/tokens/path.png";
 
-const StyledMalCarousel = styled(MalCarousel)`
-  .slide {
-    margin: 0 !important;
-    padding: 0 !important;
+const PathItemContainer = styled(motion.div)`
+    position: relative;
+    display: flex;
+    flex: 0.75;
+    flex-direction: column;
+    justify-content: space-around; // Add this line
+    width: 90%;
+    gap: 16px;
 
-    &.slide img {
-        max-height: 40vh;
+    @media (min-width: 768px) { /* Adjust breakpoint as needed */
+    flex-direction: row;
     }
-  }
+`;
+
+const PathItem = styled(motion.div)`
+  flex: 1;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  background-image: url(${props => props.bgImage});
+  width: 100%;
+  background-repeat: no-repeat;
+  overflow: visible;
+`;
+
+const PathItemContent = styled.div`
+  top: 0;
+  left: 0;
+  padding: 48px 24px;
+`;
+
+const PathItemTitle = styled.h3`
+  margin: 0;
 `;
 
 const DescriptionText = styled.p`
@@ -35,7 +58,7 @@ const DescriptionText = styled.p`
     padding: 0;
 `;
 
-const TraitTokenImage = styled.div`
+const PathTokenImage = styled.div`
     width: auto;
     padding: 32px;
 
@@ -58,11 +81,12 @@ const FooterSection = styled(motion.div)`
   // Add your footer-section styles here.
 `;
 
-const ChooseYourTrait = () => {
+const ChooseYourPath = () => {
     const { updateUserSelection, getUserInfo } = useContext(AppContext);
     const replaceElementNoun = useDynamicTextReplacer();
     const [content, setContent] = useState('initial');
     const [selectedCard, setSelectedCard] = useState(null);
+
     const location = useLocation();
     const currentPage = useMemo(() => pages.find(page => page.url === location.pathname), [location.pathname]);
     const nextPage = useMemo(() => pages.find(page => page.url === currentPage.nextPage), [currentPage]);
@@ -83,26 +107,14 @@ const ChooseYourTrait = () => {
         return [...indices];
     }
 
-    // Get 5 random items from traitsList
+    // Get 5 random items from pathsList
     const randomItems = useMemo(() => {
         // Get 5 unique random indices
-        const randomIndices = getRandomIndices(traitsList.length, 5);
+        const randomIndices = getRandomIndices(pathsList.length, 2);
 
-        // Get 5 random items from traitsList
-        return randomIndices.map(index => traitsList[index]);
-    }, [traitsList]);
-
-    const [currentSlide, setCurrentSlide] = useState(
-        {
-            index: 0,
-            title: randomItems[0].title,
-            image: randomItems[0].image,
-            text: replaceElementNoun(randomItems[0].text),
-            subheadline: replaceElementNoun(randomItems[0].subheadline),
-            description: replaceElementNoun(randomItems[0].description)
-        }
-    );
-
+        // Get 5 random items from pathsList
+        return randomIndices.map(index => pathsList[index]);
+    }, [pathsList]);
 
     const animateExit = async () => {
         await footerControls.start({ y: 100, opacity: 0 });
@@ -115,12 +127,12 @@ const ChooseYourTrait = () => {
         await footerControls.start({ y: 0, opacity: 1, transition: { delay: 0.05 } });
     };
 
-    const handleButtonClick = async () => {
-        const chosenTrait = currentSlide.title;
-        setSelectedCard(chosenTrait);
-        updateUserSelection('chosenTrait', chosenTrait);
+    const handleButtonClick = async (item) => {
+        const chosenPath = item.title;
+        setSelectedCard(item);
+        console.log('Button clicked', item);
 
-        if (chosenTrait) {
+        if (chosenPath) {
             await animateExit();
             setContent(true); // Change the content
             setTimeout(() => {
@@ -129,16 +141,19 @@ const ChooseYourTrait = () => {
         }
     };
 
-    const handleCurrentSlideChange = (newCurrentSlideIndex) => {
-        setCurrentSlide({
-            index: newCurrentSlideIndex,
-            image: traitsList[newCurrentSlideIndex].image,
-            title: replaceElementNoun(traitsList[newCurrentSlideIndex].title),
-            text: replaceElementNoun(traitsList[newCurrentSlideIndex].text),
-            subheadline: replaceElementNoun(traitsList[newCurrentSlideIndex].subheadline),
-            description: replaceElementNoun(traitsList[newCurrentSlideIndex].description)
-        });
-    };
+    const controls = useAnimation();
+
+    useEffect(() => {
+        controls.start(i => ({
+            opacity: 1,
+            y: 0,
+            transition: {
+                delay: 0.5 + i * 0.3,
+                duration: 0.5,
+                ease: 'easeOut',
+            },
+        }));
+    }, [controls]);
 
     return (
         <Layout>
@@ -148,49 +163,54 @@ const ChooseYourTrait = () => {
             >
                 {content === 'initial' ? (
                     <div className="mal-margin-bottom-large mal-padding-remove-horizontal">
-                        <h3 className="mal-margin-remove-top">Emperor Jade presents you with five shimmering cups, each radiating a unique essence of a distinct personality trait. </h3>
-                        <p className="mal-text-medium mal-margin-small-top">Choose your cup wisely.</p>
+                        <h3 className="mal-margin-remove-top">
+                            {replaceElementNoun(`You approach a crossroads with the *alliance_noun*, two paths lay ahead.`)}
+                        </h3>
+                        <p className="mal-text-medium mal-margin-small-top">Which paths do you choose to traverse?</p>
                     </div>
                 ) : ``}
             </HeaderSection>
             <BodySection
                 animate={bodyControls}
-                className="body-section"
-            >
+                className="body-section">
                 {content === 'initial' ? (
-                    <div>
-                        <StyledMalCarousel
-                            elementsList={randomItems}
-                            initialSlide={0}
-                            onCurrentSlideChange={handleCurrentSlideChange}
-                            handleCardClick={handleButtonClick}
-                        />
-                    </div>
+                    <PathItemContainer initial="hidden" animate="show">
+                        {randomItems && randomItems.map((item, index) => (
+                            <PathItem
+                                key={index}
+                                variants={item}
+                                bgImage={item.image}
+                                onClick={() => handleButtonClick(item)}
+                                custom={index}
+                                initial={{ opacity: 0, y: 50 }}
+                                animate={controls}
+                            >
+                                <PathItemContent>
+                                    <PathItemTitle>{replaceElementNoun(item.title)}</PathItemTitle>
+                                </PathItemContent>
+                            </PathItem>
+                        ))}
+                    </PathItemContainer>
                 ) : (
                     <div className="mal-padding-small mal-text-center">
-                        <TraitTokenImage className="mal-padding">
+                        <PathTokenImage className="mal-padding">
                             <Image
-                                src={trait}
-                                alt={`The Trait of ${selectedCard}`} />
-                        </TraitTokenImage>
-                        <h4 className="mal-margin-remove">{currentSlide.subheadline}</h4>
-                        <h2 className="mal-margin-remove">{currentSlide.title}</h2>
-                        <p>{currentSlide.description}</p>
+                                src={path}
+                                alt={`The Path of ${selectedCard}`} />
+                        </PathTokenImage>
+                        <h2 className="mal-margin-remove">{replaceElementNoun(selectedCard.title)}</h2>
+                        <p>{replaceElementNoun(selectedCard.description)}</p>
                     </div>
                 )}
             </BodySection>
+
             <FooterSection
                 animate={footerControls}
                 className="footer-section"
             >
-                {content === 'initial' ? (
-                    <OrnateButton onClick={handleButtonClick}>
-                        {currentSlide.title}
-                        <DescriptionText className="mal-text-small">{currentSlide.text}</DescriptionText>
-                    </OrnateButton>
-                ) : (
+                {content === 'initial' ? null : (
                     <OrnateButton url={nextPage.url}>
-                        {nextPage.title}
+                        "What is this?"
                     </OrnateButton>
                 )}
             </FooterSection>
@@ -198,4 +218,4 @@ const ChooseYourTrait = () => {
     );
 };
 
-export default ChooseYourTrait;
+export default ChooseYourPath;

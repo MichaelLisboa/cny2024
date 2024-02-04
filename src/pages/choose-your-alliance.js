@@ -1,10 +1,11 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useMemo, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { motion, useAnimation, AnimatePresence } from 'framer-motion';
+import { AppContext } from '../contexts/AppContext';
+import { useDynamicTextReplacer } from '../hooks/useDynamicTextReplacer';
 import pages from '../utils/pages';
 import Layout from '../templates/layout';
-import { AppContext } from '../contexts/AppContext';
 import MalCarousel from '../components/MalCarousel';
 import { OrnateButton } from '../components/Button';
 import { allianceList } from '../data';
@@ -107,15 +108,16 @@ const FooterSection = styled(motion.div)`
 
 const ChooseYourAlliance = () => {
     const { updateUserSelection, getUserInfo } = useContext(AppContext);
+    const replaceElementNoun = useDynamicTextReplacer();
     const [content, setContent] = useState('initial');
 
     const userInfo = getUserInfo();
     const userElement = userInfo.chosenElement;
 
     const location = useLocation();
-    const currentPage = pages.find(page => page.url === location.pathname);
-    const nextPage = pages.find(page => page.url === currentPage.nextPage);
-    const previousPage = pages.find(page => page.url === currentPage.previousPage);
+    const currentPage = useMemo(() => pages.find(page => page.url === location.pathname), [location.pathname]);
+  const nextPage = useMemo(() => pages.find(page => page.url === currentPage.nextPage), [currentPage]);
+  const previousPage = useMemo(() => pages.find(page => page.url === currentPage.previousPage), [currentPage]);
     const headerControls = useAnimation();
     const bodyControls = useAnimation();
     const footerControls = useAnimation();
@@ -127,7 +129,7 @@ const ChooseYourAlliance = () => {
         image: allianceList[0].image,
         text: allianceList[0].text,
         reaction: allianceList[0].reaction,
-        description: allianceList[0].description.replace(/\*element_noun\*/g, userElement)
+        description: replaceElementNoun(allianceList[0].description)
     };
 
     const [currentSlide, setCurrentSlide] = useState(initialSlide);
@@ -167,7 +169,7 @@ const ChooseYourAlliance = () => {
             title: allianceList[newCurrentSlideIndex].title,
             text: allianceList[newCurrentSlideIndex].text,
             reaction: allianceList[newCurrentSlideIndex].reaction,
-            description: allianceList[newCurrentSlideIndex].description.replace(/\*element_noun\*/g, userElement)
+            description: replaceElementNoun(allianceList[newCurrentSlideIndex].description)
         });
     };
 
@@ -202,7 +204,7 @@ const ChooseYourAlliance = () => {
                                 <StyledParagraph
                                     key={currentSlide.index}
                                     lines={3}>
-                                    "{currentSlide.description.replace(/\*element_noun\*/g, userElement)}"
+                                    "{replaceElementNoun(currentSlide.description)}"
                                 </StyledParagraph>
                             </AnimatePresence>
                         </Container>

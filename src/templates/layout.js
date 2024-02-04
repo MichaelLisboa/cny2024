@@ -5,7 +5,6 @@ import pages from '../utils/pages';
 import styled from 'styled-components';
 import defaultBackgroundImage from '../images/background/0-cover.jpg';
 import { AppContext } from '../contexts/AppContext';
-import { LayoutProvider } from '../contexts/LayoutContext';
 
 const BackgroundImage = styled(motion.div)`
   position: relative;
@@ -162,7 +161,6 @@ function Layout({ children }) {
   }, [currentPage, controls]);
 
   return (
-    <LayoutProvider>
       <BackgroundImage
         height={browserSize.height}
         drag={enableDragRefresh ? "y" : undefined}
@@ -205,7 +203,6 @@ function Layout({ children }) {
           </MalContainer>
         </motion.section>
       </BackgroundImage>
-    </LayoutProvider>
   );
 }
 

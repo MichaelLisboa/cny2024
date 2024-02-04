@@ -259,7 +259,7 @@ export const riddlesList = [
         result: "Sharp Mind",
         successTitle: "*alliance_noun* praises your intellectual prowess. You are the *trait_noun*.",
         successMessage: "Ah, you possess a sharp mind! Your understanding of mysteries will serve you well on this journey.",
-        failTitle: "The *alliance_noun* shakes its head, saying,",
+        failTitle: "*alliance_noun* shakes its head, saying,",
         failMessage: "A valiant attempt, *trait_noun* of the *element_noun*, but not quite the solution.\rFear not, for the journey holds more challenges, and wisdom is gained through experience.",
         correctAnswer: "I am the clouds",
         choices: [
@@ -285,73 +285,33 @@ export const riddlesList = [
 
 export const pathsList = [
     {
-        title: "Brave Character",
-        image: require('../images/traits/bravery.png'),
-        description: "As you sip from the cup, a surge of courage courses through your ethereal form. The *element_noun* shadows seem less intimidating, and you find yourself eagerly engaging with other spirits. Your newfound bravery propels you forward, unafraid of the challenges that lie ahead.",
-        subheadline: "Drink from the cup of Bravery",
-        text: ""
+        title: "Misty Mountain Path",
+        image: require('../images/paths/misty-mountain-path.png'),
+        description: "Jagged peaks loom on either side, and the air is tinged with mystery. As you ascend the mist-shrouded mountain, a mysterious air envelops you. Clink! You stumble upon something on the ground.",
+        resultText: "you two tackled the Misty Mountain Path"
     },
     {
-        title: "Clever Minded",
-        image: require('../images/traits/cleverness.png'),
-        description: "The elixir of cleverness enhances your wit and intelligence. You navigate the *element_noun* with strategic acumen, outsmarting spirits and solving challenges with ease. Your sharp mind becomes your greatest asset, and other spirits admire your clever approach.",
-        subheadline: "Drink from the cup of Cleverness",
-        text: ""
+        title: "Lush Bamboo Forest Trail",
+        image: require('../images/paths/lush-bamboo-forest-trail.png'),
+        description: "Sunlight filters through the dense foliage, casting enchanting shadows. Walking through the tranquil bamboo groves, you stumble upon a small porcelain piece.",
+        resultText: "venturing into the Lush Bamboo Forest"
     },
     {
-        title: "Energetic Spirit",
-        image: require('../images/traits/energy.png'),
-        description: "The vibrant energy from the cup infuses your spirit with agility and speed. You dart through the *element_noun*, embracing the thrill of the race. Your energetic spirit sets a lively pace, making you a formidable contender among the spirits.",
-        subheadline: "Drink from the cup of Energy",
-        text: ""
+        title: "Ancient Shrine Route",
+        image: require('../images/paths/ancient-shrine-route.png'),
+        description: "As you venture deeper on the Ancient Shrine route. The path is dimly lit by the soft glow of  lanterns, casting flickering shadows on the shrine's walls. Clink! You stumble upon something on the ground.",
+        resultText: "you two explored the Ancient Shrine Route"
     },
     {
-        title: "Crafty Nature",
-        image: require('../images/traits/crafty.png'),
-        description: "The elixir of craftiness imbues you with ingenuity and sly tactics. Navigating through the *element_noun*, you employ clever tricks and strategies, gaining an edge over challenges. Your crafty nature becomes a hallmark of your journey.",
-        subheadline: "Drink from the cup of Craftiness",
-        text: ""
+        title: "Cascade Waterfall Path",
+        image: require('../images/paths/cascade-waterfall-path.png'),
+        description: "Beside the thundering waterfall, the *alliance_noun* awaits, its powerful presence matching the force of the cascading water. But suddenly there's a clinking sound. You stumble upon something on the ground.",
+        resultText: "you two explored the Ancient Shrine Route"
     },
     {
-        title: "Strong Contender",
-        image: require('../images/traits/strength.png'),
-        description: "The cup of strength fills you with power and determination. As you move through the *element_noun*, your strong presence intimidates other spirits. Challenges become opportunities to showcase your might, solidifying your position as a formidable contender.",
-        subheadline: "Drink from the cup of Strength",
-        text: ""
-    },
-    {
-        title: "Resilient Character",
-        image: require('../images/traits/resilient.png'),
-        description: "Sipping from the cup of resilience, you feel an unwavering resolve. As you navigate the *element_noun*, challenges may arise, but you face them with adaptability and determination. Your resilience becomes a beacon, inspiring other spirits on their journey.",
-        subheadline: "Drink from the cup of Resilience",
-        text: ""
-    },
-    {
-        title: "Persevering Spirit",
-        image: require('../images/traits/persevering.png'),
-        description: "The elixir of perseverance fortifies your spirit with unwavering determination. Among the ancient *element_noun*, obstacles may attempt to hinder your path, but you press on, fueled by an inner strength that resonates with the very heartbeat of the *element_noun*.",
-        subheadline: "Drink from the cup of Perseverence",
-        text: ""
-    },
-    {
-        title: "Walks with Grace",
-        image: require('../images/traits/graceful.png'),
-        description: "The cup of grace bestows upon you an aura of elegance and finesse. Moving through the enchanted *element_noun*, your every step is marked by graceful precision. Challenges in the way seem to bow before your graceful spirit.",
-        subheadline: "Drink from the cup of Gracefulness",
-        text: ""
-    },
-    {
-        title: "Resourceful Nature",
-        image: require('../images/traits/resourceful.png'),
-        description: "Sipping from the cup of resourcefulness, you discover ingenious ways to overcome challenges. The *element_noun* becomes a canvas for your creative problem-solving, and your resourceful nature shines through.",
-        subheadline: "Drink from the cup of Resourcefulness",
-        text: ""
-    },
-    {
-        title: "Curious Soul",
-        image: require('../images/traits/curiosity.png'),
-        description: "The elixir of curiosity sparks a deep desire to explore. Every challenge, every encounter becomes an opportunity to learn. Your curious spirit leads you down uncharted paths, uncovering hidden wonders in the *element_noun*.",
-        subheadline: "Drink from the cup of Curiosity",
-        text: ""
+        title: "Abandoned Village Trail",
+        image: require('../images/paths/abandoned-village-trail.png'),
+        description: "The trail winds through ancient cobblestone paths. As you explore, a haunting clink catches your attention. Amidst overgrown weeds, you discover a piece of porcelain on the ground.",
+        resultText: "conquering challenges on the Abandoned Village Trail"
     },
 ];

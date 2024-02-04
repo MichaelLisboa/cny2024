@@ -1,16 +1,14 @@
 // contexts/LayoutContext.js
-import React, { createContext } from 'react';
+import React, { createContext, useContext } from 'react';
 import { useDynamicTextReplacer } from '../hooks/useDynamicTextReplacer';
 
-export const LayoutContext = createContext({
-    replaceText: () => {}, // Provide a default implementation
-  });
+export const LayoutContext = createContext();
 
 export const LayoutProvider = ({ children }) => {
-    const replaceText = useDynamicTextReplacer();
+    const { replaceText } = useDynamicTextReplacer(); // Destructure the returned object
 
     return (
-        <LayoutContext.Provider value={{ replaceText }}>
+        <LayoutContext.Provider value={{ replaceElementNoun: replaceText }}>
             {children}
         </LayoutContext.Provider>
     );

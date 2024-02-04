@@ -11,7 +11,7 @@ import WhatIsYourElement from './pages/choose-your-element';
 import ChooseYourCup from './pages/choose-your-cup';
 import ChooseYourAlliance from './pages/choose-your-alliance';
 import SolveTheRiddle from './pages/solve-the-riddle';
-import YourCrossroads from './pages/your-crossroads';
+import ChooseYourPath from './pages/choose-your-path';
 import SolveThePuzzle from './pages/solve-the-puzzle';
 import TestYourCalligraphySkills from './pages/test-your-calligraphy-skills';
 import EmbraceWhatInFrontOfYou from './pages/embrace-whats-in-front-of-you';
@@ -35,8 +35,8 @@ function getElementForPage(page) {
       return <ChooseYourAlliance />;
     case "/solve-the-riddle":
       return <SolveTheRiddle />;
-    case "/your-crossroads":
-      return <YourCrossroads />;
+    case "/choose-your-path":
+      return <ChooseYourPath />;
     case "/solve-the-puzzle":
       return <SolveThePuzzle />;
     case "/test-your-calligraphy-skills":

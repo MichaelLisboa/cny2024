@@ -1,10 +1,11 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 import { motion, useAnimation } from 'framer-motion';
+import { AppContext } from '../contexts/AppContext';
+import { useDynamicTextReplacer } from '../hooks/useDynamicTextReplacer';
 import pages from '../utils/pages';
 import Layout from '../templates/layout';
-import { AppContext } from '../contexts/AppContext';
 import { elementsList } from '../data';
 import MalCarousel from '../components/MalCarousel';
 import { OrnateButton } from '../components/Button';
@@ -91,13 +92,14 @@ const FooterSection = styled(motion.div)`
 
 const WhatIsYourElement = () => {
     const { updateUserSelection } = useContext(AppContext);
+    const replaceElementNoun = useDynamicTextReplacer();
     const [content, setContent] = useState('initial');
     const [selectedCard, setSelectedCard] = useState(null);
 
     const location = useLocation();
-    const currentPage = pages.find(page => page.url === location.pathname);
-    const nextPage = pages.find(page => page.url === currentPage.nextPage);
-    const previousPage = pages.find(page => page.url === currentPage.previousPage);
+    const currentPage = useMemo(() => pages.find(page => page.url === location.pathname), [location.pathname]);
+    const nextPage = useMemo(() => pages.find(page => page.url === currentPage.nextPage), [currentPage]);
+    const previousPage = useMemo(() => pages.find(page => page.url === currentPage.previousPage), [currentPage]);
     const headerControls = useAnimation();
     const bodyControls = useAnimation();
     const footerControls = useAnimation();
@@ -106,9 +108,9 @@ const WhatIsYourElement = () => {
         index: 2,
         image: elementsList[2].image,
         title: elementsList[2].title,
-        text: elementsList[2].text,
-        subheadline: elementsList[2].subheadline,
-        description: elementsList[2].description
+        text: replaceElementNoun(elementsList[2].text),
+        subheadline: replaceElementNoun(elementsList[2].subheadline),
+        description: replaceElementNoun(elementsList[2].description)
     };
 
     const [currentSlide, setCurrentSlide] = useState(initialSlide);
@@ -146,9 +148,9 @@ const WhatIsYourElement = () => {
             index: newCurrentSlideIndex,
             image: elementsList[newCurrentSlideIndex].image,
             title: elementsList[newCurrentSlideIndex].title,
-            text: elementsList[newCurrentSlideIndex].text,
-            subheadline: elementsList[newCurrentSlideIndex].subheadline,
-            description: elementsList[newCurrentSlideIndex].description
+            text: replaceElementNoun(elementsList[newCurrentSlideIndex].text),
+            subheadline: replaceElementNoun(elementsList[newCurrentSlideIndex].subheadline),
+            description: replaceElementNoun(elementsList[newCurrentSlideIndex].description)
         });
     };
 

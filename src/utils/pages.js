@@ -96,7 +96,7 @@ const pages = [
       title: "Solve the riddle",
       url: "/solve-the-riddle",
       previousPage: "/choose-your-alliance",
-      nextPage: "/your-crossroads",
+      nextPage: "/choose-your-path",
       sectionTitle: "Riddle",
       sectionIcon: require("../images/icons/riddle.svg"),
       bgImage: require("../images/background/5-alliance.jpg"),
@@ -109,7 +109,7 @@ const pages = [
     },
     {
       title: "Your crossroads",
-      url: "/your-crossroads",
+      url: "/choose-your-path",
       previousPage: "/solve-the-riddle",
       nextPage: "/solve-the-puzzle",
       sectionTitle: "Path",
@@ -125,7 +125,7 @@ const pages = [
     {
       title: "Solve the puzzle",
       url: "/solve-the-puzzle",
-      previousPage: "/your-crossroads",
+      previousPage: "/choose-your-path",
       nextPage: "/test-your-calligraphy-skills",
       sectionTitle: "Puzzle",
       sectionIcon: require("../images/icons/puzzle.svg"),

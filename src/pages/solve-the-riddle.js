@@ -2,10 +2,10 @@ import React, { useContext, useMemo, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { motion, useAnimation } from 'framer-motion';
+import { AppContext } from '../contexts/AppContext';
 import { useDynamicTextReplacer } from '../hooks/useDynamicTextReplacer';
 import pages from '../utils/pages';
 import Layout from '../templates/layout';
-import { AppContext } from '../contexts/AppContext';
 import MalCarousel from '../components/MalCarousel/MalCarousel2';
 import Image from '../components/Image';
 import { riddlesList } from '../data';
@@ -65,8 +65,6 @@ const SolveTheRiddle = () => {
   const { updateUserSelection, getUserInfo } = useContext(AppContext);
   const replaceElementNoun = useDynamicTextReplacer();
   const [content, setContent] = useState('initial');
-
-  const userInfo = getUserInfo();
   const location = useLocation();
   const currentPage = useMemo(() => pages.find(page => page.url === location.pathname), [location.pathname]);
   const nextPage = useMemo(() => pages.find(page => page.url === currentPage.nextPage), [currentPage]);
