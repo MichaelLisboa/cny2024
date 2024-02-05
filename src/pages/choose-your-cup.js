@@ -122,7 +122,7 @@ const ChooseYourTrait = () => {
 
         if (chosenTrait) {
             await animateExit();
-            setContent(true); // Change the content
+            setContent(true);
             setTimeout(() => {
                 animateEnter();
             }, 500);

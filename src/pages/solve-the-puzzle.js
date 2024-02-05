@@ -8,6 +8,9 @@ import pages from '../utils/pages';
 import Layout from '../templates/layout';
 import Image from '../components/Image';
 import { OrnateButton } from '../components/Button';
+// import PuzzleGame from '../components/Puzzle';
+import JigsawPuzzle from '../components/react-mal-jigsaw/JigsawPuzzle';
+import trait from "../images/tokens/trait.png";
 
 const HeaderSection = styled(motion.div)`
   // Add your header-section styles here.
@@ -33,9 +36,28 @@ const SolveThePuzzle = () => {
     const bodyControls = useAnimation();
     const footerControls = useAnimation();
 
-    const handleButtonClick = () => {
-        setContent('initial');
-    }
+    const animateExit = async () => {
+        await footerControls.start({ y: 100, opacity: 0 });
+        await bodyControls.start({ y: 100, opacity: 0 });
+        await headerControls.start({ y: 100, opacity: 0 });
+    };
+
+    const animateEnter = async () => {
+        await headerControls.start({ y: 0, opacity: 1, transition: { delay: 0.01 } });
+        await bodyControls.start({ y: 0, opacity: 1, transition: { delay: 0.025 } });
+        await footerControls.start({ y: 0, opacity: 1, transition: { delay: 0.05 } });
+    };
+
+    const handleButtonClick = async () => {
+        // Start the exit animation
+        await animateExit();
+
+        // Update the content
+        setContent('newContent'); // replace 'newContent' with the actual new content
+
+        // Start the enter animation
+        await animateEnter();
+    };
 
     return (
         <Layout>
@@ -45,11 +67,16 @@ const SolveThePuzzle = () => {
             >
                 {content === 'initial' ? (
                     <div className="mal-margin-bottom-large mal-padding-remove-horizontal">
-                        <h3 className="mal-margin-remove-top">Observing closer, it turns out to be a porcelain piece of a broken vase.</h3>
+                        <h3 className="mal-margin-remove-top">{replaceElementNoun("Observing closer, it turns out to be a porcelain piece of a broken vase.")}</h3>
                         <p className="mal-text-medium mal-margin-small-top">{replaceElementNoun("The pieces lie in disarray, *alliance_noun* said it may be hinting at a tale untold.")}</p>
                         <p className="mal-text-medium">Restore the once-beautiful porcelain.</p>
                     </div>
-                ) : ``}
+                ) :
+                    (<div className="mal-margin-bottom-large mal-padding-remove-horizontal">
+                        <h3 className="mal-margin-remove-top">{replaceElementNoun("Restore the porcelain before time runs out.")}</h3>
+                        <p className="mal-text-medium mal-margin-small-top">{replaceElementNoun("Swap the tiles to restore.")}</p>
+                    </div>)
+                }
             </HeaderSection>
             <BodySection
                 animate={bodyControls}
@@ -57,9 +84,11 @@ const SolveThePuzzle = () => {
             >
                 {content === 'initial' ? (
                     <div>
+                        <JigsawPuzzle imageSrc={trait} gridSize={3} />
                     </div>
                 ) : (
                     <div className="mal-padding-small mal-text-center">
+                        Monkey
                     </div>
                 )}
             </BodySection>
@@ -71,11 +100,7 @@ const SolveThePuzzle = () => {
                     <OrnateButton onClick={handleButtonClick}>
                         Restore the porcelain
                     </OrnateButton>
-                ) : (
-                    <OrnateButton url={nextPage.url}>
-                        {nextPage.title}
-                    </OrnateButton>
-                )}
+                ) : null}
             </FooterSection>
         </Layout >
     );
