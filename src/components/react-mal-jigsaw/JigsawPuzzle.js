@@ -10,7 +10,7 @@ const PuzzleContainer = styled.div`
   width: 300px;
   height: 300px;
   position: relative;
-  overflow: hidden; // Prevent pieces from being dragged outside
+  overflow: hidden;
 `;
 
 const DraggablePiece = styled(motion.div)`
@@ -21,14 +21,31 @@ const DraggablePiece = styled(motion.div)`
   height: calc(100% / ${(props) => props.gridSize});
 `;
 
-const JigsawPuzzle = ({ imageSrc, gridSize }) => {
+const JigsawPuzzle = ({ imageSrc, gridSize, timeLimit=30 }) => {
   const [pieces, setPieces] = useState([]);
+  const [elapsedTime, setElapsedTime] = useState(0);
   const clickSound = new Audio(clickSoundFile);
   const containerRef = useRef();
 
   useEffect(() => {
     setPieces(createShuffledPieces(gridSize, imageSrc));
   }, [imageSrc, gridSize]);
+
+  useEffect(() => {
+    let timerInterval = null;
+
+    if (elapsedTime < timeLimit) {
+      timerInterval = setInterval(() => {
+        setElapsedTime((prevTime) => prevTime + 1);
+      }, 1000); // Increment elapsed time every second
+    } else {
+      console.log('Time is up!'); // Console notification when time limit is reached
+    }
+
+    return () => {
+      clearInterval(timerInterval); // Cleanup the interval when component unmounts
+    };
+  }, [elapsedTime, timeLimit]);
 
   const onDragEnd = (dragIndex, event, info) => {
     const dropTargetIndex = calculateDropTargetIndex(info.point, containerRef.current, gridSize);
@@ -37,7 +54,6 @@ const JigsawPuzzle = ({ imageSrc, gridSize }) => {
       swapPieces(dragIndex, dropTargetIndex);
       clickSound.play().catch((error) => console.error('Failed to play sound:', error));
     } else {
-      // Return the dragged piece to its original location
       setPieces((pieces) => {
         const newPieces = Array.from(pieces);
         newPieces[dragIndex].x = 0;
@@ -55,24 +71,29 @@ const JigsawPuzzle = ({ imageSrc, gridSize }) => {
     });
   };
 
+  const isPuzzleComplete = pieces.every((piece, index) => piece.id === index);
+
   return (
-    <PuzzleContainer ref={containerRef} gridSize={gridSize}>
-      {pieces.map((piece, index) => (
-        <DraggablePiece
-          key={piece.id}
-          style={{
-            ...piece.style,
-            x: piece.x,
-            y: piece.y,
-          }}
-          drag
-          dragConstraints={containerRef}
-          onDragEnd={(event, info) => onDragEnd(index, event, info)}
-          whileDrag={{ zIndex: 2 }}
-          gridSize={gridSize}
-        />
-      ))}
-    </PuzzleContainer>
+    <div>
+      <PuzzleContainer ref={containerRef} gridSize={gridSize}>
+        {pieces.map((piece, index) => (
+          <DraggablePiece
+            key={piece.id}
+            style={{
+              ...piece.style,
+              x: piece.x,
+              y: piece.y,
+            }}
+            drag
+            dragConstraints={containerRef}
+            onDragEnd={(event, info) => onDragEnd(index, event, info)}
+            whileDrag={{ zIndex: 2 }}
+            gridSize={gridSize}
+          />
+        ))}
+      </PuzzleContainer>
+      {isPuzzleComplete && <p>Puzzle completed in {elapsedTime} seconds!</p>}
+    </div>
   );
 };
 

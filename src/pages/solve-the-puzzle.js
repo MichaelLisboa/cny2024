@@ -8,9 +8,8 @@ import pages from '../utils/pages';
 import Layout from '../templates/layout';
 import Image from '../components/Image';
 import { OrnateButton } from '../components/Button';
-// import PuzzleGame from '../components/Puzzle';
 import JigsawPuzzle from '../components/react-mal-jigsaw/JigsawPuzzle';
-import trait from "../images/tokens/trait.png";
+import pottery1 from "../images/jigsaw/pottery-finished-1.jpg";
 
 const HeaderSection = styled(motion.div)`
   // Add your header-section styles here.
@@ -84,7 +83,10 @@ const SolveThePuzzle = () => {
             >
                 {content === 'initial' ? (
                     <div>
-                        <JigsawPuzzle imageSrc={trait} gridSize={3} />
+                        <JigsawPuzzle
+                            imageSrc={pottery1}
+                            gridSize={3} 
+                            timeLimit={30} />
                     </div>
                 ) : (
                     <div className="mal-padding-small mal-text-center">
