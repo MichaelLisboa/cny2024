@@ -1,27 +1,83 @@
-import React, { useContext } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useContext, useState, useMemo } from 'react';
+import { useLocation } from 'react-router-dom';
+import styled from 'styled-components';
+import { motion, useAnimation } from 'framer-motion';
+import { AppContext } from '../contexts/AppContext';
+import { useDynamicTextReplacer } from '../hooks/useDynamicTextReplacer';
 import pages from '../utils/pages';
 import Layout from '../templates/layout';
-import { AppContext } from '../contexts/AppContext';
+import Image from '../components/Image';
+import { OrnateButton } from '../components/Button';
+
+const HeaderSection = styled(motion.div)`
+  // Add your header-section styles here.
+`;
+
+const BodySection = styled(motion.div)`
+  // Add your body-section styles here.
+`;
+
+const FooterSection = styled(motion.div)`
+  // Add your footer-section styles here.
+`;
 
 const SolveThePuzzle = () => {
-    const { userState, updateUserInfo } = useContext(AppContext) || JSON.parse(localStorage.getItem('userState'));
+    const { updateUserSelection, getUserInfo } = useContext(AppContext);
+    const replaceElementNoun = useDynamicTextReplacer();
+    const [content, setContent] = useState('initial');
     const location = useLocation();
-    const currentPage = pages.find(page => page.url === location.pathname);
-    const nextPage = pages.find(page => page.url === currentPage.nextPage);
-    const previousPage = pages.find(page => page.url === currentPage.previousPage);
+    const currentPage = useMemo(() => pages.find(page => page.url === location.pathname), [location.pathname]);
+    const nextPage = useMemo(() => pages.find(page => page.url === currentPage.nextPage), [currentPage]);
+    const previousPage = useMemo(() => pages.find(page => page.url === currentPage.previousPage), [currentPage]);
+    const headerControls = useAnimation();
+    const bodyControls = useAnimation();
+    const footerControls = useAnimation();
+
+    const handleButtonClick = () => {
+        setContent('initial');
+    }
 
     return (
-        // make this component full screen
-
         <Layout>
-            {/* using framer-motion make the carousel swipe and stick to each card. the focused card should be centered and
-            fill the width 80% and the height should be 80% of the parent container the cards to the left and right of the focused card should be 
-            visible slightly smaller and at 80% opacity but not centered. the cards should snap to the center when the user stops dragging
-            */}
-            <h1>{currentPage ? currentPage.title : ''}</h1>
-            <Link to={`${nextPage.url}`}>Go to {nextPage.title}</Link>
-        </Layout>
+            <HeaderSection
+                animate={headerControls}
+                className="header-section"
+            >
+                {content === 'initial' ? (
+                    <div className="mal-margin-bottom-large mal-padding-remove-horizontal">
+                        <h3 className="mal-margin-remove-top">Observing closer, it turns out to be a porcelain piece of a broken vase.</h3>
+                        <p className="mal-text-medium mal-margin-small-top">{replaceElementNoun("The pieces lie in disarray, *alliance_noun* said it may be hinting at a tale untold.")}</p>
+                        <p className="mal-text-medium">Restore the once-beautiful porcelain.</p>
+                    </div>
+                ) : ``}
+            </HeaderSection>
+            <BodySection
+                animate={bodyControls}
+                className="body-section"
+            >
+                {content === 'initial' ? (
+                    <div>
+                    </div>
+                ) : (
+                    <div className="mal-padding-small mal-text-center">
+                    </div>
+                )}
+            </BodySection>
+            <FooterSection
+                animate={footerControls}
+                className="footer-section"
+            >
+                {content === 'initial' ? (
+                    <OrnateButton onClick={handleButtonClick}>
+                        Restore the porcelain
+                    </OrnateButton>
+                ) : (
+                    <OrnateButton url={nextPage.url}>
+                        {nextPage.title}
+                    </OrnateButton>
+                )}
+            </FooterSection>
+        </Layout >
     );
 };
 
