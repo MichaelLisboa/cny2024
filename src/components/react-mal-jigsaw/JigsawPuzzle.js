@@ -28,15 +28,24 @@ const Countdown = styled.h3`
 
 const JigsawPuzzle = ({ imageSrc, gridSize, timeLimit }) => {
     const [pieces, setPieces] = useState([]);
+    const [isPuzzleComplete, setIsPuzzleComplete] = useState(false);
+    const [puzzleActive, setPuzzleActive] = useState(true);
     const [elapsedTime, setElapsedTime] = useState(0);
-    const [puzzleActive, setPuzzleActive] = useState(true); // State to control puzzle activity
-    const [isPuzzleComplete, setIsPuzzleComplete] = useState(false); // State to track puzzle completion
     const clickSound = new Audio(clickSoundFile);
     const containerRef = useRef();
 
     useEffect(() => {
         setPieces(createShuffledPieces(gridSize, imageSrc));
-    }, [imageSrc, gridSize]);
+    }, []); // Run once after first render
+
+    useEffect(() => {
+        const isComplete = pieces.every((piece, index) => piece.id === index);
+        setIsPuzzleComplete(isComplete);
+      
+        // if (isComplete && puzzleActive) {
+        //   setPuzzleActive(false);
+        // }
+      }, [pieces, puzzleActive]);
 
     useEffect(() => {
         let timerInterval = null;
@@ -105,9 +114,9 @@ const JigsawPuzzle = ({ imageSrc, gridSize, timeLimit }) => {
 
     return (
         <div>
-            {isPuzzleComplete ? 
+            {isPuzzleComplete ?
                 <Countdown>Puzzle completed in {elapsedTime} seconds!</Countdown>
-            : 
+                :
                 <Countdown>{timeLimit - elapsedTime} seconds remaining</Countdown>
             }
             <PuzzleContainer ref={containerRef} gridSize={gridSize}>
@@ -119,7 +128,7 @@ const JigsawPuzzle = ({ imageSrc, gridSize, timeLimit }) => {
                             x: piece.x,
                             y: piece.y,
                         }}
-                        drag={puzzleActive} // Set drag prop based on puzzle activity
+                        drag={!isPuzzleComplete && puzzleActive} // Set drag prop based on puzzle activity
                         dragConstraints={containerRef}
                         onDragEnd={(event, info) => onDragEnd(index, event, info)}
                         whileDrag={{ zIndex: 200, scale: 1.025, boxShadow: '0px 2px 24px rgba(50, 50, 50, 0.25)' }}
@@ -156,14 +165,9 @@ function createShuffledPieces(gridSize, imageSrc) {
 }
 
 function shuffleArray(array) {
-    let currentIndex = array.length, randomIndex;
-    // While there remain elements to shuffle...
-    while (currentIndex !== 0) {
-        // Pick a remaining element...
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex--;
-        // And swap it with the current element.
-        [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
     }
     return array;
 }
