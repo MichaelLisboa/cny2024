@@ -52,19 +52,19 @@ const StyledLink = styled(Link)`
 const OptionButtonLink = styled(Link)`
   position: relative;
   z-index: 2;
-  display: inline-block; // Change this line
-  flex-direction: column;
+  display: flex;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
-  padding: 0;
+  justify-content: space-around;
+  padding: 0 !important;
+  margin: 0 !important;
   height: 72px;
-  // min-width: 248px;
   border: solid 0px transparent;
-  border-width: 20px 28px;
-  -moz-border-image: url(${optionButtonDefaultImage}) 44 64 fill stretch stretch;
-  -webkit-border-image: url(${optionButtonDefaultImage}) 44 64 fill stretch stretch;
-  -o-border-image: url(${optionButtonDefaultImage}) 44 64 fill stretch stretch;
-  border-image: url(${optionButtonDefaultImage}) 44 64 fill stretch stretch;
+  border-width: 20px 20px;
+  -moz-border-image: url(${optionButtonDefaultImage}) 44 56 fill stretch stretch;
+  -webkit-border-image: url(${optionButtonDefaultImage}) 44 56 fill stretch stretch;
+  -o-border-image: url(${optionButtonDefaultImage}) 44 56 fill stretch stretch;
+  border-image: url(${optionButtonDefaultImage}) 44 56 fill stretch stretch;
   font-family: "Inknut Antiqua", Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   font-weight: 800;
   font-size: 1rem;
@@ -81,11 +81,11 @@ const OptionButtonLink = styled(Link)`
   &:hover {
     text-decoration: none;
     color: rgba(156, 19, 19, 1);
-    font-size: 1.25rem;
-    border-image: url(${optionButtonDefaultImage}) 44 64 fill stretch stretch;
-    -moz-border-image: url(${optionButtonDefaultImage}) 44 64 fill stretch stretch;
-    -webkit-border-image: url(${optionButtonDefaultImage}) 44 64 fill stretch stretch;
-    -o-border-image: url(${optionButtonDefaultImage}) 44 64 fill stretch stretch;
+    font-size: 1rem;
+    border-image: url(${optionButtonDefaultImage}) 44 56 fill stretch stretch;
+    -moz-border-image: url(${optionButtonDefaultImage}) 44 56 fill stretch stretch;
+    -webkit-border-image: url(${optionButtonDefaultImage}) 44 56 fill stretch stretch;
+    -o-border-image: url(${optionButtonDefaultImage}) 44 56 fill stretch stretch;
     transform: translate3d(0, -4px, 0);
     will-change: border-image, min-width, font-size;
   }
@@ -163,7 +163,7 @@ export const OptionButton = ({ children, url, onClick }) => {
       onClick={handleClick}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ delay: 1.5 }}
+      transition={{ delay: 1 }}
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseLeave}

@@ -23,8 +23,9 @@ const SplashImage = styled(Image)`
 `;
 
 const ButtonContainer = styled.div`
-  display: flex; // Add this line to make the buttons display side by side
-  justify-content: space-between; // Optional: Adjust as needed for spacing
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 `;
 
 const HeaderSection = styled(motion.div)`
@@ -140,7 +141,7 @@ const SolveThePuzzle = () => {
             // go to {nextPage.title}
           }
         }>
-          No, move on
+          No, let's move on
         </OptionButton>
         <OptionButton onClick={handleButtonClick}>
           Yes, restore the pieces
