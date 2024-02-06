@@ -9,7 +9,7 @@ import Layout from '../templates/layout';
 import Image from '../components/Image';
 import { OrnateButton, OptionButton } from '../components/Button';
 import JigsawPuzzle from '../components/react-mal-jigsaw/JigsawPuzzle';
-import CalligraphyGame from '../components/react-mal-calligraphy';
+import { puzzleData } from '../data';
 import pottery1 from "../images/jigsaw/pottery-finished-1.jpg";
 import puzzle from "../images/jigsaw/puzzle.png";
 import success from "../images/tokens/puzzle.png";
@@ -84,6 +84,8 @@ const SolveThePuzzle = () => {
     const bodyControls = useAnimation();
     const footerControls = useAnimation();
 
+    console.log(puzzleData);
+
     const animateExit = async () => {
         await footerControls.start({ y: 100, opacity: 0 });
         await bodyControls.start({ y: 100, opacity: 0 });
@@ -121,14 +123,14 @@ const SolveThePuzzle = () => {
             >
                 {content === 'initial' ? (
                     <div className="mal-margin-bottom-large mal-padding-remove-horizontal">
-                        <h3 className="mal-margin-remove-top">{replaceElementNoun("You look closer and realize the broken pieces of porcelain can be restored.")}</h3>
-                        <p className="mal-text-medium mal-margin-small-top">{replaceElementNoun("Looking at the scattered pieces, *alliance_noun* hints that they may tell a legendary tale untold. Do you want to restore the pieces?")}</p>
+                        <h3 className="mal-margin-remove-top">{replaceElementNoun(puzzleData[0].headline)}</h3>
+                        <p className="mal-text-medium mal-margin-small-top">{replaceElementNoun(puzzleData[0].subheadline)}</p>
                     </div>
                 ) : content === 'thirdState' ? null
                     : (
                         <div className="mal-margin-bottom-large mal-padding-remove-horizontal">
-                            <h3 className="mal-margin-remove-top">{replaceElementNoun("*alliance_noun* urges you to restore the porcelain pieces before time runs out.")}</h3>
-                            <p className="mal-text-medium mal-margin-small-top">{replaceElementNoun("Swap the tiles to restore.")}</p>
+                            <h3 className="mal-margin-remove-top">{replaceElementNoun(puzzleData[0].challengeHeadline)}</h3>
+                            <p className="mal-text-medium mal-margin-small-top">{replaceElementNoun(puzzleData[0].challengeMessage)}</p>
                         </div>
                     )}
             </HeaderSection>
@@ -141,26 +143,24 @@ const SolveThePuzzle = () => {
                 ) : content === 'thirdState' ? (
                     getUserInfo().potteryPuzzleResult ? (
                         <div className="mal-text-center">
-                            <h3 className="mal-h2 mal-margin-remove-vertical">Blah</h3>
+                            <h2 className="mal-h2 mal-margin-remove-vertical">{replaceElementNoun(puzzleData[0].successTitle)}</h2>
                             <PuzzleTokenImage>
                                 <Image src={success} alt={`You successfully restored the porcelain vase!`} />
                             </PuzzleTokenImage>
-                            <h2 className="mal-h3 mal-margin-remove-vertical">{`initialRiddleRef.current.successTitle`}</h2>
-                            <p className="mal-text-medium mal-text-italic">"{`initialRiddleRef.current.successMessage`}"</p>
+                            <p className="mal-text-medium">{replaceElementNoun(puzzleData[0].successMessage)}</p>
                         </div>
                     ) : (
                         <div className="mal-text-center">
                             <PuzzleTokenImage className="mal-padding">
                                 <Image src={fail} alt={`You did not restore the porcelain vase in time.`} />
                             </PuzzleTokenImage>
-                            <h2 className="mal-h3 mal-margin-remove-vertical">{replaceElementNoun(`You do not succeed to solve the puzzle.`)}</h2>
-                            <p className="mal-text-medium">{replaceElementNoun(`The porcelain remains fragmented, scattered across the ground. It seems time slipped away faster than your efforts to restore it. The *alliance_noun* urges you to learn from this experience and carry the lessons of impermanence and the value of time into the unfolding journey.`)}</p>
-                            {/* <button
+                            <h2 className="mal-h3 mal-margin-remove-vertical">{replaceElementNoun(puzzleData[0].failTitle)}</h2>
+                            <p className="mal-text-medium">{replaceElementNoun(puzzleData[0].failMessage)}</p>
+                            <button
                                 className="mal-button mal-button-small mal-button-primary mal-border-rounded"
-                                onClick={handleReset}
                             >
                                 Would you like to try again?
-                            </button> */}
+                            </button>
                         </div>
                     )
                 ) : (

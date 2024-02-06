@@ -315,3 +315,36 @@ export const pathsList = [
         resultText: "conquering challenges on the Abandoned Village Trail"
     },
 ];
+
+export const puzzleData = [
+    {
+        headline: "You look closer and realize the broken pieces of porcelain can be restored.",
+        subheadline: "Looking at the scattered pieces, *alliance_noun* hints that they may tell a legendary tale untold. Do you want to restore the pieces?",
+        challengeHeadline: "The *alliance_noun* challenges you to restore the broken porcelain pieces before time runs out.",
+        challengeMessage: "Swap the tiles to restore the porcelain pieces.",
+        successTitle: "Pottery Master",
+        successMessage: "With a graceful sweep, you and the *alliance_noun* gather the broken pieces and arrange them in a harmonious pattern. In the journey ahead, remember the strength that lies within restoration.",
+        failTitle: "In the fragments of failure, seeds of wisdom are sown.",
+        failMessage: "The porcelain remains fragmented, scattered across the ground. It seems time slipped away faster than your efforts to restore it. The *alliance_noun* urges you to learn from this experience and carry the lessons of impermanence and the value of time into the unfolding journey.",
+        puzzlesList: [
+            {
+                title: "Crafted Porcelain Puzzle",
+                image: require('../images/jigsaw/pottery-finished-1.jpg'),
+                description: "The porcelain pieces lie shattered, scattered across the ground. As you piece together the fragments, a sense of accomplishment fills your spirit.",
+                subheadline: "Swap the tiles to restore.",
+            },
+            {
+                title: "Mysterious Artifact Puzzle",
+                image: require('../images/jigsaw/pottery-finished-2.jpg'),
+                description: "A mysterious artifact lies in pieces, waiting to be restored. As you piece together the fragments, a sense of accomplishment fills your spirit.",
+                subheadline: "Swap the tiles to restore.",
+            },
+            {
+                title: "Mystical Relic Puzzle",
+                image: require('../images/jigsaw/pottery-finished-3.jpg'),
+                description: "A mystical relic lies in pieces, waiting to be restored. As you piece together the fragments, a sense of accomplishment fills your spirit.",
+                subheadline: "Swap the tiles to restore.",
+            },
+        ]
+    }
+];
