@@ -35,17 +35,17 @@ const StyledLink = styled(Link)`
   transition: transform 0.35s ease-in-out, min-width 0.35s ease-in-out, font-size 0.35s ease-in-out;
   will-change: transform, min-width, font-size;
 
-  &:hover {
-    text-decoration: none;
-    color: initial;
-    font-size: 1.25rem;
-    border-image: url(${buttonHoverImage}) 44 64 fill stretch stretch;
-    -moz-border-image: url(${buttonHoverImage}) 44 64 fill stretch stretch;
-    -webkit-border-image: url(${buttonHoverImage}) 44 64 fill stretch stretch;
-    -o-border-image: url(${buttonHoverImage}) 44 64 fill stretch stretch;
-    transform: translate3d(0, -4px, 0);
-    will-change: border-image, min-width, font-size;
-  }
+  // &:hover {
+  //   text-decoration: none;
+  //   color: initial;
+  //   font-size: 1.25rem;
+  //   border-image: url(${buttonHoverImage}) 44 64 fill stretch stretch;
+  //   -moz-border-image: url(${buttonHoverImage}) 44 64 fill stretch stretch;
+  //   -webkit-border-image: url(${buttonHoverImage}) 44 64 fill stretch stretch;
+  //   -o-border-image: url(${buttonHoverImage}) 44 64 fill stretch stretch;
+  //   transform: translate3d(0, -4px, 0);
+  //   will-change: border-image, min-width, font-size;
+  // }
 
 `;
 

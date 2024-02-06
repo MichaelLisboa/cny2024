@@ -14,6 +14,7 @@ import pottery1 from "../images/jigsaw/pottery-finished-1.jpg";
 import puzzle from "../images/jigsaw/puzzle.png";
 
 const SplashImage = styled(Image)`
+// max-height: 35vh;
     align-self: center;
 
     img {
@@ -22,7 +23,7 @@ const SplashImage = styled(Image)`
     }
 
     @media (min-width: 768px) {
-        max-height: 40vh;
+        // max-height: 40vh;
         align-self: center;
         img {
             width: auto !important;
@@ -37,13 +38,8 @@ const HeaderSection = styled(motion.div)`
 
 const BodySection = styled(motion.div)`
   // Add your body-section styles here.
-  margin-left: -35px;
-  width: 110vw;
-
-  @media (min-width: 768px) {
-    margin-left: auto;
-    width: 100% !important;
-  }
+  margin-left: -15% !important;
+  width: 130% !important;
 `;
 
 const FooterSection = styled(motion.div)`
