@@ -41,6 +41,7 @@ const SolveThePuzzle = () => {
     const { updateUserSelection, getUserInfo } = useContext(AppContext);
     const replaceElementNoun = useDynamicTextReplacer();
     const [content, setContent] = useState('initial');
+    const [isPuzzleComplete, setIsPuzzleComplete] = useState(null);
     const location = useLocation();
     const currentPage = useMemo(() => pages.find(page => page.url === location.pathname), [location.pathname]);
     const nextPage = useMemo(() => pages.find(page => page.url === currentPage.nextPage), [currentPage]);
@@ -101,13 +102,13 @@ const SolveThePuzzle = () => {
                     <div className="mal-padding-small mal-text-center">
                         <JigsawPuzzle
                             imageSrc={pottery1}
-                            gridSize={3} 
+                            gridSize={3}
                             timeLimit={30}
                             onCompletionStatusChange={(isSuccessful) => {
                                 if (isSuccessful) {
-                                    console.log('The puzzle was completed successfully.');
+                                    setIsPuzzleComplete(true)
                                 } else {
-                                    console.log('The puzzle was not completed in time.');
+                                    setIsPuzzleComplete(false)
                                 }
                             }} />
                     </div>
@@ -121,6 +122,28 @@ const SolveThePuzzle = () => {
                     <OrnateButton onClick={handleButtonClick}>
                         Restore the porcelain
                     </OrnateButton>
+                ) : isPuzzleComplete !== null && isPuzzleComplete !== undefined ? (
+                    isPuzzleComplete ? (
+                        <OrnateButton
+                            onClick={() =>
+                                updateUserSelection({
+                                    ...getUserInfo(),
+                                    currentPage: nextPage.url
+                                })
+                            }>
+                            {nextPage.title}
+                        </OrnateButton>
+                    ) : (
+                        <OrnateButton
+                            onClick={() =>
+                                updateUserSelection({
+                                    ...getUserInfo(),
+                                    currentPage: currentPage.url // Use currentPage.url instead of nextPage.url
+                                })
+                            }>
+                            Failed
+                        </OrnateButton>
+                    )
                 ) : null}
             </FooterSection>
         </Layout >
