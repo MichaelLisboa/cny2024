@@ -1,4 +1,4 @@
-import React, { useContext, useState, useMemo } from 'react';
+import React, { useContext, useState, useMemo, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { motion, useAnimation } from 'framer-motion';
@@ -63,15 +63,16 @@ const SolveThePuzzle = () => {
     };
 
     const handleButtonClick = async () => {
-        // Start the exit animation
         await animateExit();
-
-        // Update the content
-        setContent('newContent'); // replace 'newContent' with the actual new content
-
-        // Start the enter animation
+        setContent('newContent');
         await animateEnter();
     };
+
+    useEffect(() => {
+        if (isPuzzleComplete !== null && isPuzzleComplete !== undefined) {
+            updateUserSelection('potteryPuzzleResult', isPuzzleComplete);
+        }
+    }, [isPuzzleComplete, updateUserSelection]);
 
     return (
         <Layout>
@@ -123,27 +124,10 @@ const SolveThePuzzle = () => {
                         Restore the porcelain
                     </OrnateButton>
                 ) : isPuzzleComplete !== null && isPuzzleComplete !== undefined ? (
-                    isPuzzleComplete ? (
                         <OrnateButton
-                            onClick={() =>
-                                updateUserSelection({
-                                    ...getUserInfo(),
-                                    currentPage: nextPage.url
-                                })
-                            }>
+                            url={nextPage.url}>
                             {nextPage.title}
                         </OrnateButton>
-                    ) : (
-                        <OrnateButton
-                            onClick={() =>
-                                updateUserSelection({
-                                    ...getUserInfo(),
-                                    currentPage: currentPage.url // Use currentPage.url instead of nextPage.url
-                                })
-                            }>
-                            Failed
-                        </OrnateButton>
-                    )
                 ) : null}
             </FooterSection>
         </Layout >

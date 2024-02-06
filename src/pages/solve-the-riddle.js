@@ -261,7 +261,6 @@ const SolveTheRiddle = () => {
               {nextPage.title}
             </OrnateButton>
           ) : (
-
             <OrnateButton url={nextPage.url}>
               {nextPage.title}
             </OrnateButton>
