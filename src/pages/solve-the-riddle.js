@@ -37,7 +37,7 @@ const DescriptionText = styled.p`
     width: 75%;
 `;
 
-const TraitTokenImage = styled.div`
+const RiddleTokenImage = styled.div`
     width: auto;
     padding: 32px;
 
@@ -223,21 +223,21 @@ const SolveTheRiddle = () => {
           getUserInfo().riddleResult ? (
             <div className="mal-text-center">
               <h3 className="mal-h2 mal-margin-remove-vertical">{initialRiddleRef.current.result}</h3>
-              <TraitTokenImage>
+              <RiddleTokenImage>
                 <Image
                   src={success}
                   alt={initialRiddleRef.current.result} />
-              </TraitTokenImage>
+              </RiddleTokenImage>
               <h2 className="mal-h3 mal-margin-remove-vertical">{initialRiddleRef.current.successTitle}</h2>
               <p className="mal-text-medium mal-text-italic">"{initialRiddleRef.current.successMessage}"</p>
             </div>
           ) :
             <div className="mal-text-center">
-              <TraitTokenImage className="mal-padding">
+              <RiddleTokenImage className="mal-padding">
                 <Image
                   src={fail}
                   alt={initialRiddleRef.current.failMessage} />
-              </TraitTokenImage>
+              </RiddleTokenImage>
               <h2 className="mal-h3 mal-margin-remove-vertical">{initialRiddleRef.current.failTitle}</h2>
               <p className="mal-text-medium mal-text-italic">"{initialRiddleRef.current.failMessage}"</p>
               <button

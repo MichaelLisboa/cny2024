@@ -12,6 +12,8 @@ import JigsawPuzzle from '../components/react-mal-jigsaw/JigsawPuzzle';
 import CalligraphyGame from '../components/react-mal-calligraphy';
 import pottery1 from "../images/jigsaw/pottery-finished-1.jpg";
 import puzzle from "../images/jigsaw/puzzle.png";
+import success from "../images/tokens/puzzle.png";
+import fail from "../images/tokens/failed_puzzle.png";
 
 const SplashImage = styled(Image)`
     align-self: center;
@@ -38,15 +40,30 @@ const ButtonContainer = styled.div`
     }
 `;
 
+const PuzzleTokenImage = styled.div`
+    width: auto;
+    padding: 32px;
+
+    img {
+        height: 100%;
+        max-height: 25vh;
+        object-fit: contain;
+    }
+`;
+
 const HeaderSection = styled(motion.div)`
   // Add your header-section styles here.
 `;
 
 const BodySection = styled(motion.div)`
   // Add your body-section styles here.
-  justify-content: flex-start !important;
-  margin-left: -15% !important;
-  width: 130% !important;
+  justify-content: flex-start;
+  text-align: center !important;
+
+  .body-section-wide {
+    align-self: center;
+    width: 140% !important;
+   }
 `;
 
 const FooterSection = styled(motion.div)`
@@ -107,26 +124,45 @@ const SolveThePuzzle = () => {
                         <h3 className="mal-margin-remove-top">{replaceElementNoun("You look closer and realize the broken pieces of porcelain can be restored.")}</h3>
                         <p className="mal-text-medium mal-margin-small-top">{replaceElementNoun("Looking at the scattered pieces, *alliance_noun* hints that they may tell a legendary tale untold. Do you want to restore the pieces?")}</p>
                     </div>
-                ) : content === 'thirdState' ? (
-                    // Replace this with the actual content for the third state
-                    <div></div>
-                ) : (
-                    <div className="mal-margin-bottom-large mal-padding-remove-horizontal">
-                        <h3 className="mal-margin-remove-top">{replaceElementNoun("*alliance_noun* urges you to restore the porcelain pieces before time runs out.")}</h3>
-                        <p className="mal-text-medium mal-margin-small-top">{replaceElementNoun("Swap the tiles to restore.")}</p>
-                    </div>
-                )}
+                ) : content === 'thirdState' ? null
+                    : (
+                        <div className="mal-margin-bottom-large mal-padding-remove-horizontal">
+                            <h3 className="mal-margin-remove-top">{replaceElementNoun("*alliance_noun* urges you to restore the porcelain pieces before time runs out.")}</h3>
+                            <p className="mal-text-medium mal-margin-small-top">{replaceElementNoun("Swap the tiles to restore.")}</p>
+                        </div>
+                    )}
             </HeaderSection>
 
-            <BodySection
-                animate={bodyControls}
-                className="body-section"
-            >
+            <BodySection animate={bodyControls} className="body-section">
                 {content === 'initial' ? (
-                    <SplashImage src={puzzle} alt="Puzzle" />
+                    <div className="body-section-wide">
+                        <SplashImage src={puzzle} alt="Puzzle" />
+                    </div>
                 ) : content === 'thirdState' ? (
-                    // Replace this with the actual content for the third state
-                    <div></div>
+                    getUserInfo().potteryPuzzleResult ? (
+                        <div className="mal-text-center">
+                            <h3 className="mal-h2 mal-margin-remove-vertical">Blah</h3>
+                            <PuzzleTokenImage>
+                                <Image src={success} alt={`You successfully restored the porcelain vase!`} />
+                            </PuzzleTokenImage>
+                            <h2 className="mal-h3 mal-margin-remove-vertical">{`initialRiddleRef.current.successTitle`}</h2>
+                            <p className="mal-text-medium mal-text-italic">"{`initialRiddleRef.current.successMessage`}"</p>
+                        </div>
+                    ) : (
+                        <div className="mal-text-center">
+                            <PuzzleTokenImage className="mal-padding">
+                                <Image src={fail} alt={`You did not restore the porcelain vase in time.`} />
+                            </PuzzleTokenImage>
+                            <h2 className="mal-h3 mal-margin-remove-vertical">{replaceElementNoun(`You do not succeed to solve the puzzle.`)}</h2>
+                            <p className="mal-text-medium">{replaceElementNoun(`The porcelain remains fragmented, scattered across the ground. It seems time slipped away faster than your efforts to restore it. The *alliance_noun* urges you to learn from this experience and carry the lessons of impermanence and the value of time into the unfolding journey.`)}</p>
+                            {/* <button
+                                className="mal-button mal-button-small mal-button-primary mal-border-rounded"
+                                onClick={handleReset}
+                            >
+                                Would you like to try again?
+                            </button> */}
+                        </div>
+                    )
                 ) : (
                     <div className="mal-padding-small mal-text-center">
                         <JigsawPuzzle
@@ -139,37 +175,41 @@ const SolveThePuzzle = () => {
                 )}
             </BodySection>
 
+
             <FooterSection
-  animate={footerControls}
-  className="footer-section"
->
-    {content === 'initial' ? (
-      <ButtonContainer> {/* Wrap the buttons in a container */}
-        <OptionButton onClick={
-            async () => {
-                updateUserSelection('potteryPuzzleResult', false);
-                await animateExit();
-                navigate(nextPage.url);
-            }
-        }>
-            No, let's move on
-        </OptionButton>
-        <OptionButton onClick={handleButtonClick}>
-          Yes, restore the pieces
-        </OptionButton>
-      </ButtonContainer>
-    ) : content === 'thirdState' ? (
-      // Replace this with the actual button for the third state
-      <OrnateButton onClick={handleThirdStateButtonClick}>
-        Third State Button
-      </OrnateButton>
-    ) : isPuzzleComplete !== null && isPuzzleComplete !== undefined ? (
-      <OrnateButton
-        url={nextPage.url}>
-        {nextPage.title}
-      </OrnateButton>
-    ) : null}
-</FooterSection>
+                animate={footerControls}
+                className="footer-section"
+            >
+                {content === 'initial' ? (
+                    <ButtonContainer> {/* Wrap the buttons in a container */}
+                        <OptionButton onClick={
+                            async () => {
+                                updateUserSelection('potteryPuzzleResult', false);
+                                await animateExit();
+                                navigate(nextPage.url);
+                            }
+                        }>
+                            No, let's move on
+                        </OptionButton>
+                        <OptionButton onClick={handleButtonClick}>
+                            Yes, restore the pieces
+                        </OptionButton>
+                    </ButtonContainer>
+                ) : content === 'thirdState' ? (
+                    <OrnateButton onClick={handleThirdStateButtonClick}>
+                        Third State Button
+                    </OrnateButton>
+                ) : isPuzzleComplete !== null && isPuzzleComplete !== undefined ? (
+                    <OptionButton
+                        onClick={async () => {
+                            await animateExit();
+                            setContent('thirdState');
+                            await animateEnter();
+                        }}>
+                        {isPuzzleComplete ? "You did it! Let's celebrate!" : "Oh, no, time's up!"}
+                    </OptionButton>
+                ) : null}
+            </FooterSection>
         </Layout >
     );
 };
