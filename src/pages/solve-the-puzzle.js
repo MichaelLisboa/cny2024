@@ -13,12 +13,37 @@ import CalligraphyGame from '../components/react-mal-calligraphy';
 import pottery1 from "../images/jigsaw/pottery-finished-1.jpg";
 import puzzle from "../images/jigsaw/puzzle.png";
 
+const SplashImage = styled(Image)`
+    align-self: center;
+
+    img {
+        width: 110vw;
+        object-fit: cover;
+    }
+
+    @media (min-width: 768px) {
+        max-height: 40vh;
+        align-self: center;
+        img {
+            width: auto !important;
+            object-fit: contain;
+        }
+      }
+`;
+
 const HeaderSection = styled(motion.div)`
   // Add your header-section styles here.
 `;
 
 const BodySection = styled(motion.div)`
   // Add your body-section styles here.
+  margin-left: -35px;
+  width: 110vw;
+
+  @media (min-width: 768px) {
+    margin-left: auto;
+    width: 100% !important;
+  }
 `;
 
 const FooterSection = styled(motion.div)`
@@ -84,9 +109,7 @@ const SolveThePuzzle = () => {
                 className="body-section"
             >
                 {content === 'initial' ? (
-                    <div>
-                        <Image style={{width: "100vw"}} src={puzzle} alt="Puzzle" />
-                    </div>
+                    <SplashImage src={puzzle} alt="Puzzle" />
                 ) : (
                     <div className="mal-padding-small mal-text-center">
                         <JigsawPuzzle
