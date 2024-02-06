@@ -84,7 +84,24 @@ const SolveThePuzzle = () => {
     const bodyControls = useAnimation();
     const footerControls = useAnimation();
 
-    console.log(puzzleData);
+    const puzzles = puzzleData[0].puzzlesList;
+    const [randomPuzzle, setRandomPuzzle] = useState(puzzles[Math.floor(Math.random() * puzzles.length)]);
+
+    const handleReset = async () => {
+        let newRandomPuzzle;
+        do {
+            newRandomPuzzle = puzzles[Math.floor(Math.random() * puzzles.length)];
+        } while (newRandomPuzzle === randomPuzzle);
+
+        setIsPuzzleComplete(null);
+        setRandomPuzzle(newRandomPuzzle);
+
+        await animateExit();
+        setContent('newContent');
+        setTimeout(() => {
+            animateEnter();
+        }, 500);
+    };
 
     const animateExit = async () => {
         await footerControls.start({ y: 100, opacity: 0 });
@@ -129,8 +146,9 @@ const SolveThePuzzle = () => {
                 ) : content === 'thirdState' ? null
                     : (
                         <div className="mal-margin-bottom-large mal-padding-remove-horizontal">
-                            <h3 className="mal-margin-remove-top">{replaceElementNoun(puzzleData[0].challengeHeadline)}</h3>
-                            <p className="mal-text-medium mal-margin-small-top">{replaceElementNoun(puzzleData[0].challengeMessage)}</p>
+                            <h3 className="mal-margin-remove-top">{replaceElementNoun(randomPuzzle.title)}</h3>
+                            <p className="mal-text-medium mal-margin-small-top">{replaceElementNoun(randomPuzzle.description)}</p>
+                            <p className="mal-text-small mal-margin-remove-vertical">Swap the tiles to restore.</p>
                         </div>
                     )}
             </HeaderSection>
@@ -156,17 +174,12 @@ const SolveThePuzzle = () => {
                             </PuzzleTokenImage>
                             <h2 className="mal-h3 mal-margin-remove-vertical">{replaceElementNoun(puzzleData[0].failTitle)}</h2>
                             <p className="mal-text-medium">{replaceElementNoun(puzzleData[0].failMessage)}</p>
-                            <button
-                                className="mal-button mal-button-small mal-button-primary mal-border-rounded"
-                            >
-                                Would you like to try again?
-                            </button>
                         </div>
                     )
                 ) : (
                     <div className="mal-padding-small mal-text-center">
                         <JigsawPuzzle
-                            imageSrc={pottery1}
+                            imageSrc={randomPuzzle.image}
                             gridSize={3}
                             timeLimit={30}
                             onCompletionStatusChange={handleOnCompletionStatusChange}
@@ -181,7 +194,7 @@ const SolveThePuzzle = () => {
                 className="footer-section"
             >
                 {content === 'initial' ? (
-                    <ButtonContainer> {/* Wrap the buttons in a container */}
+                    <ButtonContainer>
                         <OptionButton onClick={
                             async () => {
                                 updateUserSelection('potteryPuzzleResult', false);
@@ -196,18 +209,31 @@ const SolveThePuzzle = () => {
                         </OptionButton>
                     </ButtonContainer>
                 ) : content === 'thirdState' ? (
-                    <OrnateButton onClick={handleThirdStateButtonClick}>
-                        Third State Button
-                    </OrnateButton>
+                    isPuzzleComplete ? (
+                        <OrnateButton url={nextPage.url}>
+                            {nextPage.title}
+                        </OrnateButton>
+                    ) : (
+                        <ButtonContainer>
+                            <OptionButton onClick={handleReset}>
+                                Try again
+                            </OptionButton>
+                            <OptionButton url={nextPage.url}>
+                                {nextPage.title}
+                            </OptionButton>
+                        </ButtonContainer>
+                    )
                 ) : isPuzzleComplete !== null && isPuzzleComplete !== undefined ? (
-                    <OptionButton
-                        onClick={async () => {
-                            await animateExit();
-                            setContent('thirdState');
-                            await animateEnter();
-                        }}>
-                        {isPuzzleComplete ? "You did it! Let's celebrate!" : "Oh, no, time's up!"}
-                    </OptionButton>
+                    <ButtonContainer>
+                        <OptionButton
+                            onClick={async () => {
+                                await animateExit();
+                                setContent('thirdState');
+                                await animateEnter();
+                            }}>
+                            {isPuzzleComplete ? "You did it! Let's celebrate!" : "Oh, no, time's up!"}
+                        </OptionButton>
+                    </ButtonContainer>
                 ) : null}
             </FooterSection>
         </Layout >
