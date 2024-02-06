@@ -209,6 +209,7 @@ const SolveThePuzzle = () => {
                             {nextPage.title}
                         </OrnateButton>
                     ) : (
+                        
                         <ButtonContainer>
                             <OptionButton onClick={handleReset}>
                                 Try it again?
