@@ -7,7 +7,7 @@ import { useDynamicTextReplacer } from '../hooks/useDynamicTextReplacer';
 import pages from '../utils/pages';
 import Layout from '../templates/layout';
 import Image from '../components/Image';
-import { OrnateButton } from '../components/Button';
+import { OrnateButton, OptionButton } from '../components/Button';
 import JigsawPuzzle from '../components/react-mal-jigsaw/JigsawPuzzle';
 import CalligraphyGame from '../components/react-mal-calligraphy';
 import pottery1 from "../images/jigsaw/pottery-finished-1.jpg";
@@ -20,6 +20,11 @@ const SplashImage = styled(Image)`
         width: 100%;
         object-fit: contain;
     }
+`;
+
+const ButtonContainer = styled.div`
+  display: flex; // Add this line to make the buttons display side by side
+  justify-content: space-between; // Optional: Adjust as needed for spacing
 `;
 
 const HeaderSection = styled(motion.div)`
@@ -68,11 +73,16 @@ const SolveThePuzzle = () => {
         await animateEnter();
     };
 
-    useEffect(() => {
-        if (isPuzzleComplete !== null && isPuzzleComplete !== undefined) {
-            updateUserSelection('potteryPuzzleResult', isPuzzleComplete);
+    const handleThirdStateButtonClick = () => {
+        setContent('thirdState');
+    };
+
+    const handleOnCompletionStatusChange = (isSuccessful) => {
+        setIsPuzzleComplete(isSuccessful);
+        if (isSuccessful !== null && isSuccessful !== undefined) {
+            updateUserSelection('potteryPuzzleResult', isSuccessful);
         }
-    }, [isPuzzleComplete, updateUserSelection]);
+    };
 
     return (
         <Layout>
@@ -82,54 +92,72 @@ const SolveThePuzzle = () => {
             >
                 {content === 'initial' ? (
                     <div className="mal-margin-bottom-large mal-padding-remove-horizontal">
-                        <h3 className="mal-margin-remove-top">{replaceElementNoun("Observing closer, it turns out to be a porcelain piece of a broken vase.")}</h3>
-                        <p className="mal-text-medium mal-margin-small-top">{replaceElementNoun("The pieces lie in disarray, *alliance_noun* said it may be hinting at a tale untold.")}</p>
-                        <p className="mal-text-medium">Restore the once-beautiful porcelain.</p>
+                        <h3 className="mal-margin-remove-top">{replaceElementNoun("You look closer and realize the broken pieces of porcelain can be restored.")}</h3>
+                        <p className="mal-text-medium mal-margin-small-top">{replaceElementNoun("Looking at the scattered pieces, *alliance_noun* hints that they may tell a legendary tale untold. Do you want to restore the pieces?")}</p>
                     </div>
-                ) :
-                    (<div className="mal-margin-bottom-large mal-padding-remove-horizontal">
-                        <h3 className="mal-margin-remove-top">{replaceElementNoun("Restore the porcelain before time runs out.")}</h3>
+                ) : content === 'thirdState' ? (
+                    // Replace this with the actual content for the third state
+                    <div></div>
+                ) : (
+                    <div className="mal-margin-bottom-large mal-padding-remove-horizontal">
+                        <h3 className="mal-margin-remove-top">{replaceElementNoun("*alliance_noun* urges you to restore the porcelain pieces before time runs out.")}</h3>
                         <p className="mal-text-medium mal-margin-small-top">{replaceElementNoun("Swap the tiles to restore.")}</p>
-                    </div>)
-                }
+                    </div>
+                )}
             </HeaderSection>
+
             <BodySection
                 animate={bodyControls}
                 className="body-section"
             >
                 {content === 'initial' ? (
                     <SplashImage src={puzzle} alt="Puzzle" />
+                ) : content === 'thirdState' ? (
+                    // Replace this with the actual content for the third state
+                    <div></div>
                 ) : (
                     <div className="mal-padding-small mal-text-center">
                         <JigsawPuzzle
                             imageSrc={pottery1}
                             gridSize={3}
                             timeLimit={30}
-                            onCompletionStatusChange={(isSuccessful) => {
-                                if (isSuccessful) {
-                                    setIsPuzzleComplete(true)
-                                } else {
-                                    setIsPuzzleComplete(false)
-                                }
-                            }} />
+                            onCompletionStatusChange={handleOnCompletionStatusChange}
+                        />
                     </div>
                 )}
             </BodySection>
+
             <FooterSection
-                animate={footerControls}
-                className="footer-section"
-            >
-                {content === 'initial' ? (
-                    <OrnateButton onClick={handleButtonClick}>
-                        Restore the porcelain
-                    </OrnateButton>
-                ) : isPuzzleComplete !== null && isPuzzleComplete !== undefined ? (
-                        <OrnateButton
-                            url={nextPage.url}>
-                            {nextPage.title}
-                        </OrnateButton>
-                ) : null}
-            </FooterSection>
+  animate={footerControls}
+  className="footer-section"
+>
+    {content === 'initial' ? (
+      <ButtonContainer> {/* Wrap the buttons in a container */}
+        <OptionButton onClick={
+          () => {
+            updateUserSelection('potteryPuzzleResult', false);
+            animateExit();
+            // go to {nextPage.title}
+          }
+        }>
+          No, move on
+        </OptionButton>
+        <OptionButton onClick={handleButtonClick}>
+          Yes, restore the pieces
+        </OptionButton>
+      </ButtonContainer>
+    ) : content === 'thirdState' ? (
+      // Replace this with the actual button for the third state
+      <OrnateButton onClick={handleThirdStateButtonClick}>
+        Third State Button
+      </OrnateButton>
+    ) : isPuzzleComplete !== null && isPuzzleComplete !== undefined ? (
+      <OrnateButton
+        url={nextPage.url}>
+        {nextPage.title}
+      </OrnateButton>
+    ) : null}
+</FooterSection>
         </Layout >
     );
 };
