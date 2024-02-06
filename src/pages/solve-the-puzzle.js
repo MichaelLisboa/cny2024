@@ -25,9 +25,17 @@ const SplashImage = styled(Image)`
 const ButtonContainer = styled.div`
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: center;
     padding-left: 16px !important;
     padding-right: 16px !important;
+
+    a {
+        font-size: 1.125rem;
+
+        @media (max-width: 576px) { // When the viewport is 576px or less
+            font-size: 0.875rem; // Reduce the font size even more
+        }
+    }
 `;
 
 const HeaderSection = styled(motion.div)`
