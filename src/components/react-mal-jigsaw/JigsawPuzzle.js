@@ -21,12 +21,21 @@ const DraggablePiece = styled(motion.div)`
   height: calc(100% / ${(props) => props.gridSize});
 `;
 
-const Countdown = styled.h3`
+const Countdown = styled.h2`
   text-align: center;
   color: rgba(156, 19, 19, 1);
 `;
 
-const JigsawPuzzle = ({ imageSrc, gridSize, timeLimit }) => {
+function formatTime(seconds) {
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds = seconds % 60;
+    const paddedMinutes = String(minutes).padStart(2, '0');
+    const paddedSeconds = String(remainingSeconds).padStart(2, '0');
+
+    return `${paddedMinutes}:${paddedSeconds}`;
+}
+
+const JigsawPuzzle = ({ imageSrc, gridSize, timeLimit, onCompletionStatusChange }) => {
     const [pieces, setPieces] = useState([]);
     const [isPuzzleComplete, setIsPuzzleComplete] = useState(false);
     const [puzzleActive, setPuzzleActive] = useState(true);
@@ -39,40 +48,66 @@ const JigsawPuzzle = ({ imageSrc, gridSize, timeLimit }) => {
     }, []); // Run once after first render
 
     useEffect(() => {
-        const isComplete = pieces.every((piece, index) => piece.id === index);
-        setIsPuzzleComplete(isComplete);
-      
-        // if (isComplete && puzzleActive) {
-        //   setPuzzleActive(false);
-        // }
-      }, [pieces, puzzleActive]);
+        if (pieces.length > 0) {
+            const isComplete = pieces.every((piece, index) => piece.id === index);
+            setIsPuzzleComplete(isComplete);
+
+            if (isComplete) {
+                setPuzzleActive(false);
+                onCompletionStatusChange(true);
+            }
+        }
+    }, [pieces, onCompletionStatusChange]);
 
     useEffect(() => {
         let timerInterval = null;
 
-        if (elapsedTime < timeLimit && !isPuzzleComplete) {
+        if (puzzleActive) {
             timerInterval = setInterval(() => {
-                if (elapsedTime < timeLimit && !isPuzzleComplete) {
-                    setElapsedTime((prevTime) => prevTime + 1);
-                } else {
-                    clearInterval(timerInterval); // Stop the interval if time limit is reached or puzzle is complete
-                    if (isPuzzleComplete) {
-                        console.log('Puzzle is complete!');
-                        setPuzzleActive(false);
+                setElapsedTime((prevTime) => {
+                    if (prevTime < timeLimit) {
+                        return prevTime + 1;
                     } else {
-                        console.log('Time is up!');
+                        clearInterval(timerInterval); // Stop the interval if time limit is reached
                         setPuzzleActive(false);
+                        setIsTimeUp(true); // Set isTimeUp to true when time is up
+                        onCompletionStatusChange(false);
+                        return prevTime;
                     }
-                }
-            }, 1000); // Increment elapsed time every second
+                });
+            }, 1000);
         }
 
         return () => {
             clearInterval(timerInterval);
         };
-    }, [elapsedTime, timeLimit, isPuzzleComplete]);
+    }, [timeLimit, puzzleActive, onCompletionStatusChange]);
 
+    const [isTimeUp, setIsTimeUp] = useState(false);
 
+    useEffect(() => {
+        let timerInterval = null;
+
+        if (puzzleActive) {
+            timerInterval = setInterval(() => {
+                setElapsedTime((prevTime) => {
+                    if (prevTime < timeLimit) {
+                        return prevTime + 1;
+                    } else {
+                        clearInterval(timerInterval); // Stop the interval if time limit is reached
+                        setPuzzleActive(false);
+                        setIsTimeUp(true); // Set isTimeUp to true when time is up
+                        onCompletionStatusChange(false);
+                        return prevTime;
+                    }
+                });
+            }, 1000);
+        }
+
+        return () => {
+            clearInterval(timerInterval);
+        };
+    }, [timeLimit, puzzleActive, onCompletionStatusChange]);
 
     const onDragEnd = (dragIndex, event, info) => {
         if (!puzzleActive) return; // If puzzle is not active, do nothing
@@ -94,7 +129,6 @@ const JigsawPuzzle = ({ imageSrc, gridSize, timeLimit }) => {
         }
     };
 
-
     const resetPiecePosition = (index) => {
         setPieces((pieces) => {
             const newPieces = Array.from(pieces);
@@ -114,11 +148,13 @@ const JigsawPuzzle = ({ imageSrc, gridSize, timeLimit }) => {
 
     return (
         <div>
-            {isPuzzleComplete ?
-                <Countdown>Puzzle completed in {elapsedTime} seconds!</Countdown>
-                :
-                <Countdown>{timeLimit - elapsedTime} seconds remaining</Countdown>
-            }
+            {!isPuzzleComplete && !isTimeUp ? (
+                <Countdown>{formatTime(timeLimit - elapsedTime)}</Countdown>
+            ) : (
+                <Countdown>{!isTimeUp ? "Success!" : "Time's Up!"}</Countdown>
+            )}
+
+
             <PuzzleContainer ref={containerRef} gridSize={gridSize}>
                 {pieces.map((piece, index) => (
                     <DraggablePiece
@@ -128,7 +164,7 @@ const JigsawPuzzle = ({ imageSrc, gridSize, timeLimit }) => {
                             x: piece.x,
                             y: piece.y,
                         }}
-                        drag={!isPuzzleComplete && puzzleActive} // Set drag prop based on puzzle activity
+                        drag={!isPuzzleComplete && puzzleActive && timeLimit - elapsedTime > 1} // Set drag prop based on puzzle activityag prop based on puzzle activity
                         dragConstraints={containerRef}
                         onDragEnd={(event, info) => onDragEnd(index, event, info)}
                         whileDrag={{ zIndex: 200, scale: 1.025, boxShadow: '0px 2px 24px rgba(50, 50, 50, 0.25)' }}

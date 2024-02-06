@@ -9,7 +9,9 @@ import Layout from '../templates/layout';
 import Image from '../components/Image';
 import { OrnateButton } from '../components/Button';
 import JigsawPuzzle from '../components/react-mal-jigsaw/JigsawPuzzle';
+import CalligraphyGame from '../components/react-mal-calligraphy';
 import pottery1 from "../images/jigsaw/pottery-finished-1.jpg";
+import puzzle from "../images/jigsaw/puzzle.png";
 
 const HeaderSection = styled(motion.div)`
   // Add your header-section styles here.
@@ -83,14 +85,21 @@ const SolveThePuzzle = () => {
             >
                 {content === 'initial' ? (
                     <div>
-                        <JigsawPuzzle
-                            imageSrc={pottery1}
-                            gridSize={3} 
-                            timeLimit={30} />
+                        <Image style={{width: "100vw"}} src={puzzle} alt="Puzzle" />
                     </div>
                 ) : (
                     <div className="mal-padding-small mal-text-center">
-                        Monkey
+                        <JigsawPuzzle
+                            imageSrc={pottery1}
+                            gridSize={3} 
+                            timeLimit={30}
+                            onCompletionStatusChange={(isSuccessful) => {
+                                if (isSuccessful) {
+                                    console.log('The puzzle was completed successfully.');
+                                } else {
+                                    console.log('The puzzle was not completed in time.');
+                                }
+                            }} />
                     </div>
                 )}
             </BodySection>
