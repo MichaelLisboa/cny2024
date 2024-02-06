@@ -40,6 +40,7 @@ const JigsawPuzzle = ({ imageSrc, gridSize, timeLimit, onCompletionStatusChange 
     const [isPuzzleComplete, setIsPuzzleComplete] = useState(false);
     const [puzzleActive, setPuzzleActive] = useState(true);
     const [elapsedTime, setElapsedTime] = useState(0);
+    const [isTimeUp, setIsTimeUp] = useState(false);
     const clickSound = new Audio(clickSoundFile);
     const containerRef = useRef();
 
@@ -58,32 +59,6 @@ const JigsawPuzzle = ({ imageSrc, gridSize, timeLimit, onCompletionStatusChange 
             }
         }
     }, [pieces, onCompletionStatusChange]);
-
-    useEffect(() => {
-        let timerInterval = null;
-
-        if (puzzleActive) {
-            timerInterval = setInterval(() => {
-                setElapsedTime((prevTime) => {
-                    if (prevTime < timeLimit) {
-                        return prevTime + 1;
-                    } else {
-                        clearInterval(timerInterval); // Stop the interval if time limit is reached
-                        setPuzzleActive(false);
-                        setIsTimeUp(true); // Set isTimeUp to true when time is up
-                        onCompletionStatusChange(false);
-                        return prevTime;
-                    }
-                });
-            }, 1000);
-        }
-
-        return () => {
-            clearInterval(timerInterval);
-        };
-    }, [timeLimit, puzzleActive, onCompletionStatusChange]);
-
-    const [isTimeUp, setIsTimeUp] = useState(false);
 
     useEffect(() => {
         let timerInterval = null;
