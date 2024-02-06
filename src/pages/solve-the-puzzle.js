@@ -31,7 +31,7 @@ const ButtonContainer = styled.div`
     padding-left: 16px !important;
     padding-right: 16px !important;
 
-    a {
+    * {
         font-size: 1.125rem;
 
         @media (max-width: 576px) { // When the viewport is 576px or less
@@ -121,10 +121,6 @@ const SolveThePuzzle = () => {
         await animateEnter();
     };
 
-    const handleThirdStateButtonClick = () => {
-        setContent('thirdState');
-    };
-
     const handleOnCompletionStatusChange = (isSuccessful) => {
         setIsPuzzleComplete(isSuccessful);
         if (isSuccessful !== null && isSuccessful !== undefined) {
@@ -147,8 +143,8 @@ const SolveThePuzzle = () => {
                     : (
                         <div className="mal-margin-bottom-large mal-padding-remove-horizontal">
                             <h3 className="mal-margin-remove-top">{replaceElementNoun(randomPuzzle.title)}</h3>
-                            <p className="mal-text-medium mal-margin-small-top">{replaceElementNoun(randomPuzzle.description)}</p>
-                            <p className="mal-text-small mal-margin-remove-vertical">Swap the tiles to restore.</p>
+                            <p className="mal-text-medium mal-margin-small-top mal-margin-small-bottom">{replaceElementNoun(randomPuzzle.description)}</p>
+                            <p className="mal-text-small mal-margin-remove-vertical">Swap the tiles to restore the {replaceElementNoun(randomPuzzle.title.replace(/\s*Puzzle\s*/g, ""))}.</p>
                         </div>
                     )}
             </HeaderSection>
@@ -188,7 +184,6 @@ const SolveThePuzzle = () => {
                 )}
             </BodySection>
 
-
             <FooterSection
                 animate={footerControls}
                 className="footer-section"
@@ -216,10 +211,10 @@ const SolveThePuzzle = () => {
                     ) : (
                         <ButtonContainer>
                             <OptionButton onClick={handleReset}>
-                                Try again
+                                Try it again?
                             </OptionButton>
                             <OptionButton url={nextPage.url}>
-                                {nextPage.title}
+                                Continue your journey
                             </OptionButton>
                         </ButtonContainer>
                     )
@@ -231,7 +226,7 @@ const SolveThePuzzle = () => {
                                 setContent('thirdState');
                                 await animateEnter();
                             }}>
-                            {isPuzzleComplete ? "You did it! Let's celebrate!" : "Oh, no, time's up!"}
+                            {isPuzzleComplete ? "You did it! Continue." : "Continue."}
                         </OptionButton>
                     </ButtonContainer>
                 ) : null}

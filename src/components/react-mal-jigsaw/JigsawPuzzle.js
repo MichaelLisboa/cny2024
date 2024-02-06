@@ -161,7 +161,6 @@ const JigsawPuzzle = ({ imageSrc, gridSize, timeLimit, onCompletionStatusChange 
                     />
                 ))}
             </PuzzleContainer>
-            {isPuzzleComplete && <p>Puzzle completed in {elapsedTime} seconds!</p>}
         </div>
     );
 };
