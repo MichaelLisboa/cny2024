@@ -46,7 +46,7 @@ const JigsawPuzzle = ({ imageSrc, gridSize, timeLimit, onCompletionStatusChange 
 
     useEffect(() => {
         setPieces(createShuffledPieces(gridSize, imageSrc));
-    }, []); // Run once after first render
+    }, []);
 
     useEffect(() => {
         if (pieces.length > 0) {
@@ -107,8 +107,11 @@ const JigsawPuzzle = ({ imageSrc, gridSize, timeLimit, onCompletionStatusChange 
     const resetPiecePosition = (index) => {
         setPieces((pieces) => {
             const newPieces = Array.from(pieces);
-            newPieces[index].x = 0;
-            newPieces[index].y = 0;
+            const piece = newPieces[index];
+            const origX = piece.origX; // Get the original X position
+            const origY = piece.origY; // Get the original Y position
+            piece.x = origX; // Reset to the original X position
+            piece.y = origY; // Reset to the original Y position
             return newPieces;
         });
     };
@@ -142,7 +145,10 @@ const JigsawPuzzle = ({ imageSrc, gridSize, timeLimit, onCompletionStatusChange 
                         drag={!isPuzzleComplete && puzzleActive && timeLimit - elapsedTime > 1} // Set drag prop based on puzzle activityag prop based on puzzle activity
                         dragConstraints={containerRef}
                         onDragEnd={(event, info) => onDragEnd(index, event, info)}
-                        whileDrag={{ zIndex: 200, scale: 1.025, boxShadow: '0px 2px 24px rgba(50, 50, 50, 0.25)' }}
+                        whileDrag={{
+                            zIndex: 200,
+                            scale: 1.025,
+                            boxShadow: '0px 2px 24px rgba(50, 50, 50, 0.25)' }}
                         animate={{ x: 0, y: 0 }}
                         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                         gridSize={gridSize}
