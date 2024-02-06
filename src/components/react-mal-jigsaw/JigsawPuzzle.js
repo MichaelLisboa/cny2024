@@ -6,11 +6,13 @@ import clickSoundFile from './clickSound.mp3';
 const PuzzleContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(${(props) => props.gridSize}, 1fr);
-  gap: 2px;
+  display: grid;
+  gap: ${props => props.isPuzzleComplete ? '0' : '2px'};
   width: 300px;
   height: 300px;
   position: relative;
   overflow: hidden;
+  transition: gap 0.5s ease-in;
 `;
 
 const DraggablePiece = styled(motion.div)`
@@ -133,7 +135,10 @@ const JigsawPuzzle = ({ imageSrc, gridSize, timeLimit, onCompletionStatusChange 
             )}
 
 
-            <PuzzleContainer ref={containerRef} gridSize={gridSize}>
+            <PuzzleContainer
+                ref={containerRef}
+                gridSize={gridSize}
+                isPuzzleComplete={isPuzzleComplete}>
                 {pieces.map((piece, index) => (
                     <DraggablePiece
                         key={piece.id}
@@ -148,7 +153,8 @@ const JigsawPuzzle = ({ imageSrc, gridSize, timeLimit, onCompletionStatusChange 
                         whileDrag={{
                             zIndex: 200,
                             scale: 1.025,
-                            boxShadow: '0px 2px 24px rgba(50, 50, 50, 0.25)' }}
+                            boxShadow: '0px 2px 24px rgba(50, 50, 50, 0.25)'
+                        }}
                         animate={{ x: 0, y: 0 }}
                         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                         gridSize={gridSize}
