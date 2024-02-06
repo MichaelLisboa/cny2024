@@ -14,22 +14,12 @@ import pottery1 from "../images/jigsaw/pottery-finished-1.jpg";
 import puzzle from "../images/jigsaw/puzzle.png";
 
 const SplashImage = styled(Image)`
-// max-height: 35vh;
     align-self: center;
 
     img {
-        width: 110vw;
-        object-fit: cover;
+        width: 100%;
+        object-fit: contain;
     }
-
-    @media (min-width: 768px) {
-        // max-height: 40vh;
-        align-self: center;
-        img {
-            width: auto !important;
-            object-fit: contain;
-        }
-      }
 `;
 
 const HeaderSection = styled(motion.div)`
@@ -38,6 +28,7 @@ const HeaderSection = styled(motion.div)`
 
 const BodySection = styled(motion.div)`
   // Add your body-section styles here.
+  justify-content: flex-start !important;
   margin-left: -15% !important;
   width: 130% !important;
 `;
