@@ -1,5 +1,5 @@
 import React, { useContext, useState, useMemo, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { motion, useAnimation } from 'framer-motion';
 import { AppContext } from '../contexts/AppContext';
@@ -25,7 +25,9 @@ const SplashImage = styled(Image)`
 const ButtonContainer = styled.div`
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-around;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
 `;
 
 const HeaderSection = styled(motion.div)`
@@ -49,6 +51,7 @@ const SolveThePuzzle = () => {
     const [content, setContent] = useState('initial');
     const [isPuzzleComplete, setIsPuzzleComplete] = useState(null);
     const location = useLocation();
+    const navigate = useNavigate();
     const currentPage = useMemo(() => pages.find(page => page.url === location.pathname), [location.pathname]);
     const nextPage = useMemo(() => pages.find(page => page.url === currentPage.nextPage), [currentPage]);
     const previousPage = useMemo(() => pages.find(page => page.url === currentPage.previousPage), [currentPage]);
@@ -135,13 +138,13 @@ const SolveThePuzzle = () => {
     {content === 'initial' ? (
       <ButtonContainer> {/* Wrap the buttons in a container */}
         <OptionButton onClick={
-          () => {
-            updateUserSelection('potteryPuzzleResult', false);
-            animateExit();
-            // go to {nextPage.title}
-          }
+            async () => {
+                updateUserSelection('potteryPuzzleResult', false);
+                await animateExit();
+                navigate(nextPage.url);
+            }
         }>
-          No, let's move on
+            No, let's move on
         </OptionButton>
         <OptionButton onClick={handleButtonClick}>
           Yes, restore the pieces
