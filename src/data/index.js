@@ -148,7 +148,7 @@ export const allianceList = [
     {
         title: "Patient Snake",
         image: require('../images/zodiac_actual/animals/snake.png'),
-        description: "Ahead lies a path woven with complexity. With patience, we can overcome them together. Shall we navigate it as allies?",
+        description: "Ahead liesss a path woven with complexity. With patience, we can overcome them together. Shall we navigate it as alliesss?",
         reaction: "Snake slithers with finesse, hissing,",
         text: "Wisssely chosen, spirit! With cunning and patience, we'll navigate the twisssts of fate together."
     },

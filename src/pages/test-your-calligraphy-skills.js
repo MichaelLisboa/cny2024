@@ -11,8 +11,8 @@ import { OrnateButton, OptionButton } from '../components/Button';
 import { calligraphyData } from '../data';
 import CalligraphyGame from '../components/react-mal-calligraphy';
 import scroll from "../images/calligraphy/scroll.png";
-import success from "../images/tokens/puzzle.png";
-import fail from "../images/tokens/failed_puzzle.png";
+import success from "../images/tokens/calligraphy.png";
+import fail from "../images/tokens/failed_calligraphy.png";
 
 const SplashImage = styled(Image)`
     img {
@@ -110,14 +110,14 @@ const TestYourCalligraphySkills = () => {
                         <h3 className="mal-margin-remove-vertical">{replaceElementNoun(calligraphyData[0].headline)}</h3>
                         <p className="mal-text-medium mal-margin-small-top">{replaceElementNoun(calligraphyData[0].subheadline)}</p>
                     </div>
-                ) : content === 'game' ? null
-                    : (
+                ) : content === 'game' ?
+                    (
                         <div className="mal-padding-remove-horizontal">
                             <h3 className="mal-margin-remove-vertical">{replaceElementNoun(randomCharacter.title)}</h3>
                             <p className="mal-text-medium mal-margin-small-top mal-margin-small-bottom">{replaceElementNoun(randomCharacter.description)}</p>
                             <p className="mal-text-small mal-margin-remove-vertical padding-remove-vertical">Swap the tiles to restore the {replaceElementNoun(randomCharacter.title.replace(/\s*Puzzle\s*/g, ""))}.</p>
                         </div>
-                    )}
+                    ) : null }
             </HeaderSection>
             <BodySection
                 animate={bodyControls}
