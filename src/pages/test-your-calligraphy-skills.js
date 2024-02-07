@@ -72,7 +72,7 @@ const TestYourCalligraphySkills = () => {
     const bodyControls = useAnimation();
     const footerControls = useAnimation();
 
-    const characters = calligraphyData[0].puzzlesList;
+    const characters = calligraphyData[0].characterList;
     const [randomCharacter, setRandomCharacter] = useState(characters[Math.floor(Math.random() * characters.length)]);
 
 

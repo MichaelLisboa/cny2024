@@ -359,9 +359,9 @@ export const calligraphyData = [
         successMessage: "You have harnessed the art of calligraphy, a reflection of your mastery over the written expression of your true self. Embrace this newfound skill as you continue your journey.",
         failTitle: "Failure is not an end but a lesson indeed.",
         failMessage: "The characters on the stone tablet do not align in harmony. The celestial realm is patient, embrace the opportunity to refine your understanding.",
-        puzzlesList: [
+        characterList: [
             {
-                title: "Crafted Porcelain Puzzle",
+                title: "Brave",
                 image: require('../images/jigsaw/pottery-finished-1.jpg'),
                 description: "The porcelain pieces lie shattered, scattered across the ground. As you piece together the fragments, a sense of accomplishment fills your spirit.",
                 subheadline: "Swap the tiles to restore.",
