@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import clickSoundFile from './clickSound.mp3';
+import Timer from '../Timer';
 
 const PuzzleContainer = styled.div`
   display: grid;
@@ -29,15 +30,6 @@ const Countdown = styled.h3`
   color: rgba(156, 19, 19, 1);
 `;
 
-function formatTime(seconds) {
-    const minutes = Math.floor((seconds % 3600) / 60);
-    const remainingSeconds = seconds % 60;
-    const paddedMinutes = String(minutes).padStart(2, '0');
-    const paddedSeconds = String(remainingSeconds).padStart(2, '0');
-
-    return `${paddedMinutes}:${paddedSeconds}`;
-}
-
 const JigsawPuzzle = ({ imageSrc, gridSize, timeLimit, onCompletionStatusChange }) => {
     const [pieces, setPieces] = useState([]);
     const [isPuzzleComplete, setIsPuzzleComplete] = useState(false);
@@ -62,30 +54,6 @@ const JigsawPuzzle = ({ imageSrc, gridSize, timeLimit, onCompletionStatusChange 
             }
         }
     }, [pieces, onCompletionStatusChange, isPuzzleComplete]);
-
-    useEffect(() => {
-        let timerInterval = null;
-
-        if (puzzleActive) {
-            timerInterval = setInterval(() => {
-                setElapsedTime((prevTime) => {
-                    if (prevTime < timeLimit) {
-                        return prevTime + 1;
-                    } else {
-                        clearInterval(timerInterval); // Stop the interval if time limit is reached
-                        setPuzzleActive(false);
-                        setIsTimeUp(true); // Set isTimeUp to true when time is up
-                        onCompletionStatusChange(false);
-                        return prevTime;
-                    }
-                });
-            }, 1000);
-        }
-
-        return () => {
-            clearInterval(timerInterval);
-        };
-    }, [timeLimit, puzzleActive, onCompletionStatusChange]);
 
     const onDragEnd = (dragIndex, event, info) => {
         if (!puzzleActive) return; // If puzzle is not active, do nothing
@@ -130,7 +98,7 @@ const JigsawPuzzle = ({ imageSrc, gridSize, timeLimit, onCompletionStatusChange 
     return (
         <div>
             {!isPuzzleComplete && !isTimeUp ? (
-                <Countdown>{formatTime(timeLimit - elapsedTime)}</Countdown>
+                <Timer timeLimit={timeLimit} puzzleActive={puzzleActive} onCompletionStatusChange={onCompletionStatusChange} />
             ) : (
                 <Countdown>{!isTimeUp ? "Success!" : "Time's Up!"}</Countdown>
             )}

@@ -101,9 +101,9 @@ const TestYourCalligraphySkills = () => {
 
     const handleOnCompletionStatusChange = useCallback((isSuccessful) => {
         setIsGameComplete(isSuccessful);
-        // if (isSuccessful !== null && isSuccessful !== undefined) {
-        //     updateUserSelection('potteryPuzzleResult', isSuccessful);
-        // }
+        if (isSuccessful !== null && isSuccessful !== undefined) {
+            updateUserSelection('calligraphyChallengeResult', isSuccessful);
+        }
     }, [setIsGameComplete, updateUserSelection]);
 
     return (
@@ -137,7 +137,8 @@ const TestYourCalligraphySkills = () => {
                 ) : content === 'game' ? (
                     // Display game related content here
                     <CalligraphyGame
-                        timeLimit={60} />
+                        timeLimit={60}
+                        onCompletionStatusChange={handleOnCompletionStatusChange} />
                 ) : content === 'complete' ? (
                     'Stuff'
                 ) : null}

@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import Timer from '../Timer';
 import graceful from '../../images/calligraphy/graceful.svg';
 import clever from '../../images/calligraphy/clever.svg';
 import energetic from '../../images/calligraphy/energetic.svg';
@@ -30,29 +31,93 @@ const StyledCanvas = styled.canvas`
   padding: 24px;
 `;
 
-const Countdown = styled.h3`
-  text-align: center;
-  margin: 0 auto 12px auto;
-  color: rgba(156, 19, 19, 1);
-`;
+const CalligraphyCanvas = React.memo(({ characterImage }) => {
+    const canvasRef = useRef(null);
 
-function formatTime(seconds) {
-    const minutes = Math.floor((seconds % 3600) / 60);
-    const remainingSeconds = seconds % 60;
-    const paddedMinutes = String(minutes).padStart(2, '0');
-    const paddedSeconds = String(remainingSeconds).padStart(2, '0');
+    // Corrected event handling
+    useEffect(() => {
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d');
+        canvas.width = 300;
+        canvas.height = 300;
+        ctx.lineWidth = 12;
+        ctx.lineCap = 'round';
+        ctx.strokeStyle = 'rgba(156, 19, 19, 1)';
 
-    return `${paddedMinutes}:${paddedSeconds}`;
-}
+        const image = new Image();
+        image.onload = () => ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+        image.src = characterImage;
+
+        let isDrawing = false;
+
+        const drawStart = (event) => {
+            isDrawing = true;
+            ctx.beginPath();
+            // Use correct coordinates for both touch and mouse events
+            const { offsetX, offsetY } = event.touches ? getTouchCoordinates(event, canvas) : getMouseCoordinates(event);
+            ctx.moveTo(offsetX, offsetY);
+        };
+
+        const drawing = (event) => {
+            if (!isDrawing) return;
+            const { offsetX, offsetY } = event.touches ? getTouchCoordinates(event, canvas) : getMouseCoordinates(event);
+            ctx.lineTo(offsetX, offsetY);
+            ctx.stroke();
+        };
+
+        const drawEnd = () => {
+            isDrawing = false;
+        };
+
+        // Attach event listeners
+        canvas.addEventListener("mousedown", drawStart);
+        canvas.addEventListener("mousemove", drawing);
+        canvas.addEventListener("mouseup", drawEnd);
+        canvas.addEventListener("mouseleave", drawEnd);
+
+        canvas.addEventListener("touchstart", drawStart);
+        canvas.addEventListener("touchmove", drawing);
+        canvas.addEventListener("touchend", drawEnd);
+
+        return () => {
+            // Detach event listeners
+            canvas.removeEventListener("mousedown", drawStart);
+            canvas.removeEventListener("mousemove", drawing);
+            canvas.removeEventListener("mouseup", drawEnd);
+            canvas.removeEventListener("mouseleave", drawEnd);
+
+            canvas.removeEventListener("touchstart", drawStart);
+            canvas.removeEventListener("touchmove", drawing);
+            canvas.removeEventListener("touchend", drawEnd);
+        };
+    }, [characterImage]);
+
+    // Helper functions to get coordinates
+    function getTouchCoordinates(event, canvas) {
+        const touch = event.touches[0];
+        const rect = canvas.getBoundingClientRect();
+        return {
+            offsetX: touch.clientX - rect.left,
+            offsetY: touch.clientY - rect.top,
+        };
+    }
+
+    function getMouseCoordinates(event) {
+        return {
+            offsetX: event.offsetX,
+            offsetY: event.offsetY,
+        };
+    }
+
+    return <StyledCanvas ref={canvasRef} />;
+});
+
 
 // Main CalligraphyGame component
-const CalligraphyGame = (timeLimit) => {
+const CalligraphyGame = ({ timeLimit = 60 }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
-
     const [isGameComplete, setIsGameComplete] = useState(false);
-    const [gameActive, setGameActive] = useState(true);
-    const [elapsedTime, setElapsedTime] = useState(0);
-    const [isTimeUp, setIsTimeUp] = useState(false);
+    const [puzzleActive, setPuzzleActive] = useState(true);
 
     const characterList = [
         { mandarin: '友', english: 'Friendly', image: friendly },
@@ -67,126 +132,34 @@ const CalligraphyGame = (timeLimit) => {
         { mandarin: '奇', english: 'Curious', image: curious },
     ];
 
-    const canvasRef = useRef(null);
+    const onCompletionStatusChange = (isComplete) => {
+        setPuzzleActive(false);
+        setIsGameComplete(isComplete);
+    };
 
-    useEffect(() => {
-        if (!canvasRef.current) return;
-
-        const canvas = canvasRef.current;
-        const context = canvas.getContext('2d');
-        canvas.width = 300;
-        canvas.height = 300;
-
-        // Clear the canvas before drawing a new character outline
-        context.clearRect(0, 0, canvas.width, canvas.height);
-
-        // Load and draw the character outline
-        const image = new Image();
-        image.src = characterList[currentIndex].image; // Corrected to use the 'image' property
-        image.onload = () => {
-            // Draw the image on the canvas
-            context.drawImage(image, 0, 0, canvas.width, canvas.height);
-        };
-
-        let drawing = false;
-
-        const getCoordinates = (event) => {
-            if (event.touches) {
-                // Touch event
-                const canvasRect = canvas.getBoundingClientRect();
-                return {
-                    offsetX: event.touches[0].clientX - canvasRect.left,
-                    offsetY: event.touches[0].clientY - canvasRect.top,
-                };
-            } else {
-                // Mouse event
-                return { offsetX: event.offsetX, offsetY: event.offsetY };
-            }
-        };
-
-        const startDrawing = (event) => {
-            drawing = true;
-            event.preventDefault(); // Prevent scrolling on touch devices
-            draw(event);
-        };
-
-        const endDrawing = () => {
-            drawing = false;
-            context.beginPath(); // Begin a new path to avoid drawing continuous lines when moving the mouse
-        };
-
-        const draw = (event) => {
-            if (!drawing) return;
-            const { offsetX, offsetY } = getCoordinates(event);
-
-            context.lineWidth = 6;
-            context.lineCap = 'round';
-            context.strokeStyle = 'black'; // Change as needed
-
-            context.lineTo(offsetX, offsetY);
-            context.stroke();
-            context.beginPath(); // Start a new path for the next segment
-            context.moveTo(offsetX, offsetY);
-        };
-
-        // Event listeners for drawing actions
-        canvas.addEventListener('mousedown', startDrawing);
-        canvas.addEventListener('mouseup', endDrawing);
-        canvas.addEventListener('mousemove', draw);
-        canvas.addEventListener('touchstart', startDrawing, { passive: false });
-        canvas.addEventListener('touchend', endDrawing);
-        canvas.addEventListener('touchmove', draw, { passive: false });
-
-        // Cleanup function to remove event listeners
-        return () => {
-            canvas.removeEventListener('mousedown', startDrawing);
-            canvas.removeEventListener('mouseup', endDrawing);
-            canvas.removeEventListener('mousemove', draw);
-            canvas.removeEventListener('touchstart', startDrawing);
-            canvas.removeEventListener('touchend', endDrawing);
-            canvas.removeEventListener('touchmove', draw);
-        };
-    }, [currentIndex, characterList]); // Depend on currentIndex to update the image
-
-
-
-    useEffect(() => {
-        let timerInterval = null;
-
-        if (gameActive) {
-            timerInterval = setInterval(() => {
-                setElapsedTime((prevTime) => {
-                    if (prevTime < timeLimit) {
-                        return prevTime + 1;
-                    } else {
-                        clearInterval(timerInterval); // Stop the interval if time limit is reached
-                        setGameActive(false);
-                        setIsTimeUp(true); // Set isTimeUp to true when time is up
-                        // onCompletionStatusChange(false);
-                        return prevTime;
-                    }
-                });
-            }, 1000);
+    const handleNextCharacter = () => {
+        if (currentIndex < characterList.length - 1) {
+            setCurrentIndex((prevIndex) => prevIndex + 1);
+        } else {
+            onCompletionStatusChange(true);
         }
+    };
 
-        return () => {
-            clearInterval(timerInterval);
-        };
-    }, [timeLimit, gameActive]);
+    useEffect(() => {
+        // Whenever the index changes, we set puzzleActive to true to restart the timer
+        setPuzzleActive(true);
+    }, [currentIndex]);
 
     return (
         <GameContainer>
-            {gameActive ? (
-                <>
-                    {!isGameComplete && !isTimeUp ? (
-                        <Countdown>{formatTime(timeLimit - elapsedTime)}</Countdown>
-                    ) : (
-                        <Countdown>{!isTimeUp ? "Success!" : "Time's Up!"}</Countdown>
-                    )}
-                    <StyledCanvas ref={canvasRef} />
-                    <div>{characterList[currentIndex].english}</div>
-                </>
-            ) : (
+            {!isGameComplete && (
+                <Timer
+                    timeLimit={timeLimit}
+                    puzzleActive={puzzleActive}
+                    onCompletionStatusChange={onCompletionStatusChange}
+                />
+            )}
+            {isGameComplete ? (
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -194,6 +167,12 @@ const CalligraphyGame = (timeLimit) => {
                 >
                     Game Over! Review your characters.
                 </motion.div>
+            ) : (
+                <>
+                    <CalligraphyCanvas characterImage={characterList[currentIndex].image} />
+                    <div>{characterList[currentIndex].english}</div>
+                    <button onClick={handleNextCharacter}>Next Character</button>
+                </>
             )}
         </GameContainer>
     );

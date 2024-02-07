@@ -8,7 +8,7 @@ import pages from '../utils/pages';
 import Layout from '../templates/layout';
 import Image from '../components/Image';
 import { OrnateButton, OptionButton } from '../components/Button';
-import JigsawPuzzle from '../components/react-mal-jigsaw/JigsawPuzzle';
+import JigsawPuzzle from '../components/react-mal-jigsaw';
 import { puzzleData } from '../data';
 import puzzle from "../images/jigsaw/puzzle.png";
 import success from "../images/tokens/puzzle.png";
