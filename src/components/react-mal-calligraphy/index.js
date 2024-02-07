@@ -27,6 +27,7 @@ const StyledCanvas = styled.canvas`
   height: 300px;
   border: 1px solid #ccc;
   background-color: #fff;
+  padding: 24px;
 `;
 
 const TimeLeft = styled(motion.div)`

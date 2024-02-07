@@ -5,6 +5,7 @@ import pages from '../utils/pages';
 import styled from 'styled-components';
 import defaultBackgroundImage from '../images/background/0-cover.jpg';
 import { AppContext } from '../contexts/AppContext';
+import RefreshContext from '../contexts/RefreshContext';
 
 const BackgroundImage = styled(motion.div)`
   position: relative;
@@ -61,7 +62,7 @@ const startAnimation = (controls, animationConfig) => {
 
 const isTouchDevice = () => window.matchMedia('(hover: none)').matches;
 
-function Layout({ children }) {
+const Layout = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { getBrowserSize } = useContext(AppContext);
@@ -161,48 +162,48 @@ function Layout({ children }) {
   }, [currentPage, controls]);
 
   return (
-      <BackgroundImage
-        height={browserSize.height}
-        drag={enableDragRefresh ? "y" : undefined}
-        dragConstraints={enableDragRefresh ? { top: 0, bottom: 0 } : undefined}
-        dragElastic={enableDragRefresh ? 0.2 : 0}
-        onDragStart={onDragStart}
-        onDragEnd={onDragEnd}
-        onDrag={onDrag}
-        style={{
-          overflow: getOverflowStyle(),
-          overflowX: 'hidden'
-        }}
+    <BackgroundImage
+      height={browserSize.height}
+      drag={enableDragRefresh ? "y" : undefined}
+      dragConstraints={enableDragRefresh ? { top: 0, bottom: 0 } : undefined}
+      dragElastic={enableDragRefresh ? 0.2 : 0}
+      onDragStart={onDragStart}
+      onDragEnd={onDragEnd}
+      onDrag={onDrag}
+      style={{
+        overflow: getOverflowStyle(),
+        overflowX: 'hidden'
+      }}
+    >
+      <BackgroundImg
+        ref={imageRef}
+        src={currentPage?.bgImage || defaultBackgroundImage}
+        animate={controls}
+        initial={{ scale: 2 }}
+      />
+      <motion.section
+        initial={{ y: browserSize.height }}
+        animate={{ y: 0 }}
+        exit={{ y: browserSize.height }}
+        transition={{ type: 'spring', stiffness: 90, damping: 20 }}
+        style={{ height: browserSize.height }}
       >
-        <BackgroundImg
-          ref={imageRef}
-          src={currentPage?.bgImage || defaultBackgroundImage}
-          animate={controls}
-          initial={{ scale: 2 }}
-        />
-        <motion.section
-          initial={{ y: browserSize.height }}
-          animate={{ y: 0 }}
-          exit={{ y: browserSize.height }}
-          transition={{ type: 'spring', stiffness: 90, damping: 20 }}
-          style={{ height: browserSize.height }}
-        >
-          <MalContainer className="mal-container mal-container-small">
-            <Header className="chapter-title">
-              <h3>&nbsp;</h3>
-              <div className="icon-title mal-flex mal-flex-middle">
-                <img
-                  className="mal-margin-small-right"
-                  src={currentPage?.sectionIcon?.default}
-                  alt={currentPage?.sectionTitle}
-                />
-                <h4 className="mal-margin-remove mal-padding-remove">{currentPage?.sectionTitle}</h4>
-              </div>
-            </Header>
-            {children}
-          </MalContainer>
-        </motion.section>
-      </BackgroundImage>
+        <MalContainer className="mal-container mal-container-small">
+          <Header className="chapter-title">
+            <h3>&nbsp;</h3>
+            <div className="icon-title mal-flex mal-flex-middle">
+              <img
+                className="mal-margin-small-right"
+                src={currentPage?.sectionIcon?.default}
+                alt={currentPage?.sectionTitle}
+              />
+              <h4 className="mal-margin-remove mal-padding-remove">{currentPage?.sectionTitle}</h4>
+            </div>
+          </Header>
+          {children}
+        </MalContainer>
+      </motion.section>
+    </BackgroundImage>
   );
 }
 
