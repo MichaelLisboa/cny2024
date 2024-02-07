@@ -89,6 +89,10 @@ const OptionButtonLink = styled(Link)`
     transform: translate3d(0, -4px, 0);
     will-change: border-image, min-width, font-size;
   }
+
+  * {
+    font-size: 1rem;
+  }
 `;
 
 

@@ -10,14 +10,11 @@ import Image from '../components/Image';
 import { OrnateButton, OptionButton } from '../components/Button';
 import JigsawPuzzle from '../components/react-mal-jigsaw/JigsawPuzzle';
 import { puzzleData } from '../data';
-import pottery1 from "../images/jigsaw/pottery-finished-1.jpg";
 import puzzle from "../images/jigsaw/puzzle.png";
 import success from "../images/tokens/puzzle.png";
 import fail from "../images/tokens/failed_puzzle.png";
 
 const SplashImage = styled(Image)`
-    align-self: center;
-
     img {
         width: 100%;
         object-fit: contain;
@@ -32,10 +29,10 @@ const ButtonContainer = styled.div`
     padding-right: 16px !important;
 
     * {
-        font-size: 1.125rem;
+        font-size: 1rem;
 
         @media (max-width: 576px) { // When the viewport is 576px or less
-            font-size: 0.875rem; // Reduce the font size even more
+            font-size: 0.875rem !important; // Reduce the font size even more
         }
     }
 `;
