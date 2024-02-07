@@ -165,7 +165,7 @@ const CalligraphyGame = () => {
         <GameContainer>
             {!isGameOver ? (
                 <>
-                    <Timer duration={100 / characterList.length} onTimeout={handleTimeout} />
+                    <Timer duration={1000 / characterList.length} onTimeout={handleTimeout} />
                     <StyledCanvas ref={canvasRef} />
                     <div>Draw: {characterList[currentIndex].mandarin}</div>
                 </>

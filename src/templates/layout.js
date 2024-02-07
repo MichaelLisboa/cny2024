@@ -72,6 +72,7 @@ const Layout = ({ children }) => {
   const [dragDirection, setDragDirection] = useState(null);
   // Add this state to manage whether the device is a touch device
   const [enableDragRefresh, setEnableDragRefresh] = useState(isTouchDevice());
+  const [refreshEnabled, setRefreshEnabled] = useState(true);
 
   useEffect(() => {
     const html = document.documentElement;
@@ -106,7 +107,7 @@ const Layout = ({ children }) => {
     navigate(0);
   };
 
-  const onDrag = enableDragRefresh ? (event, info) => {
+  const onDrag = enableDragRefresh && refreshEnabled ? (event, info) => {
     const offsetY = info.offset.y;
     const offsetX = Math.abs(info.offset.x);
     if (offsetY > 0 && offsetY > offsetX) {
@@ -116,12 +117,12 @@ const Layout = ({ children }) => {
     }
   } : undefined;
 
-  const onDragStart = enableDragRefresh ? (event, info) => {
+  const onDragStart = enableDragRefresh && refreshEnabled ? (event, info) => {
     setIsDragging(true);
     setDragDirection(null);
   } : undefined;
 
-  const onDragEnd = enableDragRefresh ? (event, info) => {
+  const onDragEnd = enableDragRefresh && refreshEnabled ? (event, info) => {
     setIsDragging(false);
     if (dragDirection === 'down' && info.offset.y > 100) {
       refreshPage();
@@ -162,48 +163,50 @@ const Layout = ({ children }) => {
   }, [currentPage, controls]);
 
   return (
-    <BackgroundImage
-      height={browserSize.height}
-      drag={enableDragRefresh ? "y" : undefined}
-      dragConstraints={enableDragRefresh ? { top: 0, bottom: 0 } : undefined}
-      dragElastic={enableDragRefresh ? 0.2 : 0}
-      onDragStart={onDragStart}
-      onDragEnd={onDragEnd}
-      onDrag={onDrag}
-      style={{
-        overflow: getOverflowStyle(),
-        overflowX: 'hidden'
-      }}
-    >
-      <BackgroundImg
-        ref={imageRef}
-        src={currentPage?.bgImage || defaultBackgroundImage}
-        animate={controls}
-        initial={{ scale: 2 }}
-      />
-      <motion.section
-        initial={{ y: browserSize.height }}
-        animate={{ y: 0 }}
-        exit={{ y: browserSize.height }}
-        transition={{ type: 'spring', stiffness: 90, damping: 20 }}
-        style={{ height: browserSize.height }}
+    <RefreshContext.Provider value={{ refreshEnabled, setRefreshEnabled }}>
+      <BackgroundImage
+        height={browserSize.height}
+        drag={enableDragRefresh && refreshEnabled ? "y" : undefined}
+        dragConstraints={enableDragRefresh ? { top: 0, bottom: 0 } : undefined}
+        dragElastic={enableDragRefresh ? 0.2 : 0}
+        onDragStart={onDragStart}
+        onDragEnd={onDragEnd}
+        onDrag={onDrag}
+        style={{
+          overflow: getOverflowStyle(),
+          overflowX: 'hidden'
+        }}
       >
-        <MalContainer className="mal-container mal-container-small">
-          <Header className="chapter-title">
-            <h3>&nbsp;</h3>
-            <div className="icon-title mal-flex mal-flex-middle">
-              <img
-                className="mal-margin-small-right"
-                src={currentPage?.sectionIcon?.default}
-                alt={currentPage?.sectionTitle}
-              />
-              <h4 className="mal-margin-remove mal-padding-remove">{currentPage?.sectionTitle}</h4>
-            </div>
-          </Header>
-          {children}
-        </MalContainer>
-      </motion.section>
-    </BackgroundImage>
+        <BackgroundImg
+          ref={imageRef}
+          src={currentPage?.bgImage || defaultBackgroundImage}
+          animate={controls}
+          initial={{ scale: 2 }}
+        />
+        <motion.section
+          initial={{ y: browserSize.height }}
+          animate={{ y: 0 }}
+          exit={{ y: browserSize.height }}
+          transition={{ type: 'spring', stiffness: 90, damping: 20 }}
+          style={{ height: browserSize.height }}
+        >
+          <MalContainer className="mal-container mal-container-small">
+            <Header className="chapter-title">
+              <h3>&nbsp;</h3>
+              <div className="icon-title mal-flex mal-flex-middle">
+                <img
+                  className="mal-margin-small-right"
+                  src={currentPage?.sectionIcon?.default}
+                  alt={currentPage?.sectionTitle}
+                />
+                <h4 className="mal-margin-remove mal-padding-remove">{currentPage?.sectionTitle}</h4>
+              </div>
+            </Header>
+            {children}
+          </MalContainer>
+        </motion.section>
+      </BackgroundImage>
+    </RefreshContext.Provider>
   );
 }
 

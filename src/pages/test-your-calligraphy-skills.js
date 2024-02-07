@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import pages from '../utils/pages';
 import Layout from '../templates/layout';
@@ -12,15 +12,21 @@ const TestYourCalligraphySkills = () => {
     const currentPage = pages.find(page => page.url === location.pathname);
     const nextPage = pages.find(page => page.url === currentPage.nextPage);
     const previousPage = pages.find(page => page.url === currentPage.previousPage);
+    const { setRefreshEnabled } = useContext(RefreshContext);
+
+    useEffect(() => {
+        // Disable refresh on mount
+        setRefreshEnabled(false);
+    
+        // Re-enable refresh when the component unmounts
+        return () => setRefreshEnabled(true);
+      }, [setRefreshEnabled]);
 
     return (
-        <RefreshContext.Provider
-            value={{ disableRefresh: true }}>
             <Layout>
                 <CalligraphyGame />
                 <Link to={`${nextPage.url}`}>Go to {nextPage.title}</Link>
             </Layout>
-        </RefreshContext.Provider>
     );
 };
 
