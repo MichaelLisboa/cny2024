@@ -1,4 +1,4 @@
-import React, { useContext, useState, useMemo, useEffect } from 'react';
+import React, { useContext, useCallback, useState, useMemo, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { motion, useAnimation } from 'framer-motion';
@@ -73,6 +73,7 @@ const SolveThePuzzle = () => {
     const replaceElementNoun = useDynamicTextReplacer();
     const [content, setContent] = useState('initial');
     const [isPuzzleComplete, setIsPuzzleComplete] = useState(null);
+    const [refreshEnabled, setRefreshEnabled] = useState(true);
     const location = useLocation();
     const navigate = useNavigate();
     const currentPage = useMemo(() => pages.find(page => page.url === location.pathname), [location.pathname]);
@@ -84,6 +85,14 @@ const SolveThePuzzle = () => {
 
     const puzzles = puzzleData[0].puzzlesList;
     const [randomPuzzle, setRandomPuzzle] = useState(puzzles[Math.floor(Math.random() * puzzles.length)]);
+
+    useEffect(() => {
+        if (content === 'initial' || content === 'thirdState') {
+            setRefreshEnabled(true);
+        } else {
+            setRefreshEnabled(false);
+        }
+    }, [content]);
 
     const handleReset = async () => {
         let newRandomPuzzle;
@@ -97,6 +106,7 @@ const SolveThePuzzle = () => {
         await animateExit();
         setContent('newContent');
         setTimeout(() => {
+            setRefreshEnabled(false);
             animateEnter();
         }, 500);
     };
@@ -119,15 +129,15 @@ const SolveThePuzzle = () => {
         await animateEnter();
     };
 
-    const handleOnCompletionStatusChange = (isSuccessful) => {
+    const handleOnCompletionStatusChange = useCallback((isSuccessful) => {
         setIsPuzzleComplete(isSuccessful);
         if (isSuccessful !== null && isSuccessful !== undefined) {
             updateUserSelection('potteryPuzzleResult', isSuccessful);
         }
-    };
+    }, [setIsPuzzleComplete, updateUserSelection]);
 
     return (
-        <Layout>
+        <Layout refreshEnabled={refreshEnabled}>
             <HeaderSection
                 animate={headerControls}
                 className="header-section"

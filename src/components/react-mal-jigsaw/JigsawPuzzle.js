@@ -52,16 +52,16 @@ const JigsawPuzzle = ({ imageSrc, gridSize, timeLimit, onCompletionStatusChange 
     }, []);
 
     useEffect(() => {
-        if (pieces.length > 0) {
+        if (!isPuzzleComplete && pieces.length > 0) {
             const isComplete = pieces.every((piece, index) => piece.id === index);
             setIsPuzzleComplete(isComplete);
-
+    
             if (isComplete) {
                 setPuzzleActive(false);
                 onCompletionStatusChange(true);
             }
         }
-    }, [pieces, onCompletionStatusChange]);
+    }, [pieces, onCompletionStatusChange, isPuzzleComplete]);
 
     useEffect(() => {
         let timerInterval = null;
