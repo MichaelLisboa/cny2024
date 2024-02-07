@@ -30,32 +30,29 @@ const StyledCanvas = styled.canvas`
   padding: 24px;
 `;
 
-const TimeLeft = styled(motion.div)`
-  margin-bottom: 10px;
-  font-size: 16px;
-  font-weight: bold;
+const Countdown = styled.h3`
+  text-align: center;
+  margin: 0 auto 12px auto;
+  color: rgba(156, 19, 19, 1);
 `;
 
-// Timer component
-const Timer = ({ onTimeout, duration }) => {
-    const [timeLeft, setTimeLeft] = useState(duration);
+function formatTime(seconds) {
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds = seconds % 60;
+    const paddedMinutes = String(minutes).padStart(2, '0');
+    const paddedSeconds = String(remainingSeconds).padStart(2, '0');
 
-    useEffect(() => {
-        if (timeLeft === 0) {
-            onTimeout();
-            return;
-        }
-        const timerId = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
-        return () => clearTimeout(timerId);
-    }, [timeLeft, onTimeout]);
-
-    return <TimeLeft>Time Left: {timeLeft}s</TimeLeft>;
-};
+    return `${paddedMinutes}:${paddedSeconds}`;
+}
 
 // Main CalligraphyGame component
-const CalligraphyGame = () => {
+const CalligraphyGame = (timeLimit) => {
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [isGameOver, setIsGameOver] = useState(false);
+
+    const [isGameComplete, setIsGameComplete] = useState(false);
+    const [gameActive, setGameActive] = useState(true);
+    const [elapsedTime, setElapsedTime] = useState(0);
+    const [isTimeUp, setIsTimeUp] = useState(false);
 
     const characterList = [
         { mandarin: '友', english: 'Friendly', image: friendly },
@@ -153,21 +150,41 @@ const CalligraphyGame = () => {
 
 
 
-    const handleTimeout = () => {
-        if (currentIndex < characterList.length - 1) {
-            setCurrentIndex(currentIndex + 1);
-        } else {
-            setIsGameOver(true);
+    useEffect(() => {
+        let timerInterval = null;
+
+        if (gameActive) {
+            timerInterval = setInterval(() => {
+                setElapsedTime((prevTime) => {
+                    if (prevTime < timeLimit) {
+                        return prevTime + 1;
+                    } else {
+                        clearInterval(timerInterval); // Stop the interval if time limit is reached
+                        setGameActive(false);
+                        setIsTimeUp(true); // Set isTimeUp to true when time is up
+                        // onCompletionStatusChange(false);
+                        return prevTime;
+                    }
+                });
+            }, 1000);
         }
-    };
+
+        return () => {
+            clearInterval(timerInterval);
+        };
+    }, [timeLimit, gameActive]);
 
     return (
         <GameContainer>
-            {!isGameOver ? (
+            {gameActive ? (
                 <>
-                    <Timer duration={1000 / characterList.length} onTimeout={handleTimeout} />
+                    {!isGameComplete && !isTimeUp ? (
+                        <Countdown>{formatTime(timeLimit - elapsedTime)}</Countdown>
+                    ) : (
+                        <Countdown>{!isTimeUp ? "Success!" : "Time's Up!"}</Countdown>
+                    )}
                     <StyledCanvas ref={canvasRef} />
-                    <div>Draw: {characterList[currentIndex].mandarin}</div>
+                    <div>{characterList[currentIndex].english}</div>
                 </>
             ) : (
                 <motion.div

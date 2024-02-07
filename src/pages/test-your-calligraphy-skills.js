@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useMemo } from 'react';
+import React, { useContext, useState, useEffect, useMemo, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { motion, useAnimation } from 'framer-motion';
@@ -99,6 +99,13 @@ const TestYourCalligraphySkills = () => {
         await animateEnter();
     };
 
+    const handleOnCompletionStatusChange = useCallback((isSuccessful) => {
+        setIsGameComplete(isSuccessful);
+        // if (isSuccessful !== null && isSuccessful !== undefined) {
+        //     updateUserSelection('potteryPuzzleResult', isSuccessful);
+        // }
+    }, [setIsGameComplete, updateUserSelection]);
+
     return (
         <Layout refreshEnabled={refreshEnabled}>
             <HeaderSection
@@ -117,7 +124,7 @@ const TestYourCalligraphySkills = () => {
                             <p className="mal-text-medium mal-margin-small-top mal-margin-small-bottom">{replaceElementNoun(randomCharacter.description)}</p>
                             <p className="mal-text-small mal-margin-remove-vertical padding-remove-vertical">Swap the tiles to restore the {replaceElementNoun(randomCharacter.title.replace(/\s*Puzzle\s*/g, ""))}.</p>
                         </div>
-                    ) : null }
+                    ) : null}
             </HeaderSection>
             <BodySection
                 animate={bodyControls}
@@ -129,7 +136,8 @@ const TestYourCalligraphySkills = () => {
                     </div>
                 ) : content === 'game' ? (
                     // Display game related content here
-                    <CalligraphyGame />
+                    <CalligraphyGame
+                        timeLimit={60} />
                 ) : content === 'complete' ? (
                     'Stuff'
                 ) : null}
