@@ -124,7 +124,7 @@ const CalligraphyFlashGame = ({ timeLimit = 30, onCompletionStatusChange }) => {
           setIsTimeUp(true);
           onCompletionStatusChange(correctCount, incorrectCount);
         }}
-        successMessage={`Time's Up!`} />
+        successMessage={``} />
       {!showOptions ? (
         <>
           <FlashCardContainer key="activeCharacter" variants={variants} initial="hidden" animate="visible" exit="exit">
@@ -148,7 +148,7 @@ const CalligraphyFlashGame = ({ timeLimit = 30, onCompletionStatusChange }) => {
           </OptionsGrid>
         </AnimatePresence>
       )}
-      {isTimeUp && <h2>Game Over</h2>}
+      {isTimeUp && <h2>Time's Up!</h2>}
     </GameContainer>
   );
 };

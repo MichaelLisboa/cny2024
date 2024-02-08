@@ -39,6 +39,17 @@ const ButtonContainer = styled.div`
     }
 `;
 
+const CalligraphyTokenImage = styled.div`
+    width: auto;
+    padding: 32px;
+
+    img {
+        height: 100%;
+        max-height: 25vh;
+        object-fit: contain;
+    }
+`;
+
 const HeaderSection = styled(motion.div)`
   // Add your header-section styles here.
 `;
@@ -100,6 +111,12 @@ const TestYourCalligraphySkills = () => {
         await animateEnter();
     };
 
+    useEffect(() => {
+        if (isGameComplete) {
+            animateExit().then(() => setContent('complete')).then(() => animateEnter());
+        }
+    }, [isGameComplete]);
+
     const handleOnCompletionStatusChange = useCallback((correctCount, incorrectCount) => {
         console.log('Correct:', correctCount, 'Incorrect:', incorrectCount);
         setIsGameComplete(true);
@@ -130,18 +147,24 @@ const TestYourCalligraphySkills = () => {
             <BodySection
                 animate={bodyControls}
                 className="body-section"
+                style={ content === 'game' && { justifyContent: 'center', padding: 0 }}
             >
                 {content === 'initial' ? (
                     <div className="body-section-wide">
                         <SplashImage src={scroll} alt="Calligraphy scroll" />
                     </div>
                 ) : content === 'game' ? (
-                    // Display game related content here
                     <CalligraphyFlashGame
                         timeLimit={30}
                         onCompletionStatusChange={handleOnCompletionStatusChange} />
                 ) : content === 'complete' ? (
-                    'Stuff'
+                    <div className="mal-text-center">
+                            <h2 className="mal-h2 mal-margin-remove-vertical">{replaceElementNoun(calligraphyData[0].successTitle)}</h2>
+                            <CalligraphyTokenImage>
+                                <Image src={success} alt={`You successfully restored the porcelain vase!`} />
+                            </CalligraphyTokenImage>
+                            <p className="mal-text-medium">{replaceElementNoun(calligraphyData[0].successMessage)}</p>
+                        </div>
                 ) : null}
 
             </BodySection>
@@ -163,11 +186,8 @@ const TestYourCalligraphySkills = () => {
                             Yes, let's do it
                         </OptionButton>
                     </ButtonContainer>
-                ) : content === 'game' ? (
-                    // Display game related content here
-                    'placeholder'
                 ) : content === 'complete' ? (
-                    <OptionButton to={`${nextPage.url}`}>Go to {nextPage.title}</OptionButton>
+                    <OrnateButton url={`${nextPage.url}`}>{nextPage.title}</OrnateButton>
                 ) : null}
             </FooterSection>
         </Layout>
