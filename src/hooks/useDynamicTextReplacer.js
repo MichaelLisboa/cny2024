@@ -17,6 +17,7 @@ export const useDynamicTextReplacer = () => {
   };
 
   const replaceText = (text) => {
+    if (text === undefined) console.error('Text is undefined', text);
 
     const replacements = {
       '\\*element_noun\\*': userInfo?.chosenElement || getDataFromLocalStorage('chosenElement'),

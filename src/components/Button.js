@@ -93,7 +93,7 @@ const OptionButtonLink = styled(Link)`
   * {
     font-size: 1rem;
   }
-`;
+`;  
 
 
 const NextButton = motion(StyledLink);

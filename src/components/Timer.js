@@ -1,3 +1,4 @@
+// ../Timer.js
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
@@ -7,7 +8,7 @@ const Countdown = styled.h3`
   color: rgba(156, 19, 19, 1);
 `;
 
-const Timer = ({ timeLimit, puzzleActive, onCompletionStatusChange, successMessage = "Success!", failMessage = "Time's Up!" }) => {
+const Timer = ({ timeLimit = 30, puzzleActive = true, onCompletionStatusChange, successMessage = "Success!", failMessage = "Time's Up!" }) => {
     const [elapsedTime, setElapsedTime] = useState(0);
     const [isTimeUp, setIsTimeUp] = useState(false);
 

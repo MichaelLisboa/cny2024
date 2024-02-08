@@ -9,7 +9,9 @@ import Layout from '../templates/layout';
 import Image from '../components/Image';
 import { OrnateButton, OptionButton } from '../components/Button';
 import { calligraphyData } from '../data';
-import CalligraphyGame from '../components/react-mal-calligraphy';
+// import CalligraphyGame from '../components/react-mal-calligraphy';
+// import CalligraphyGame from '../games/CalligraphyGame';
+import CalligraphyFlashGame from '../games/CalligraphyFlashGame';
 import scroll from "../images/calligraphy/scroll.png";
 import success from "../images/tokens/calligraphy.png";
 import fail from "../images/tokens/failed_calligraphy.png";
@@ -43,13 +45,13 @@ const HeaderSection = styled(motion.div)`
 
 const BodySection = styled(motion.div)`
   // Add your body-section styles here.
-  justify-content: flex-start;
+//   justify-content: center;
   text-align: center !important;
   padding-top: 0;
 
   .body-section-wide {
     align-self: center;
-    width: 100% !important;
+    width: 130% !important;
    }
 `;
 
@@ -74,7 +76,6 @@ const TestYourCalligraphySkills = () => {
 
     const characters = calligraphyData[0].characterList;
     const [randomCharacter, setRandomCharacter] = useState(characters[Math.floor(Math.random() * characters.length)]);
-
 
     useEffect(() => {
         setRefreshEnabled(false);
@@ -120,9 +121,8 @@ const TestYourCalligraphySkills = () => {
                 ) : content === 'game' ?
                     (
                         <div className="mal-padding-remove-horizontal">
-                            <h3 className="mal-margin-remove-vertical">{replaceElementNoun(randomCharacter.title)}</h3>
-                            <p className="mal-text-medium mal-margin-small-top mal-margin-small-bottom">{replaceElementNoun(randomCharacter.description)}</p>
-                            <p className="mal-text-small mal-margin-remove-vertical padding-remove-vertical">Swap the tiles to restore the {replaceElementNoun(randomCharacter.title.replace(/\s*Puzzle\s*/g, ""))}.</p>
+                            <h3 className="mal-margin-remove-vertical">{replaceElementNoun(calligraphyData[0].challengeHeadline)}</h3>
+                            <p className="mal-text-medium mal-margin-small-top mal-margin-small-bottom">{replaceElementNoun(calligraphyData[0].challengeMessage)}</p>
                         </div>
                     ) : null}
             </HeaderSection>
@@ -136,8 +136,8 @@ const TestYourCalligraphySkills = () => {
                     </div>
                 ) : content === 'game' ? (
                     // Display game related content here
-                    <CalligraphyGame
-                        timeLimit={60}
+                    <CalligraphyFlashGame
+                        timeLimit={30}
                         onCompletionStatusChange={handleOnCompletionStatusChange} />
                 ) : content === 'complete' ? (
                     'Stuff'
@@ -153,7 +153,7 @@ const TestYourCalligraphySkills = () => {
                             async () => {
                                 updateUserSelection('calligraphyChallengeResult', false);
                                 await animateExit();
-                                navigate(nextPage.url);
+                                navigate(nextPage?.url);
                             }
                         }>
                             No, let's move on

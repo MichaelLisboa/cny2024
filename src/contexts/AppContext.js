@@ -23,7 +23,7 @@ const getInitialState = () => {
       chosenPath: '',
       potteryPuzzleResult: '',
       calligraphyChallengeResult: '',
-      spotTheDifferenceChallengeResult: '',
+      chosenWish: '',
       mysteryAnimalResult: '',
     },
   };
