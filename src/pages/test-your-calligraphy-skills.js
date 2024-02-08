@@ -100,12 +100,13 @@ const TestYourCalligraphySkills = () => {
         await animateEnter();
     };
 
-    const handleOnCompletionStatusChange = useCallback((isSuccessful) => {
-        setIsGameComplete(isSuccessful);
-        if (isSuccessful !== null && isSuccessful !== undefined) {
-            updateUserSelection('calligraphyChallengeResult', isSuccessful);
+    const handleOnCompletionStatusChange = useCallback((correctCount, incorrectCount) => {
+        console.log('Correct:', correctCount, 'Incorrect:', incorrectCount);
+        setIsGameComplete(true);
+        if (correctCount !== null && correctCount !== undefined && incorrectCount !== null && incorrectCount !== undefined) {
+          updateUserSelection('calligraphyChallengeResult', { correct: correctCount, incorrect: incorrectCount });
         }
-    }, [setIsGameComplete, updateUserSelection]);
+      }, [setIsGameComplete, updateUserSelection]);
 
     return (
         <Layout refreshEnabled={refreshEnabled}>

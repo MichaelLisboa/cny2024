@@ -16,6 +16,7 @@ import resourceful from '../images/calligraphy/resourceful.svg';
 import curious from '../images/calligraphy/curious.svg';
 import friendly from '../images/calligraphy/friendly.svg';
 import brave from '../images/calligraphy/brave.svg';
+import { set } from 'lodash';
 
 // Styled Components
 const GameContainer = styled.div`
@@ -80,11 +81,14 @@ const characterList = [
 
 const shuffleArray = (array) => array.sort(() => Math.random() - 0.5);
 
-const CalligraphyFlashGame = ({ timeLimit = 60 }) => {
+const CalligraphyFlashGame = ({ timeLimit = 30, onCompletionStatusChange }) => {
   const [activeCharacterIndex, setActiveCharacterIndex] = useState(0);
   const [showOptions, setShowOptions] = useState(false);
   const [isTimeUp, setIsTimeUp] = useState(false);
   const [timerStarted, setTimerStarted] = useState(false);
+
+  const [correctCount, setCorrectCount] = useState(0);
+  const [incorrectCount, setIncorrectCount] = useState(0);
 
   const characterOptions = useMemo(() => {
     let options = shuffleArray(characterList.filter((_, index) => index !== activeCharacterIndex)).slice(0, 8);
@@ -100,24 +104,40 @@ const CalligraphyFlashGame = ({ timeLimit = 60 }) => {
   const handleCharacterChoice = (option) => {
     if (isTimeUp) return;
     const isCorrect = option.mandarin === characterList[activeCharacterIndex].mandarin;
-    console.log(`Choice was ${isCorrect ? "correct" : "incorrect"}.`);
+
+    if (isCorrect) {
+      setCorrectCount(prevCount => prevCount + 1);
+    } else {
+      setIncorrectCount(prevCount => prevCount + 1);
+    }
+
     setActiveCharacterIndex((prevIndex) => (prevIndex + 1) % characterList.length);
     setShowOptions(false);
   };
 
   return (
     <GameContainer>
-      <Timer timeLimit={timeLimit} puzzleActive={timerStarted} onCompletionStatusChange={() => setIsTimeUp(true)} />
+      <Timer
+        timeLimit={timeLimit}
+        puzzleActive={timerStarted}
+        onCompletionStatusChange={() => {
+          setIsTimeUp(true);
+          onCompletionStatusChange(correctCount, incorrectCount);
+        }}
+        successMessage={`Time's Up!`} />
       {!showOptions ? (
         <>
           <FlashCardContainer key="activeCharacter" variants={variants} initial="hidden" animate="visible" exit="exit">
             <Image src={characterList[activeCharacterIndex].image} alt={characterList[activeCharacterIndex].english} />
           </FlashCardContainer>
-          <ButtonContainer>
-            <OptionButton onClick={handleButtonClick}>{timerStarted ? "Next" : "Begin"}</OptionButton>
-          </ButtonContainer>
+          {!isTimeUp &&
+            <ButtonContainer>
+              <OptionButton onClick={handleButtonClick}>{timerStarted ? "Next" : "Begin"}</OptionButton>
+            </ButtonContainer>
+          }
         </>
       ) : (
+        !isTimeUp &&
         <AnimatePresence>
           <OptionsGrid key="characterOptions" variants={variants} initial="hidden" animate="visible" exit="exit">
             {characterOptions.map((option, index) => (
