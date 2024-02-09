@@ -11,11 +11,9 @@ import { OrnateButton, OptionButton } from '../components/Button';
 import { zodiacData } from '../data';
 import getBestMatch from '../data/calculateBestMatch';
 
-const Section = styled(motion(SimpleLayout))`
+const Section = styled(SimpleLayout)`
     margin-top: 72px;
-    padding: 24px;  
-    height: 100vh !important;
-    overflow: scroll !important;
+    padding: o 24px;
 `;
 
 const Headline = styled.h1`
@@ -30,7 +28,7 @@ const StyledAnimalImage = styled(Image)`
     max-width: none !important;
     width: auto !important;
     max-height: 60vh !important;
-    overflow: hidden !important;
+    margin: 0 auto !important;
 
     img {
         object-fit: cover;
@@ -89,6 +87,10 @@ const Description = styled.div`
 
 const BodySection = styled(motion.div)`
   // Your body-section styles here.
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+    align-items: center;
 `;
 
 const FooterSection = styled(motion.div)`
@@ -154,54 +156,38 @@ const MeetYourInnerSelf = () => {
         }
     }, [userAnimal, updateUserSelection, userInfo.userAnimal]);
 
-    const animateExit = async (direction) => {
-        await bodyControls.start(directionalVariants.exit(direction));
-        await footerControls.start(directionalVariants.exit(direction));
-    };
-    
-    const animateEnter = async (direction) => {
-        // Use 'visible' variant with direction for entering animation
-        await bodyControls.start(directionalVariants.visible(direction));
-        await footerControls.start(directionalVariants.visible(direction)); // If footer needs direction-based animation
-    };
-    
-
     const handleDragEnd = (event, info) => {
         const offsetY = info.offset.y;
         const swipeThreshold = 50;
+        const swipeVelocity = info.velocity.y; // Capture the vertical swipe velocity
+
         if (offsetY < -swipeThreshold) {
-            handleSwipe('up');
+            handleSwipe('up', Math.abs(swipeVelocity)); // Pass the absolute value of velocity for consistency
         } else if (offsetY > swipeThreshold) {
-            handleSwipe('down');
+            handleSwipe('down', Math.abs(swipeVelocity));
         }
     };
 
-    const handleSwipe = async (direction) => {
+    const handleSwipe = async (direction, velocity) => {
         let nextContentIndex = contentOrder.indexOf(content);
         if (direction === 'up' && nextContentIndex < contentOrder.length - 1) {
             nextContentIndex++;
         } else if (direction === 'down' && nextContentIndex > 0) {
             nextContentIndex--;
         }
-    
+
         const nextContent = contentOrder[nextContentIndex];
-    
-        // Exit animation with current direction
-        await animateExit(direction);
-    
-        // Prepare the content to enter from the correct direction
-        // This directly manipulates the 'y' value to simulate content coming from the swipe direction
-        bodyControls.set({
-            y: direction === 'up' ? 100 : -100, // Adjust these values as necessary
-            opacity: 0
-        });
-    
+
+        // Exit animation
+        await animateExit();
+
+        // Update the content
         setContent(nextContent);
-    
-        // Now animate to visible, which should smoothly transition from the set position
+
+        // Enter animation
         await animateEnter(); // animateEnter might not need direction anymore if set() is used
     };
-    
+
 
     const handleButtonClick = async (targetSection) => {
         const currentIdx = contentOrder.indexOf(content);
@@ -213,6 +199,20 @@ const MeetYourInnerSelf = () => {
         await animateEnter();
     };
 
+    const animateExit = () => {
+        return bodyControls.start({
+            opacity: 0,
+            transition: { duration: 0.25 },
+        });
+    };
+
+    const animateEnter = () => {
+        return bodyControls.start({
+            opacity: 1,
+            transition: { duration: 0.25 },
+        });
+    };
+
 
 
     return (
@@ -220,10 +220,10 @@ const MeetYourInnerSelf = () => {
             <BodySection
                 drag="y"
                 onDragEnd={handleDragEnd}
-                dragConstraints={{ top: 0, bottom: 0 }}
+                dragConstraints={{ top: 0, bottom: 0, left: 0, right: 0 }}
                 variants={directionalVariants}
                 dragElastic={0}
-                initial="visible"
+                initial={{ y: 0 }}
                 animate={bodyControls}
                 custom={content} // Pass current content as custom prop for dynamic variants
             >
