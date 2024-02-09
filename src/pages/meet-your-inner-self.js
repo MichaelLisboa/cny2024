@@ -1,7 +1,7 @@
 import React, { useContext, useMemo, useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { motion, useAnimation } from 'framer-motion';
+import { motion, useAnimation, easeInOut } from 'framer-motion';
 import { AppContext } from '../contexts/AppContext';
 import { useDynamicTextReplacer } from '../hooks/useDynamicTextReplacer';
 import pages from '../utils/pages';
@@ -9,11 +9,12 @@ import SimpleLayout from '../templates/simple-layout';
 import Image from '../components/Image';
 import { OrnateButton, OptionButton } from '../components/Button';
 import { zodiacData } from '../data';
-import getBestMatch from '../data/calculateBestMatch';
+import getBestMatch from '../data/calculateBestMatch'
 
 const Section = styled(SimpleLayout)`
-    margin-top: 72px;
-    padding: o 24px;
+    padding: 72px 24px 128px 24px;  
+    overflow-y: auto !important;
+    scroll-behavior: smooth;
 `;
 
 const Headline = styled.h1`
@@ -26,16 +27,19 @@ const Headline = styled.h1`
 
 const StyledAnimalImage = styled(Image)`
     max-width: none !important;
+    min-width: none !important;
+    height: 55vh;
     width: auto !important;
-    max-height: 60vh !important;
-    margin: 0 auto !important;
-
     img {
         object-fit: cover;
     }
 
+    @media (max-height: 668px) {
+        max-height: 45vh;
+    }
+
     @media (min-width: 768px) {
-        max-height: 55vh;
+        max-height: 60vh;
     }
 `;
 
@@ -50,6 +54,10 @@ const TraitsList = styled.ul`
 
     li {
         user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -o-user-select: none;
         cursor: default;
         font-size: 0.875rem;
         color: rgba(102, 71, 56, 1);
@@ -73,8 +81,8 @@ const ButtonContainer = styled.div`
     * {
         font-size: 1rem;
 
-        @media (max-width: 576px) {
-            font-size: 0.875rem !important;
+        @media (max-width: 576px) { // When the viewport is 576px or less
+            font-size: 0.875rem !important; // Reduce the font size even more
         }
     }
 `;
@@ -86,40 +94,18 @@ const Description = styled.div`
 }`;
 
 const BodySection = styled(motion.div)`
-  // Your body-section styles here.
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-    align-items: center;
+  // Add your body-section styles here.
 `;
 
 const FooterSection = styled(motion.div)`
-  // Your footer-section styles here.
+  // Add your footer-section styles here.
 `;
-
-// Define your animation variants
-const directionalVariants = {
-    // Keep 'hidden' as is if needed, or adjust similarly to 'visible' for consistency
-    visible: (direction = 'up') => ({
-        opacity: 1,
-        y: direction === 'up' ? 100 : -100, // Adjust values as needed to match the desired effect
-        transition: { type: 'tween', ease: 'easeInOut', duration: 0.5 },
-    }),
-    exit: (direction = 'up') => ({
-        opacity: 0,
-        y: direction === 'up' ? -100 : 100,
-        transition: { type: 'tween', ease: 'easeInOut', duration: 0.5 },
-    }),
-};
-
-
 
 const MeetYourInnerSelf = () => {
     const { updateUserSelection, getUserInfo } = useContext(AppContext);
     const replaceElementNoun = useDynamicTextReplacer();
     const [refreshEnabled, setRefreshEnabled] = useState(false);
-    const [content, setContent] = useState('section1');
-    const contentOrder = ['section1', 'section2', 'section3'];
+    const [content, setContent] = useState('section-1');
     const location = useLocation();
     const navigate = useNavigate();
     const currentPage = useMemo(() => pages.find(page => page.url === location.pathname), [location.pathname]);
@@ -156,134 +142,44 @@ const MeetYourInnerSelf = () => {
         }
     }, [userAnimal, updateUserSelection, userInfo.userAnimal]);
 
-    const handleDragEnd = (event, info) => {
-        const offsetY = info.offset.y;
-        const swipeThreshold = 50;
-        const swipeVelocity = info.velocity.y; // Capture the vertical swipe velocity
-
-        if (offsetY < -swipeThreshold) {
-            handleSwipe('up', Math.abs(swipeVelocity)); // Pass the absolute value of velocity for consistency
-        } else if (offsetY > swipeThreshold) {
-            handleSwipe('down', Math.abs(swipeVelocity));
-        }
+    const animateExit = async () => {
+        await footerControls.start({ y: 100, opacity: 0 });
+        await bodyControls.start({ y: 100, opacity: 0 });
     };
 
-    const handleSwipe = async (direction, velocity) => {
-        let nextContentIndex = contentOrder.indexOf(content);
-        if (direction === 'up' && nextContentIndex < contentOrder.length - 1) {
-            nextContentIndex++;
-        } else if (direction === 'down' && nextContentIndex > 0) {
-            nextContentIndex--;
-        }
+    const animateEnter = async () => {
+        await bodyControls.start({ y: 0, opacity: 1, transition: { delay: 0.025 } });
+        await footerControls.start({ y: 0, opacity: 1, transition: { delay: 0.05 } });
+    };
 
-        const nextContent = contentOrder[nextContentIndex];
-
-        // Exit animation
+    const handleButtonClick = async () => {
         await animateExit();
-
-        // Update the content
-        setContent(nextContent);
-
-        // Enter animation
-        await animateEnter(); // animateEnter might not need direction anymore if set() is used
-    };
-
-
-    const handleButtonClick = async (targetSection) => {
-        const currentIdx = contentOrder.indexOf(content);
-        const targetIdx = contentOrder.indexOf(targetSection);
-        const direction = targetIdx > currentIdx ? 'up' : 'down';
-
-        await animateExit(direction);
-        setContent(targetSection); // Update the content state to the target section
+        setContent('complete');
         await animateEnter();
-    };
-
-    const animateExit = () => {
-        return bodyControls.start({
-            opacity: 0,
-            transition: { duration: 0.25 },
-        });
-    };
-
-    const animateEnter = () => {
-        return bodyControls.start({
-            opacity: 1,
-            transition: { duration: 0.25 },
-        });
-    };
-
-
+    }
 
     return (
         <Section refreshEnabled={refreshEnabled}>
             <BodySection
-                drag="y"
-                onDragEnd={handleDragEnd}
-                dragConstraints={{ top: 0, bottom: 0, left: 0, right: 0 }}
-                variants={directionalVariants}
-                dragElastic={0}
-                initial={{ y: 0 }}
                 animate={bodyControls}
-                custom={content} // Pass current content as custom prop for dynamic variants
+                className="body-section"
             >
-                {/* Conditional rendering based on content state */}
-                {content === 'section1' && (
-                    <>
-                        <Headline>{userAnimal.title}-Hearted {userInfo.zodiacAnimal}</Headline>
-                        <TraitsList>
-                            {userAnimal.traits.map((trait, index) => (
-                                <li key={index}>{trait}</li>
-                            ))}
-                        </TraitsList>
-                        <StyledAnimalImage src={userAnimal.image} alt={userAnimal.name} />
-                    </>
-                )}
-                {content === 'section2' && (
-                    <div id="section-2">
-                        <Description>
-                            <h3>There's something intriguing about you, a hidden aspect waiting to be discovered.</h3>
-                            <p>{replaceElementNoun(userAnimal.story)}</p>
-                        </Description>
-                    </div>
-                )}
-                {content === 'section3' && (
-                    <div id="section-3">
-                        <Description>
-                            <h3>There's something intriguing about you, a hidden aspect waiting to be discovered.</h3>
-                            <p>{replaceElementNoun(userAnimal.story)}</p>
-                        </Description>
-                    </div>
-                )}
+                <Headline>{userAnimal.title}-Hearted {userInfo.zodiacAnimal}</Headline>
+                <div id="section-1" className="mal-flex mal-flex-column mal-flex-middle">
+                    <TraitsList>
+                        {userAnimal.traits.map((trait, index) => (
+                            <li key={index}>{trait}</li>
+                        ))}
+                    </TraitsList>
+                    <StyledAnimalImage src={userAnimal.image} alt={userAnimal.name} />
+                </div>
+                <div id="section-2" className="mal-flex mal-flex-column mal-flex-middle">
+                    <Description>
+                        <h3>There's something intriguing about you, a hidden aspect waiting to be discovered.</h3>
+                        <p>{replaceElementNoun(userAnimal.story)}</p>
+                    </Description>
+                </div>
             </BodySection>
-
-            <FooterSection
-                animate={footerControls}
-                className="footer-section">
-                {content === 'section1' && (
-                    <ButtonContainer>
-                        <OptionButton onClick={() => handleButtonClick('section2')}>
-                            Go to Section 2
-                        </OptionButton>
-                    </ButtonContainer>
-                )}
-                {content === 'section2' && (
-                    <ButtonContainer>
-                        <OptionButton onClick={() => handleButtonClick('section3')}>
-                            Go to Section 3
-                        </OptionButton>
-                    </ButtonContainer>
-                )}
-                {content === 'section3' && (
-                    <ButtonContainer>
-                        <OptionButton onClick={() => handleButtonClick('section1')}>
-                            Back to Section 1
-                        </OptionButton>
-                    </ButtonContainer>
-                )}
-            </FooterSection>
-
-
         </Section>
     );
 };
