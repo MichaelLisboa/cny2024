@@ -3,7 +3,7 @@ const pages = [
       title: "Welcome to CNY 2024",
       url: "/",
       previousPage: null,
-      nextPage: "/when-were-you-born",
+      nextPage: "/welcome-noble-beings",
       sectionTitle: null,
       sectionIcon: null,
       bgImage: require("../images/background/0-cover.jpg"),
@@ -33,7 +33,7 @@ const pages = [
     {
       title: "Welcome noble beings",
       url: "/welcome-noble-beings",
-      previousPage: "/when-were-you-born",
+      previousPage: "/welcome-to-cny-2024",
       nextPage: "/choose-your-element",
       sectionTitle: "Introduction",
       sectionIcon: require("../images/icons/introduction.svg"),
