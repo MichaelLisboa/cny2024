@@ -14,10 +14,13 @@ import SolveTheRiddle from './pages/solve-the-riddle';
 import ChooseYourPath from './pages/choose-your-path';
 import SolveThePuzzle from './pages/solve-the-puzzle';
 import TestYourCalligraphySkills from './pages/test-your-calligraphy-skills';
-// import EmbraceWhatInFrontOfYou from './pages/embrace-whats-in-front-of-you';
 import WhatIsYourWish from './pages/what-is-your-wish';
 import PursueYourDreams from './pages/pursue-your-dreams';
 import MeetYourInnerSelf from './pages/meet-your-inner-self';
+
+import ReactGA from 'react-ga';
+
+ReactGA.initialize('G-4SZM7TT0QN');
 
 
 function getElementForPage(page) {
@@ -42,8 +45,6 @@ function getElementForPage(page) {
       return <SolveThePuzzle />;
     case "/test-your-calligraphy-skills":
       return <TestYourCalligraphySkills />;
-    // case "/embrace-whats-in-front-of-you":
-    //   return <EmbraceWhatInFrontOfYou />;
     case "/what-is-your-wish":
       return <WhatIsYourWish />;
     case "/pursue-your-dreams":
