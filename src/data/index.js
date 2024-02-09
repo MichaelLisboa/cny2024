@@ -590,7 +590,7 @@ export const wishesData = {
 export const resultData = [
     {
         headline: "At last, as you cross the finish line, the *alliance_noun* presents you to Jade Emperor.",
-        message: "\“Jade Emperor, let me present to you this *trait_noun*,\" proclaims the *alliance_noun*. \"They've faced trials and challenges, displaying unwavering perseverance, even in the face of setbacks.\""
+        message: "\“Jade Emperor, let me present to you this *trait_noun* spirit,\" proclaims the *alliance_noun*. \"They've faced trials and challenges, displaying unwavering perseverance, even in the face of setbacks.\""
     },
 ]
 
