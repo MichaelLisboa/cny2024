@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import styled from 'styled-components';
 import Image from '../components/Image';
@@ -16,24 +16,23 @@ import resourceful from '../images/calligraphy/resourceful.svg';
 import curious from '../images/calligraphy/curious.svg';
 import friendly from '../images/calligraphy/friendly.svg';
 import brave from '../images/calligraphy/brave.svg';
-import { set } from 'lodash';
 
-// Styled Components
 const GameContainer = styled.div`
   text-align: center;
   max-width: 600px;
-  // padding: 20px;
+  padding: 20px;
 `;
 
 const FlashCardContainer = styled(motion.div)`
-  margin: 20px auto;
+  margin: 0 auto;
 `;
 
 const CharacterButton = styled.button`
   padding: 10px 20px;
   cursor: pointer;
-  background-color: transparent;
-  border: none;
+  background-color: rgba(255, 255, 255, 0.25);
+  border: 1px solid #ccc;
+  border-radius: 8px;
 `;
 
 const ButtonContainer = styled.div`
@@ -55,7 +54,7 @@ const ButtonContainer = styled.div`
 const OptionsGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  gap: 32px;
 `;
 
 // Animation Variants
@@ -86,6 +85,7 @@ const CalligraphyFlashGame = ({ timeLimit = 30, onCompletionStatusChange }) => {
   const [activeCharacterIndex, setActiveCharacterIndex] = useState(0);
   const [showOptions, setShowOptions] = useState(false);
   const [isTimeUp, setIsTimeUp] = useState(false);
+  const [gameStarted, setGameStarted] = useState(false);
   const [timerStarted, setTimerStarted] = useState(false);
 
   const [correctCount, setCorrectCount] = useState(0);
@@ -99,6 +99,7 @@ const CalligraphyFlashGame = ({ timeLimit = 30, onCompletionStatusChange }) => {
 
   const handleButtonClick = () => {
     if (!timerStarted) setTimerStarted(true);
+    setGameStarted(true)
     setShowOptions(!showOptions);
   };
 
@@ -117,40 +118,46 @@ const CalligraphyFlashGame = ({ timeLimit = 30, onCompletionStatusChange }) => {
   };
 
   return (
-    <GameContainer>
-      <Timer
-        timeLimit={timeLimit}
-        puzzleActive={timerStarted}
-        onCompletionStatusChange={() => {
-          setIsTimeUp(true);
-          onCompletionStatusChange(correctCount, incorrectCount);
-        }}
-        successMessage={``} />
-      {!showOptions ? (
-        <>
-          <FlashCardContainer key="activeCharacter" variants={variants} initial="hidden" animate="visible" exit="exit">
-            <Image src={characterList[activeCharacterIndex].image} alt={characterList[activeCharacterIndex].english} />
-          </FlashCardContainer>
-          {!isTimeUp &&
-            <ButtonContainer>
-              <OptionButton onClick={handleButtonClick}>{timerStarted ? "Next" : "Begin"}</OptionButton>
-            </ButtonContainer>
-          }
-        </>
-      ) : (
-        !isTimeUp &&
-        <AnimatePresence>
-          <OptionsGrid key="characterOptions" variants={variants} initial="hidden" animate="visible" exit="exit">
-            {characterOptions.map((option, index) => (
-              <CharacterButton key={index} onClick={() => handleCharacterChoice(option)}>
-                <Image src={option.image} alt={option.english} />
-              </CharacterButton>
-            ))}
-          </OptionsGrid>
-        </AnimatePresence>
-      )}
-      {isTimeUp && <h2>Time's Up!</h2>}
-    </GameContainer>
+    gameStarted ? (
+      <GameContainer>
+        <Timer
+          timeLimit={timeLimit}
+          puzzleActive={timerStarted}
+          onCompletionStatusChange={() => {
+            setIsTimeUp(true);
+            onCompletionStatusChange(correctCount, incorrectCount);
+          }}
+          successMessage={``} />
+        {!showOptions ? (
+          <>
+            <FlashCardContainer key="activeCharacter" variants={variants} initial="hidden" animate="visible" exit="exit">
+              <Image src={characterList[activeCharacterIndex].image} alt={characterList[activeCharacterIndex].english} />
+            </FlashCardContainer>
+            {!isTimeUp &&
+              <ButtonContainer>
+                <OptionButton onClick={handleButtonClick}>{"Next"}</OptionButton>
+              </ButtonContainer>
+            }
+          </>
+        ) : (
+          !isTimeUp &&
+          <AnimatePresence>
+            <OptionsGrid key="characterOptions" variants={variants} initial="hidden" animate="visible" exit="exit">
+              {characterOptions.map((option, index) => (
+                <CharacterButton key={index} onClick={() => handleCharacterChoice(option)}>
+                  <Image src={option.image} alt={option.english} />
+                </CharacterButton>
+              ))}
+            </OptionsGrid>
+          </AnimatePresence>
+        )}
+        {isTimeUp && <h2>Time's Up!</h2>}
+      </GameContainer>
+    ) : (
+      <ButtonContainer style={{marginTop: "-50%"}}>
+        <OrnateButton onClick={handleButtonClick}>Start Game</OrnateButton>
+      </ButtonContainer>
+    )
   );
 };
 
