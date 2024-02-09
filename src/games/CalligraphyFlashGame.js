@@ -87,7 +87,6 @@ const CalligraphyFlashGame = ({ timeLimit = 30, onCompletionStatusChange }) => {
   const [isTimeUp, setIsTimeUp] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
   const [timerStarted, setTimerStarted] = useState(false);
-
   const [correctCount, setCorrectCount] = useState(0);
   const [incorrectCount, setIncorrectCount] = useState(0);
 
@@ -130,13 +129,16 @@ const CalligraphyFlashGame = ({ timeLimit = 30, onCompletionStatusChange }) => {
           successMessage={``} />
         {!showOptions ? (
           <>
-            <FlashCardContainer key="activeCharacter" variants={variants} initial="hidden" animate="visible" exit="exit">
-              <Image src={characterList[activeCharacterIndex].image} alt={characterList[activeCharacterIndex].english} />
-            </FlashCardContainer>
             {!isTimeUp &&
-              <ButtonContainer>
-                <OptionButton onClick={handleButtonClick}>{"Next"}</OptionButton>
-              </ButtonContainer>
+              <>
+                <FlashCardContainer key="activeCharacter" variants={variants} initial="hidden" animate="visible" exit="exit">
+                  <Image src={characterList[activeCharacterIndex].image} alt={characterList[activeCharacterIndex].english} />
+                </FlashCardContainer>
+
+                <ButtonContainer>
+                  <OptionButton onClick={handleButtonClick}>{"Next"}</OptionButton>
+                </ButtonContainer>
+              </>
             }
           </>
         ) : (
@@ -154,7 +156,7 @@ const CalligraphyFlashGame = ({ timeLimit = 30, onCompletionStatusChange }) => {
         {isTimeUp && <h2>Time's Up!</h2>}
       </GameContainer>
     ) : (
-      <ButtonContainer style={{marginTop: "-50%"}}>
+      <ButtonContainer style={{ marginTop: "-50%" }}>
         <OrnateButton onClick={handleButtonClick}>Start Game</OrnateButton>
       </ButtonContainer>
     )

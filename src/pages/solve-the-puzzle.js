@@ -87,7 +87,7 @@ const SolveThePuzzle = () => {
     const [randomPuzzle, setRandomPuzzle] = useState(puzzles[Math.floor(Math.random() * puzzles.length)]);
 
     useEffect(() => {
-        if (content === 'initial' || content === 'thirdState') {
+        if (content === 'initial' || content === 'complete') {
             setRefreshEnabled(true);
         } else {
             setRefreshEnabled(false);
@@ -147,7 +147,7 @@ const SolveThePuzzle = () => {
                         <h3 className="mal-margin-remove-vertical">{replaceElementNoun(puzzleData[0].headline)}</h3>
                         <p className="mal-text-medium mal-margin-small-top">{replaceElementNoun(puzzleData[0].subheadline)}</p>
                     </div>
-                ) : content === 'thirdState' ? null
+                ) : content === 'complete' ? null
                     : (
                         <div className="mal-padding-remove-horizontal">
                             <h3 className="mal-margin-remove-vertical">{replaceElementNoun(randomPuzzle.title)}</h3>
@@ -162,7 +162,7 @@ const SolveThePuzzle = () => {
                     <div className="body-section-wide">
                         <SplashImage src={puzzle} alt="Puzzle" />
                     </div>
-                ) : content === 'thirdState' ? (
+                ) : content === 'complete' ? (
                     getUserInfo().potteryPuzzleResult ? (
                         <div className="mal-text-center">
                             <h2 className="mal-h2 mal-margin-remove-vertical">{replaceElementNoun(puzzleData[0].successTitle)}</h2>
@@ -211,7 +211,7 @@ const SolveThePuzzle = () => {
                             Yes, restore the pieces
                         </OptionButton>
                     </ButtonContainer>
-                ) : content === 'thirdState' ? (
+                ) : content === 'complete' ? (
                     isPuzzleComplete ? (
                         <OrnateButton url={nextPage.url}>
                             {nextPage.title}
@@ -232,7 +232,7 @@ const SolveThePuzzle = () => {
                         <OptionButton
                             onClick={async () => {
                                 await animateExit();
-                                setContent('thirdState');
+                                setContent('complete');
                                 await animateEnter();
                             }}>
                             {isPuzzleComplete ? "You did it! Continue." : "Continue."}

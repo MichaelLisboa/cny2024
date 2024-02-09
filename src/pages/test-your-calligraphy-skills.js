@@ -9,8 +9,6 @@ import Layout from '../templates/layout';
 import Image from '../components/Image';
 import { OrnateButton, OptionButton } from '../components/Button';
 import { calligraphyData } from '../data';
-// import CalligraphyGame from '../components/react-mal-calligraphy';
-// import CalligraphyGame from '../games/CalligraphyGame';
 import CalligraphyFlashGame from '../games/CalligraphyFlashGame';
 import scroll from "../images/calligraphy/scroll.png";
 import success from "../images/tokens/calligraphy.png";
@@ -87,9 +85,12 @@ const TestYourCalligraphySkills = () => {
     const [score, setScore] = useState(null);
 
     useEffect(() => {
-        setRefreshEnabled(false);
-        return () => setRefreshEnabled(true);
-    }, [setRefreshEnabled]);
+        if (content === 'initial' || content === 'complete') {
+            setRefreshEnabled(true);
+        } else {
+            setRefreshEnabled(false);
+        }
+    }, [content]);
 
     const animateExit = async () => {
         await footerControls.start({ y: 100, opacity: 0 });
@@ -113,19 +114,7 @@ const TestYourCalligraphySkills = () => {
         if (isGameComplete) {
             animateExit().then(() => setContent('complete')).then(() => animateEnter());
         }
-    }, [isGameComplete]);
-
-    // useEffect(() => {
-    //     if (correctCount !== null && correctCount !== undefined && incorrectCount !== null && incorrectCount !== undefined) {
-    //         const totalAttempts = correctCount + incorrectCount;
-    //         const successPercentage = (correctCount / totalAttempts) * 100;
-    //         if (successPercentage > 70) {
-    //             setScore(true);
-    //         } else {
-    //             setScore(false);
-    //         }
-    //     }
-    // }, [correctCount, incorrectCount]);    
+    }, [isGameComplete]); 
 
     const handleOnCompletionStatusChange = useCallback((correctCount, incorrectCount) => {
         setIsGameComplete(true);
