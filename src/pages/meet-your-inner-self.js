@@ -9,8 +9,9 @@ import Layout from '../templates/layout';
 import Image from '../components/Image';
 import { OrnateButton } from '../components/Button';
 import { zodiacData } from '../data';
+import getBestMatch from '../data/calculateBestMatch'
 
-const Section = styled(motion.section)`
+const Section = styled.section`
     margin-top: 72px;
 `;
 
@@ -60,28 +61,41 @@ const MeetYourInnerSelf = () => {
     const previousPage = useMemo(() => pages.find(page => page.url === currentPage.previousPage), [currentPage]);
 
     const userInfo = getUserInfo();
-    
+
+    const userChoices = {
+        element: getUserInfo().chosenElement.choice.toLowerCase(),
+        trait: getUserInfo().chosenTrait,
+        alliance: getUserInfo().chosenAlliance.choice.toLowerCase(),
+        riddle: getUserInfo().riddleResult.choice,
+        puzzle: !getUserInfo().potteryPuzzleResult,
+        calligraphy: !getUserInfo().calligraphyChallengeResult,
+        wishes: getUserInfo().chosenWish.toLowerCase(),
+        path: getUserInfo().chosenPath.choice.toLowerCase()
+    };
+
     const userAnimal = useMemo(() => {
-        // if (userInfo.userAnimal) return userInfo.userAnimal;
-        const randomIndex = Math.floor(Math.random() * zodiacData.length);
-        return zodiacData[randomIndex];
+        const matchedAnimal = getBestMatch(userChoices).animal;
+        const matchedAnimalData = zodiacData.find(animal => animal.slug === matchedAnimal);
+        return matchedAnimalData;
     }, []);
 
     useEffect(() => {
-        updateUserSelection('userAnimal', userAnimal);
-    }, [userAnimal, updateUserSelection]);
+        if (!userInfo.userAnimal) {
+            updateUserSelection('userAnimal', userAnimal);
+        }
+    }, [userAnimal, updateUserSelection, userInfo.userAnimal]);
 
 
     return (
         <Section>
             <Headline>{userAnimal.title}-Hearted {userInfo.zodiacAnimal}</Headline>
             <TraitsList>
-                {userAnimal.traits.slice(0,3).map((trait, index) => (
-                    <li key={userAnimal.slug}>{trait}</li>
+                {userAnimal.traits.map((trait, index) => (
+                    <li key={index}>{trait}</li>
                 ))}
 
             </TraitsList>
-            <StyledAnimalImage src={userAnimal.image} alt={userAnimal.title} />
+            <StyledAnimalImage src={userAnimal.image} alt={userAnimal.name} />
         </Section>
     );
 };

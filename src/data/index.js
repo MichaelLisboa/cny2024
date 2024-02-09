@@ -6,7 +6,8 @@ export const elementsList = [
         text: "Misty lakeside with soothing ripples",
         subheadline: "You've risen from",
         description: "As you embrace the Water element, a serene energy envelops you. You let the currents guide you on a journey of adaptability and resilience!",
-        element_endResult: "You embraced fluidity in your journey, infusing it with" 
+        element_endResult: "You embraced fluidity in your journey, infusing it with",
+        slug: "water"
     },
     {
         image: require('../images/elements/wood.png'),
@@ -14,7 +15,8 @@ export const elementsList = [
         text: "Towering trees in an enchanted forest",
         subheadline: "You've risen from",
         description: "You feel the essence of growth and creativity. Your spirit aligns with the flourishing trees, ready to weave a tale of blossoming possibilities. Let the branches of creativity guide your course.",
-        element_endResult: "Nature's growth anchored your path, completed it with"
+        element_endResult: "Nature's growth anchored your path, completed it with",
+        slug: "wood"
     },
     {
         image: require('../images/elements/fire.png'),
@@ -22,7 +24,8 @@ export const elementsList = [
         text: "Blaze-lit cavern glowing with warmth",
         subheadline: "You've risen from",
         description: "It blazes within you, igniting passion and determination. Flames of courage flicker, ready to illuminate the path ahead. Embrace the warmth and stride with determination!",
-        element_endResult: "Every step fueled by fire's intensity, fueling your journey with"
+        element_endResult: "Every step fueled by fire's intensity, fueling your journey with",
+        slug: "fire"
     },
     {
         image: require('../images/elements/earth.png'),
@@ -30,7 +33,8 @@ export const elementsList = [
         text: "Cliffside overlooking the horizon",
         subheadline: "You've risen from",
         description: "The sturdy foundation beneath your feet anchors your spirit. With stability and responsibility, you embark on a journey grounded in purpose. Feel the soil beneath your feet as you step into the unknown.",
-        element_endResult: "Stability grounded your grand race, navigating with"
+        element_endResult: "Stability grounded your grand race, navigating with",
+        slug: "earth"
     },
     {
         image: require('../images/elements/metal.png'),
@@ -38,7 +42,8 @@ export const elementsList = [
         text: "Shimmering scape under the moonlight",
         subheadline: "You've risen from",
         description: "It shapes your being with discipline and precision. Your spirit, akin to a well-forged blade, is ready to cut through challenges. Embrace the strength of metal as you carve your destiny.",
-        element_endResult: "Resilience defined your sturdy foundation, leading with"
+        element_endResult: "Resilience defined your sturdy foundation, leading with",
+        slug: "metal"
     },
 ];
 
@@ -48,70 +53,80 @@ export const traitsList = [
         image: require('../images/traits/bravery.png'),
         description: "As you sip from the cup, a surge of courage courses through your ethereal form. The *element_noun* shadows seem less intimidating, and you find yourself eagerly engaging with other spirits. Your newfound bravery propels you forward, unafraid of the challenges that lie ahead.",
         subheadline: "Drink from the cup of Bravery",
-        text: "Embrace your inner bravery and fearlessly face the challenges of the *element_noun*."
+        text: "Embrace your inner bravery and fearlessly face the challenges of the *element_noun*.",
+        slug: "brave-character"
     },
     {
         title: "Clever Minded",
         image: require('../images/traits/cleverness.png'),
         description: "The elixir of cleverness enhances your wit and intelligence. You navigate the *element_noun* with a strategic mind, outsmarting spirits and solving challenges with ease. Your sharp mind becomes your greatest asset, and other spirits admire your clever approach.",
         subheadline: "Drink from the cup of Cleverness",
-        text: "Harness your cleverness and outwit the challenges that await in the *element_noun*."
+        text: "Harness your cleverness and outwit the challenges that await in the *element_noun*.",
+        slug: "clever-minded"
     },
     {
         title: "Energetic Spirit",
         image: require('../images/traits/energy.png'),
         description: "Infused with vibrant energy from the cup, your spirit gains agility and speed, allowing you to dart through the *element_noun*, and embrace the thrill of the race. Your lively spirit makes you a competitive contender among others.",
         subheadline: "Drink from the cup of Energy",
-        text: "Unleash your energetic spirit and race through the *element_noun* with unmatched agility."
+        text: "Unleash your energetic spirit and race through the *element_noun* with unmatched agility.",
+        slug: "energetic-spirit"
     },
     {
         title: "Crafty Nature",
         image: require('../images/traits/crafty.png'),
         description: "Imbued with the elixir of craftiness, you gain ingenuity and sly tactics, enabling you to navigate through the *element_noun* with clever tricks and strategies, gaining an edge over challenges. Your crafty nature becomes a hallmark of your journey.",
         subheadline: "Drink from the cup of Craftiness",
-        text: "Embrace your crafty nature and outmaneuver the challenges that lie in the *element_noun*."
+        text: "Embrace your crafty nature and outmaneuver the challenges that lie in the *element_noun*.",
+        slug: "crafty-nature"
     },
     {
         title: "Strong Contender",
         image: require('../images/traits/strength.png'),
         description: "The cup of strength fills you with power and determination. As you move through the *element_noun*, your strong presence intimidates other spirits. Challenges become opportunities to showcase your might, solidifying your position as a formidable contender.",
         subheadline: "Drink from the cup of Strength",
-        text: "Harness your inner strength and conquer the challenges that await in the *element_noun*."
+        text: "Harness your inner strength and conquer the challenges that await in the *element_noun*.",
+        slug: "strong-contender"
     },
     {
         title: "Resilient Character",
         image: require('../images/traits/resilient.png'),
         description: "Sipping from the cup of resilience, you feel an unwavering resolve. As you navigate the *element_noun*, challenges may arise, but you face them with adaptability and determination. Your resilience becomes a beacon, inspiring other spirits on their journey.",
         subheadline: "Drink from the cup of Resilience",
-        text: "Embrace your resilience and overcome any obstacles that come your way in the *element_noun*."
+        text: "Embrace your resilience and overcome any obstacles that come your way in the *element_noun*.",
+        slug: "resilient-character"
     },
     {
         title: "Persevering Spirit",
         image: require('../images/traits/persevering.png'),
         description: "The elixir of perseverance strengthens your spirit with determination. Among the ancient *element_noun*, obstacles may attempt to hinder your path, but you press on, fueled by an inner strength that resonates with the very heartbeat of the *element_noun*.",
         subheadline: "Drink from the cup of Perseverance",
-        text: "Tap into your persevering spirit and conquer the challenges that await in the *element_noun*."
+        text: "Tap into your persevering spirit and conquer the challenges that await in the *element_noun*.",
+        slug: "persevering-spirit"
     },
     {
         title: "Walk with Grace",
         image: require('../images/traits/graceful.png'),
         description: "Bestowed with an aura of elegance and finesse from the cup of grace, you move through the enchanted *element_noun*, each step marked by graceful precision, as challenges along the way seem to bow before your graceful spirit.",
         subheadline: "Drink from the cup of Gracefulness",
-        text: "Embrace your graceful nature and navigate the *element_noun* with elegance and finesse."
+        text: "Embrace your graceful nature and navigate the *element_noun* with elegance and finesse.",
+        slug: "walk-with-grace"
     },
     {
         title: "Resourceful Nature",
         image: require('../images/traits/resourceful.png'),
         description: "Sipping from the cup of resourcefulness, you discover ingenious ways to overcome challenges. The *element_noun* becomes a canvas for your creative problem-solving, and your resourceful nature shines through.",
         subheadline: "Drink from the cup of Resourcefulness",
-        text: "Unleash your resourceful nature and find creative solutions to the challenges in the *element_noun*."
+        text: "Unleash your resourceful nature and find creative solutions to the challenges in the *element_noun*.",
+        slug: "resourceful-nature"
     },
     {
         title: "Curious Soul",
         image: require('../images/traits/curiosity.png'),
         description: "The elixir of curiosity sparks a deep desire to explore, turning every challenge and encounter into an opportunity to learn, leading your curious spirit down uncharted paths and uncovering hidden wonders in *element_noun*.",
         subheadline: "Drink from the cup of Curiosity",
-        text: "Embrace your curious soul and embark on a journey of discovery in the *element_noun*."
+        text: "Embrace your curious soul and embark on a journey of discovery in the *element_noun*.",
+        slug: "curious-soul"
     },
 ];
 
@@ -245,19 +260,23 @@ export const riddlesList = [
         choices: [
             {
                 answer: "I am a breath",
-                image: require('../images/riddle/breath.png')
+                image: require('../images/riddle/breath.png'),
+                slug: "breath"
             },
             {
                 answer: "I am an echo",
-                image: require('../images/riddle/echo.png')
+                image: require('../images/riddle/echo.png'),
+                slug: "echo"
             },
             {
                 answer: "I am the shadows",
-                image: require('../images/riddle/shadow.png')
+                image: require('../images/riddle/shadow.png'),
+                slug: "shadows"
             },
             {
                 answer: "I am a whisper",
-                image: require('../images/riddle/whisper.png')
+                image: require('../images/riddle/whisper.png'),
+                slug: "whisper"
             },
         ]
     },
@@ -273,25 +292,29 @@ export const riddlesList = [
         riddle_endResult: [
             {
                 true: "your wit shone as you answered the riddle with ease",
-                false: "your journey continues although not every riddle finds its solution in your mind"
+                false: "your journey continues although not every riddle finds its solution in your mind",
             }
         ],
         choices: [
             {
                 answer: "I am a breath",
-                image: require('../images/riddle/breath.png')
+                image: require('../images/riddle/breath.png'),
+                slug: "breath"
             },
             {
                 answer: "I am footsteps",
-                image: require('../images/riddle/footsteps.png')
+                image: require('../images/riddle/footsteps.png'),
+                slug: "footsteps"
             },
             {
                 answer: "I am time",
-                image: require('../images/riddle/time.png')
+                image: require('../images/riddle/time.png'),
+                slug: "time"
             },
             {
                 answer: "I am memories",
-                image: require('../images/riddle/memories.png')
+                image: require('../images/riddle/memories.png'),
+                slug: "memories"
             },
         ]
     },
@@ -313,19 +336,23 @@ export const riddlesList = [
         choices: [
             {
                 answer: "I am the clouds",
-                image: require('../images/riddle/cloud.png')
+                image: require('../images/riddle/cloud.png'),
+                slug: "clouds"
             },
             {
                 answer: "I am the wind",
-                image: require('../images/riddle/wind.png')
+                image: require('../images/riddle/wind.png'),
+                slug: "wind"
             },
             {
                 answer: "I am the moon",
-                image: require('../images/riddle/moon.png')
+                image: require('../images/riddle/moon.png'),
+                slug: "moon"
             },
             {
                 answer: "I am the night",
-                image: require('../images/riddle/night.png')
+                image: require('../images/riddle/night.png'),
+                slug: "night"
             },
         ]
     }
@@ -396,18 +423,21 @@ export const puzzleData = [
                 image: require('../images/jigsaw/pottery-finished-1.jpg'),
                 description: "The porcelain pieces lie shattered, scattered across the ground. As you piece together the fragments, a sense of accomplishment fills your spirit.",
                 subheadline: "Swap the tiles to restore.",
+                slug: "crafted-porcelain-puzzle"
             },
             {
                 title: "Mysterious Artifact Puzzle",
                 image: require('../images/jigsaw/pottery-finished-2.jpg'),
                 description: "A mysterious artifact lies in pieces, waiting to be restored. As you piece together the fragments, a sense of accomplishment fills your spirit.",
                 subheadline: "Swap the tiles to restore.",
+                slug: "mysterious-artifact-puzzle"
             },
             {
                 title: "Mystical Relic Puzzle",
                 image: require('../images/jigsaw/pottery-finished-3.jpg'),
                 description: "A mystical relic lies in pieces, waiting to be restored. As you piece together the fragments, a sense of accomplishment fills your spirit.",
                 subheadline: "Swap the tiles to restore.",
+                slug: "mystical-relic-puzzle"
             },
         ]
     }
@@ -697,4 +727,4 @@ export const zodiacData = [
         fortune: "The gentle presence of the milu deer brings harmony. Your compassionate nature will attract positive energy.",
         image: require('../images/zodiac_selected/milu-deer.png')
     }
-]
+];
