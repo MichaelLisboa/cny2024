@@ -20,11 +20,17 @@ import brave from '../images/calligraphy/brave.svg';
 const GameContainer = styled.div`
   text-align: center;
   max-width: 600px;
-  padding: 20px;
 `;
 
 const FlashCardContainer = styled(motion.div)`
   margin: 0 auto;
+  padding: 48px 0 16px 0;
+
+  img {
+    width: 90vw;
+    max-height: 40vh;
+    object-fit: contain;
+  }
 `;
 
 const CharacterButton = styled.button`
@@ -55,6 +61,8 @@ const OptionsGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 32px;
+
+  padding: 48px 0;
 `;
 
 // Animation Variants
@@ -98,8 +106,8 @@ const CalligraphyFlashGame = ({ timeLimit = 30, onCompletionStatusChange }) => {
 
   const handleButtonClick = () => {
     if (!timerStarted) setTimerStarted(true);
-    setGameStarted(true)
-    setShowOptions(!showOptions);
+    if (gameStarted) setShowOptions(!showOptions);
+    setGameStarted(true);
   };
 
   const handleCharacterChoice = (option) => {
@@ -129,16 +137,13 @@ const CalligraphyFlashGame = ({ timeLimit = 30, onCompletionStatusChange }) => {
           successMessage={``} />
         {!showOptions ? (
           <>
+            <FlashCardContainer key="activeCharacter" variants={variants} initial="hidden" animate="visible" exit="exit">
+              <Image src={characterList[activeCharacterIndex].image} alt={characterList[activeCharacterIndex].english} />
+            </FlashCardContainer>
             {!isTimeUp &&
-              <>
-                <FlashCardContainer key="activeCharacter" variants={variants} initial="hidden" animate="visible" exit="exit">
-                  <Image src={characterList[activeCharacterIndex].image} alt={characterList[activeCharacterIndex].english} />
-                </FlashCardContainer>
-
-                <ButtonContainer>
-                  <OptionButton onClick={handleButtonClick}>{"Next"}</OptionButton>
-                </ButtonContainer>
-              </>
+              <ButtonContainer>
+                <OptionButton onClick={handleButtonClick}>{"Next"}</OptionButton>
+              </ButtonContainer>
             }
           </>
         ) : (
@@ -156,7 +161,7 @@ const CalligraphyFlashGame = ({ timeLimit = 30, onCompletionStatusChange }) => {
         {isTimeUp && <h2>Time's Up!</h2>}
       </GameContainer>
     ) : (
-      <ButtonContainer style={{ marginTop: "-50%" }}>
+      <ButtonContainer style={{marginTop: "50%"}}>
         <OrnateButton onClick={handleButtonClick}>Start Game</OrnateButton>
       </ButtonContainer>
     )

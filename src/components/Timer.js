@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-const Countdown = styled.h3`
+const Countdown = styled.h2`
   text-align: center;
   margin: 0 auto 12px auto;
   color: rgba(156, 19, 19, 1);

@@ -24,7 +24,7 @@ const DraggablePiece = styled(motion.div)`
   height: calc(100% / ${(props) => props.gridSize});
 `;
 
-const Countdown = styled.h3`
+const Countdown = styled.h2`
   text-align: center;
   margin: 0 auto 12px auto;
   color: rgba(156, 19, 19, 1);

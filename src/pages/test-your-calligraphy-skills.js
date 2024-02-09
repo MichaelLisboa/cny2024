@@ -54,7 +54,7 @@ const HeaderSection = styled(motion.div)`
 
 const BodySection = styled(motion.div)`
   // Add your body-section styles here.
-//   justify-content: center;
+  justify-content: flex-start !important;
   text-align: center !important;
   padding-top: 0;
 
@@ -152,7 +152,6 @@ const TestYourCalligraphySkills = () => {
             <BodySection
                 animate={bodyControls}
                 className="body-section"
-                style={content === 'game' && { justifyContent: 'center', padding: 0 }}
             >
                 {content === 'initial' ? (
                     <div className="body-section-wide">
