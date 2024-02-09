@@ -452,7 +452,7 @@ export const calligraphyData = [
         successTitle: "Calligraphy Master",
         successMessage: "You have harnessed the art of calligraphy, a reflection of your mastery over the written expression of your true self. Embrace this newfound skill as you continue your journey.",
         failTitle: "Failure is not an end but a lesson indeed.",
-        failMessage: "The characters on the stone tablet do not align in harmony. The celestial realm is patient, embrace the opportunity to refine your understanding.",
+        failMessage: "The characters on the scroll do not align in harmony. The celestial realm is patient, embrace the opportunity to refine your understanding.",
         calligraphy_endResult: [
             {
                 true: "Strokes danced on paper, a calligraphy masterpiece",
