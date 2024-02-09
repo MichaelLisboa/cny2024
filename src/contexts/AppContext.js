@@ -24,7 +24,7 @@ const getInitialState = () => {
       potteryPuzzleResult: '',
       calligraphyChallengeResult: '',
       chosenWish: '',
-      mysteryAnimalResult: '',
+      userAnimal: '',
     },
   };
 };
