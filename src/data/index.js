@@ -448,7 +448,7 @@ export const calligraphyData = [
         headline: "As the mist clears, you're presented with a scroll showcasing intricate Chinese characters.",
         subheadline: "Remember the characters displayed before you. Are you up for the challenge of recalling them from memory?",
         challengeHeadline: "Remember the characters. Consider the curves, the angles, the spaces between.",
-        challengeMessage: "Choose the applicable strokes.",
+        challengeMessage: "\"It's a race against time!\" says *alliance_noun*, \"match the brush strokes and immerse yourself in the art of calligraphy.\"",
         successTitle: "Calligraphy Master",
         successMessage: "You have harnessed the art of calligraphy, a reflection of your mastery over the written expression of your true self. Embrace this newfound skill as you continue your journey.",
         failTitle: "Failure is not an end but a lesson indeed.",
