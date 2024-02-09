@@ -206,7 +206,7 @@ const pages = [
       sectionIcon: null,
       bgImage: require("../images/background/10-result-animal.jpg"),
       backgroundAnimation: {
-        animationName: 'scaleDownAnimation',
+        animationName: 'slideAnimation',
         animationDuration: '20s',
         animationTimingFunction: 'linear',
         animationIterationCount: '1',

@@ -8,7 +8,7 @@ import { AppContext } from '../contexts/AppContext';
 
 const BackgroundImage = styled(motion.div)`
   position: relative;
-  width: 100%;
+  width: auto;
   height: 100%;
   overflow-x: hidden;
 `;
@@ -49,6 +49,9 @@ const startAnimation = (controls, animationConfig) => {
     case 'slideScaleAnimation':
       controls.start({ x: '-10%', scale: 1.2, transition: { duration: 30, ease: 'easeInOut' } });
       break;
+    case 'slideAnimation':
+      controls.start({ x: '50%', y: '0', transition: { duration: 30, ease: 'easeOut' } });
+      break;
     // Add more cases for different animations
     default:
       // Default animation or no animation
@@ -68,7 +71,7 @@ const SimpleLayout = ({ children }) => {
     pages.find(page => page.url === location.pathname),
     [location.pathname]
   );
-  
+
   const [loaded, setLoaded] = useState(false);
   const imageRef = useRef(new Image());
 
@@ -76,7 +79,7 @@ const SimpleLayout = ({ children }) => {
     if (!currentPage || imageRef.current.src === currentPage.bgImage) {
       return;
     }
-  
+
     setLoaded(false);
     const img = imageRef.current;
     img.src = currentPage.bgImage;
