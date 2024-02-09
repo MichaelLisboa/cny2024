@@ -1,6 +1,6 @@
 {
-  "short_name": "龍行大運",
-  "name": "龍行大運",
+  "short_name": "心中的龙 ",
+  "name": "心中的龙 ",
   "icons": [
     {
       "src": "favicon.ico",
@@ -22,7 +22,7 @@
   "theme_color": "#F5E3CA",
   "background_color": "#B25548",
   "display": "standalone",
-  "description": "Lunar New Year 2024",
+  "description": "心中的龙 asks what if other animals joined the Chinese Zodiac? Dive into this choose-your-own-adventure to find out which creature you'd be.",
   "orientation": "portrait-primary",
   "id": "/?utm_source=CNY2024_app&utm_medium=app&utm_campaign=CNY2024_app"
 }
