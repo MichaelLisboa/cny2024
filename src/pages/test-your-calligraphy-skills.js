@@ -126,7 +126,11 @@ const TestYourCalligraphySkills = () => {
             } else {
                 setScore(false);
             }
-            updateUserSelection('calligraphyChallengeResult', { correct: correctCount, incorrect: incorrectCount });
+            updateUserSelection('calligraphyChallengeResult', {
+                correct: correctCount,
+                incorrect: incorrectCount,
+                success: score,
+                calligraphy_endResult: score ? calligraphyData[0].calligraphy_endResult[0].true : calligraphyData[0].calligraphy_endResult[0].false});
         }
     }, [setIsGameComplete, updateUserSelection]);
 

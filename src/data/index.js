@@ -1,38 +1,44 @@
+
 export const elementsList = [
     {
         image: require('../images/elements/water.png'),
         title: "Water",
         text: "Misty lakeside with soothing ripples",
         subheadline: "You've risen from",
-        description: "As you embrace the Water element, a serene energy envelops you. You let the currents guide you on a journey of adaptability and resilience!"
+        description: "As you embrace the Water element, a serene energy envelops you. You let the currents guide you on a journey of adaptability and resilience!",
+        element_endResult: "You embraced fluidity in your journey, infusing it with" 
     },
     {
         image: require('../images/elements/wood.png'),
         title: "Wood",
         text: "Towering trees in an enchanted forest",
         subheadline: "You've risen from",
-        description: "You feel the essence of growth and creativity. Your spirit aligns with the flourishing trees, ready to weave a tale of blossoming possibilities. Let the branches of creativity guide your course."
+        description: "You feel the essence of growth and creativity. Your spirit aligns with the flourishing trees, ready to weave a tale of blossoming possibilities. Let the branches of creativity guide your course.",
+        element_endResult: "Nature's growth anchored your path, completed it with"
     },
     {
         image: require('../images/elements/fire.png'),
         title: "Fire",
         text: "Blaze-lit cavern glowing with warmth",
         subheadline: "You've risen from",
-        description: "It blazes within you, igniting passion and determination. Flames of courage flicker, ready to illuminate the path ahead. Embrace the warmth and stride with determination!"
+        description: "It blazes within you, igniting passion and determination. Flames of courage flicker, ready to illuminate the path ahead. Embrace the warmth and stride with determination!",
+        element_endResult: "Every step fueled by fire's intensity, fueling your journey with"
     },
     {
         image: require('../images/elements/earth.png'),
         title: "Earth",
         text: "Cliffside overlooking the horizon",
         subheadline: "You've risen from",
-        description: "The sturdy foundation beneath your feet anchors your spirit. With stability and responsibility, you embark on a journey grounded in purpose. Feel the soil beneath your feet as you step into the unknown."
+        description: "The sturdy foundation beneath your feet anchors your spirit. With stability and responsibility, you embark on a journey grounded in purpose. Feel the soil beneath your feet as you step into the unknown.",
+        element_endResult: "Stability grounded your grand race, navigating with"
     },
     {
         image: require('../images/elements/metal.png'),
         title: "Metal",
         text: "Shimmering scape under the moonlight",
         subheadline: "You've risen from",
-        description: "It shapes your being with discipline and precision. Your spirit, akin to a well-forged blade, is ready to cut through challenges. Embrace the strength of metal as you carve your destiny."
+        description: "It shapes your being with discipline and precision. Your spirit, akin to a well-forged blade, is ready to cut through challenges. Embrace the strength of metal as you carve your destiny.",
+        element_endResult: "Resilience defined your sturdy foundation, leading with"
     },
 ];
 
@@ -116,7 +122,8 @@ export const allianceList = [
         description: "I am known for my wit. Will you join forces with me to navigate these challenges?",
         reaction: "Rat scurries excitedly, saying,",
         text: "Ah, great choice, spirit! Let's outsmart the competition!",
-        slug: "clever-rat"
+        slug: "clever-rat",
+        alliance_endResult: "Teamed up with the Clever Rat"
     },
     {
         title: "Strong Ox",
@@ -124,7 +131,8 @@ export const allianceList = [
         description: "My strength is unmatched. Shall we join forces to overcome these challenges?",
         reaction: "With sturdy trot, Ox declares,",
         text: "A worthy adversary! Brace yourself, spirit, for a test of strength.",
-        slug: "strong-ox"
+        slug: "strong-ox",
+        alliance_endResult: "Joined forces with the Strong Ox"
     },
     {
         title: "Fierce Tiger",
@@ -132,7 +140,8 @@ export const allianceList = [
         description: "To win this race, you will need courage and strength. Join me to learn the ways of the *element_noun*",
         reaction: "Tiger stands with a commanding presence, declaring,",
         text: "We shall navigate the trials ahead, not as followers, but as sovereigns of our path.",
-        slug: "fierce-tiger"
+        slug: "fierce-tiger",
+        alliance_endResult: "Joined the Fierce Tiger"
     },
     {
         title: "Smart Rabbit",
@@ -140,7 +149,8 @@ export const allianceList = [
         description: "I am known for my agility and wit. Would you like to team up and outpace the competition?",
         reaction: "Rabbit hops lightly, stating,",
         text: "Smart move, spirit! Quick thinking will be our path to victory.",
-        slug: "smart-rabbit"
+        slug: "smart-rabbit",
+        alliance_endResult: "Teamed up with the Smart Rabbit"
     },
     {
         title: "Wise Dragon",
@@ -148,7 +158,8 @@ export const allianceList = [
         description: "Only the brave dare to navigate this treacherous course. Let's see if you can succeed.",
         reaction: "With a sweep of its powerful wings, the Dragon hovers,",
         text: "Bravery, I like! Let us navigate the twists of fate and rise above the challenges, spirit.",
-        slug: "wise-dragon"
+        slug: "wise-dragon",
+        alliance_endResult: "Together with the Wise Dragon"
     },
     {
         title: "Patient Snake",
@@ -156,7 +167,8 @@ export const allianceList = [
         description: "Ahead liesss a path woven with complexity. With patience, we can overcome them together. Shall we navigate it as alliesss?",
         reaction: "Snake slithers with finesse, hissing,",
         text: "Wisssely chosen, spirit! With cunning and patience, we'll navigate the twisssts of fate together.",
-        slug: "patient-snake"
+        slug: "patient-snake",
+        alliance_endResult: "Faced challenges with the Patient Snake"
     },
     {
         title: "Mighty Horse",
@@ -164,7 +176,8 @@ export const allianceList = [
         description: "It is time for a test of strength. Are you up for the challenge?",
         reaction: "Horse gallops forward with vibrant energy,",
         text: "Our strength will carry us to success. Prepare for a true test of your spirit's might!",
-        slug: "mighty-horse"
+        slug: "mighty-horse",
+        alliance_endResult: "Teamed up with the Mighty Horse"
     },
     {
         title: "Polite Goat",
@@ -172,7 +185,8 @@ export const allianceList = [
         description: "Your journey thus far is admirable. Together, with our combined resilience and strategic thinking, we can overcome the hurdles with ease. Shall we join forces?",
         reaction: "Goat nods in greeting,",
         text: "Welcome, kindred spirit! With wisdom and cooperation, we'll scale heights and overcome any obstacle.",
-        slug: "polite-goat"
+        slug: "polite-goat",
+        alliance_endResult: "Cooperated with the Polite Goat"
     },
     {
         title: "Curious Monkey",
@@ -180,7 +194,8 @@ export const allianceList = [
         description: "Rumors of hidden treasures within the heart of *element_noun* have reached my ears. Shall we embark on this quest together?",
         reaction: "Monkey leaps excitedly, eyes sparkling with anticipation",
         text: "Curiosity is key! Let's explore and unveil our victory!",
-        slug: "curious-monkey"
+        slug: "curious-monkey",
+        alliance_endResult: "Ventured with the Curious Monkey"
     },
     {
         title: "Determined Rooster",
@@ -188,7 +203,8 @@ export const allianceList = [
         description: "Your determination is admirable. Join me, and we'll overcome these challenges together!",
         reaction: "Rooster struts confidently, crowing,",
         text: "Bravo! With determination, we'll conquer all obstacles.",
-        slug: "determined-rooster"
+        slug: "determined-rooster",
+        alliance_endResult: "Joined the Determined Rooster"
     },
     {
         title: "Friendly Dog",
@@ -196,7 +212,8 @@ export const allianceList = [
         description: "With a loyal friend by your side, every step of the journey becomes a delightful adventure. Would you be my companion?",
         reaction: "Dog bounds joyfully, barking,",
         text: "Oh, splendid choice! With you as my companion, there's nothing we can't conquer!",
-        slug: "friendly-dog"
+        slug: "friendly-dog",
+        alliance_endResult: "Enjoyed the journey with the Amiable Dog"
     },
     {
         title: "Chill Pig",
@@ -204,7 +221,8 @@ export const allianceList = [
         description: "Fancy a leisurely stroll through the forest together? I bet we could make a great team!",
         reaction: "Pig rolls over, oinking,",
         text: "Delightful! I'm more of a stroll-at-my-own-pace kind of pig, but we could still have a good time together.",
-        slug: "chill-pig"
+        slug: "chill-pig",
+        alliance_endResult: "Together with the Energetic Pig"
     }
 ];
 
@@ -218,6 +236,12 @@ export const riddlesList = [
         failTitle: "*alliance_noun* shakes its head, saying,",
         failMessage: "A valiant attempt, *trait_noun* of the *element_noun*, but not quite the solution.\rFear not, for the journey holds more challenges, and wisdom is gained through experience.",
         correctAnswer: "I am an echo",
+        riddle_endResult: [
+            {
+                true: "your wit shone as you answered the riddle with ease",
+                false: "your journey continues although not every riddle finds its solution in your mind"
+            }
+        ],
         choices: [
             {
                 answer: "I am a breath",
@@ -246,6 +270,12 @@ export const riddlesList = [
         failTitle: "*alliance_noun* shakes its head, saying,",
         failMessage: "A valiant attempt, *trait_noun* of the *element_noun*, but not quite the solution.\rFear not, for the journey holds more challenges, and wisdom is gained through experience.",
         correctAnswer: "I am footsteps",
+        riddle_endResult: [
+            {
+                true: "your wit shone as you answered the riddle with ease",
+                false: "your journey continues although not every riddle finds its solution in your mind"
+            }
+        ],
         choices: [
             {
                 answer: "I am a breath",
@@ -274,6 +304,12 @@ export const riddlesList = [
         failTitle: "*alliance_noun* shakes its head, saying,",
         failMessage: "A valiant attempt, *trait_noun* of the *element_noun*, but not quite the solution.\rFear not, for the journey holds more challenges, and wisdom is gained through experience.",
         correctAnswer: "I am the clouds",
+        riddle_endResult: [
+            {
+                true: "your wit shone as you answered the riddle with ease",
+                false: "your journey continues although not every riddle finds its solution in your mind"
+            }
+        ],
         choices: [
             {
                 answer: "I am the clouds",
@@ -301,35 +337,40 @@ export const pathsList = [
         slug: "misty-mountain-path",
         image: require('../images/paths/misty-mountain-path.png'),
         description: "Jagged peaks loom on either side, and the air is tinged with mystery. As you ascend the mist-shrouded mountain, a mysterious air envelops you. Clink! You stumble upon something on the ground.",
-        resultText: "You successfully conquered the Misty Mountain Path"
+        resultText: "You successfully conquered the Misty Mountain Path",
+        path_endResult: "you two tackled the Misty Mountain Path"
     },
     {
         title: "Lush Bamboo Forest Trail",
         slug: "lush-bamboo-forest-trail",
         image: require('../images/paths/lush-bamboo-forest-trail.png'),
         description: "Sunlight filters through the dense foliage, casting enchanting shadows. Walking through the tranquil bamboo groves, you stumble upon a small porcelain piece.",
-        resultText: "You ventured deep into the Lush Bamboo Forest"
+        resultText: "You ventured deep into the Lush Bamboo Forest",
+        path_endResult: "venturing into the Lush Bamboo Forest"
     },
     {
         title: "Ancient Shrine Route",
         slug: "ancient-shrine-route",
         image: require('../images/paths/ancient-shrine-route.png'),
         description: "As you venture deeper on the Ancient Shrine route. The path is dimly lit by the soft glow of lanterns, casting flickering shadows on the shrine's walls. Clink! You stumble upon something on the ground.",
-        resultText: "You explored the mysterious Ancient Shrine Route"
+        resultText: "You explored the mysterious Ancient Shrine Route",
+        path_endResult: "you two explored the Ancient Shrine Route"
     },
     {
         title: "Cascade Waterfall Path",
         slug: "cascade-waterfall-path",
         image: require('../images/paths/cascade-waterfall-path.png'),
         description: "Beside the thundering waterfall, the *alliance_noun* awaits, its powerful presence matching the force of the cascading water. Suddenly there's a clinking sound. You stumble upon something on the ground.",
-        resultText: "You discovered the breathtaking Cascade Waterfall Path"
+        resultText: "You discovered the breathtaking Cascade Waterfall Path",
+        path_endResult: "charting a course through the Cascade Waterfall"
     },
     {
         title: "Abandoned Village Trail",
         slug: "abandoned-village-trail",
         image: require('../images/paths/abandoned-village-trail.png'),
         description: "The trail winds through ancient cobblestone paths. As you explore, a haunting clink catches your attention. Amidst overgrown weeds, you discover a piece of porcelain on the ground.",
-        resultText: "You overcame challenges on the mysterious Abandoned Village Trail"
+        resultText: "You overcame challenges on the mysterious Abandoned Village Trail",
+        path_endResult: "conquering challenges on the Abandoned Village Trail"
     },
 ];
 
@@ -343,6 +384,12 @@ export const puzzleData = [
         successMessage: "With a graceful sweep, you and the *alliance_noun* gather the broken pieces and arrange them in a harmonious pattern. In the journey ahead, remember the strength that lies within restoration.",
         failTitle: "In the fragments of failure, seeds of wisdom are sown.",
         failMessage: "The porcelain remains fragmented, scattered across the ground. It seems time slipped away faster than your efforts to restore it. The *alliance_noun* urges you to learn from this experience and carry the lessons of impermanence and the value of time into the unfolding journey.",
+        puzzle_endResult: [
+            {
+                true: "You aced the pottery game, showcasing your adaptability",
+                false: "The porcelain puzzle proved tricky, but setbacks are just stepping stones"
+            }
+        ],
         puzzlesList: [
             {
                 title: "Crafted Porcelain Puzzle",
@@ -376,6 +423,12 @@ export const calligraphyData = [
         successMessage: "You have harnessed the art of calligraphy, a reflection of your mastery over the written expression of your true self. Embrace this newfound skill as you continue your journey.",
         failTitle: "Failure is not an end but a lesson indeed.",
         failMessage: "The characters on the stone tablet do not align in harmony. The celestial realm is patient, embrace the opportunity to refine your understanding.",
+        calligraphy_endResult: [
+            {
+                true: "Strokes danced on paper, a calligraphy masterpiece",
+                false: "Calligraphy wasn't a strong suit, but fueled the craving for adventure"
+            }
+        ],
         characterList: [
             {
                 slug: "graceful",
@@ -509,4 +562,139 @@ export const resultData = [
         headline: "At last, as you cross the finish line, the *alliance_noun* comes forward, presenting you to the illustrious Jade Emperor.",
         message: "\“Jade Emperor, let me present to you this resilient spirit,\" proclaims the *alliance_noun*. \"They've faced trials and challenges, displaying unwavering perseverance, even in the face of setbacks.\""
     },
+]
+
+export const zodiacData = [
+    {
+        id: 1,
+        title: "Crane",
+        slug: "crane",
+        traits: ["Elegant", "Gracious", "Determined"],
+        story: "Known for its grace and elegance, The Crane was initially part of the race. *element_endResult* *traits_noun*. *alliance_endResult* *path_endResult*. You took shelter during a rainstorm, *riddle_endResult*. *puzzle_endResult*. *calligraphy_endResult*. *spot_endResult*.",
+        positiveDescription: "Cranes embody determination, facing challenges with resilience. Cranes embody determination, facing challenges with resilience.",
+        negativeDescription: "Cranes tend to overanalyze situations, leading to indecision. Practice mindfulness and focus on the present. Set clear goals to avoid overthinking.",
+        fortune: "The path of perseverance will lead you to great heights. Stay focused, and success will be your companion.",
+        image: require('../images/zodiac_selected/crane.png')
+    },
+    {
+        id: 2,
+        title: "Red Panda",
+        slug: "red-panda",
+        traits: ["Resourceful", "Friendly"],
+        story: "With your gentle nature and adaptability, The Red Panda was a latecomer to the race. *element_endResult* *traits_noun*. *alliance_endResult* *path_endResult*. You couldn't catch up with the front-runners, but *riddle_endResult*. *puzzle_endResult*.",
+        positiveDescription: "Red Pandas are adaptable, thriving in various environments. Embrace change willingly and see challenges as opportunities for growth.",
+        negativeDescription: "Red Pandas may be overly shy and hesitant to take risks. Gradually expose yourself to new experiences, building confidence over time.",
+        fortune: "Like the adaptable bamboo, your flexibility will bring unexpected blessings. A journey of growth awaits.",
+        image: require('../images/zodiac_selected/red-panda.png')
+    },
+    {
+        id: 3,
+        title: "Cat",
+        slug: "cat",
+        traits: ["Crafty", "Competitive", "Determined"],
+        story: "The Cat, you're known for your curiosity and independence, were initially in the race. *element_endResult* *traits_noun*. *alliance_endResult* *path_endResult*. However, you faced a dilemma when the Rat tricked it, but *riddle_endResult*. *puzzle_endResult*.",
+        positiveDescription: "Cats value independence, capable of navigating life with self-reliance. Cultivate self-confidence, knowing that your independence is a strength.",
+        negativeDescription: "Cats can be distant and may struggle with expressing emotions openly. Work on forming deeper connections by expressing feelings and engaging in open communication.",
+        fortune: "The lone cat thrives in solitude, yet its presence is felt. Your independence will lead to unique achievements.",
+        image: require('../images/zodiac_selected/cat.png')
+    },
+    {
+        id: 4,
+        title: "Pangolin",
+        slug: "pangolin",
+        traits: ["Resilient", "Friendly", "Tenacious"],
+        story: "The Pangolin, renowned for its armor-like scales and resilience, was a determined racer. *element_endResult* *traits_noun*. *alliance_endResult* *path_endResult*. Your slow and steady pace couldn't compete with the faster animals. However, *riddle_endResult*. *puzzle_endResult*.",
+        positiveDescription: "Pangolins are tenacious, persisting in the face of challenges. Apply tenacity in all endeavors, understanding that challenges are stepping stones to success.",
+        negativeDescription: "Pangolins may avoid confrontations, leading to unresolved issues. Face challenges directly, learning to address conflicts constructively.",
+        fortune: "The armor of tenacity will shield you on your journey. Your unwavering spirit will carve a path to triumph.",
+        image: require('../images/zodiac_selected/pangolin.png')
+    },
+    {
+        id: 5,
+        title: "Koi Fish",
+        slug: "koi-fish",
+        traits: ["Persevering", "Ambitious", "Courageous"],
+        story: "The Koi Fish, known for your perseverance and determination, made a strong effort in the race. *element_endResult* *traits_noun*. *alliance_endResult* *path_endResult*. You swam against the currents and overcame various challenges, *riddle_endResult*.",
+        positiveDescription: "Koi Fish embody ambition, swimming against currents to reach greater heights. Set ambitious goals and persevere, knowing each effort propels you closer to success.",
+        negativeDescription: "Koi Fish may act on impulses without considering long-term consequences. Develop a habit of thoughtful decision-making, considering both short-term and long-term effects.",
+        fortune: "Like the leaping koi, your ambitions will be recognized. As you swim upstream, doors of opportunity open.",
+        image: require('../images/zodiac_selected/koi-fish.png')
+    },
+    {
+        id: 6,
+        title: "Duck",
+        slug: "duck",
+        traits: ["Friendly", "Graceful", "Kind"],
+        story: "The Duck, an adaptable and sociable creature, started the race with enthusiasm. *element_endResult* *traits_noun*. *alliance_endResult* *path_endResult*. However, your friendly nature led it to form friendships with other animals along the way. You often paused to help those in need, *riddle_endResult*. *puzzle_endResult*. *calligraphy_endResult*. *spot_endResult*. As a result, the Duck couldn't finish in the top twelve but continued to embody kindness.",
+        positiveDescription: "Ducks exemplify kindness, fostering harmonious relationships. Spread kindness in every interaction, creating a positive ripple effect.",
+        negativeDescription: "Ducks might take on too many responsibilities, leading to burnout. Learn to set boundaries and prioritize tasks, ensuring a balanced and sustainable workload.",
+        fortune: "Like gentle ripples, your kindness will touch many hearts. Good fortune follows the path of the kind-hearted duck.",
+        image: require('../images/zodiac_selected/duck.png')
+    },
+    {
+        id: 7,
+        title: "Panda",
+        slug: "panda",
+        traits: ["Friendly", "Resourceful", "Peaceful"],
+        story: "The Panda, with your calm and peaceful demeanor, embarked on the race. *element_endResult* *traits_noun*. *alliance_endResult* *path_endResult*. You couldn't match the speed of the animals that emerged as the top finishers. However, *riddle_endResult*. *puzzle_endResult*. *calligraphy_endResult*. *spot_endResult*. While you didn't qualify as a Zodiac animal, you continued to symbolize peace and harmony in Chinese culture.",
+        positiveDescription: "Pandas exhibit resilience, bouncing back from setbacks. Develop inner strength and resilience, knowing challenges are temporary.",
+        negativeDescription: "Pandas may struggle with making decisions, fearing making the wrong choice. Trust your instincts, make decisions confidently, and view mistakes as opportunities for growth.",
+        fortune: "The bamboo bends but does not break. Your resilience ensures that challenges become stepping stones to success.",
+        image: require('../images/zodiac_selected/panda.png')
+    },
+    {
+        id: 8,
+        title: "Crab",
+        slug: "crab",
+        traits: ["Persevering", "Adaptable", "Resilient"],
+        story: "The Crab, celebrated for its adaptability and unique gait, was a tenacious participant in the race. *element_endResult* *traits_noun*. *alliance_endResult* *path_endResult*. You often found yourself moving sideways or getting caught in detours. However, *riddle_endResult*. *puzzle_endResult*. *calligraphy_endResult*. *spot_endResult*. Your journey was filled with ups and downs, but continued to symbolize adaptability and resilience.",
+        positiveDescription: "Crabs display adaptability, seamlessly adjusting to changing circumstances. Navigate change with grace, embracing adaptability as a valuable life skill.",
+        negativeDescription: "Crabs can be stubborn and resistant to change. Cultivate adaptability and openness to new ideas, embracing change as a chance for personal development.",
+        fortune: "The agile crab navigates changing tides effortlessly. Your adaptability will bring fortune in unexpected ways.",
+        image: require('../images/zodiac_selected/crab.png')
+    },
+    {
+        id: 9,
+        title: "Phoenix",
+        slug: "phoenix",
+        traits: ["Graceful", "Hopeful", "Transformative"],
+        story: "The Phoenix, a symbol of rebirth and renewal, soared gracefully through the skies. Despite your impressive flight, the race proved challenging. *element_endResult* *traits_noun*. *alliance_endResult* *path_endResult*. You had to frequently stop to renew its own fiery essence, *riddle_endResult*. *puzzle_endResult*. *calligraphy_endResult*. *spot_endResult*. You didn't make it to the top twelve but remained a symbol of hope and transformation.",
+        positiveDescription: "Phoenixes embody hope, rising from challenges with renewed strength. Cultivate hope in challenging times, knowing every setback is a prelude to a magnificent comeback.",
+        negativeDescription: "Phoenixes may set unrealistic expectations for themselves and others. Focus on achievable goals, celebrating progress rather than aiming for perfection.",
+        fortune: "The phoenix's flame of hope illuminates even the darkest paths. Your optimistic spirit will guide you to greatness.",
+        image: require('../images/zodiac_selected/phoenix.png')
+    },
+    {
+        id: 10,
+        title: "Goldfish",
+        slug: "goldfish",
+        traits: ["Graceful", "Friendly", "Patient"],
+        story: "The Goldfish, known for the vibrant colors and grace, swam through waterways with elegance. *element_endResult* *traits_noun*. *alliance_endResult* *path_endResult*. However, it faced challenges when the race took it away from its beloved ponds and streams, *riddle_endResult*. *puzzle_endResult*. *calligraphy_endResult*. *spot_endResult*. You didn't make it to the top twelve but remained a symbol of beauty and fortune.",
+        positiveDescription: "Goldfish are symbols of good fortune and prosperity. Embrace a positive mindset, attracting good fortune with gratitude and optimism.",
+        negativeDescription: "Goldfish might struggle with forgetfulness, impacting daily tasks. Develop organizational habits, such as using reminders and schedules, to enhance memory.",
+        fortune: "Like the golden scales of the goldfish, fortune smiles upon you. Abundance and prosperity are in your future.",
+        image: require('../images/zodiac_selected/goldfish.png')
+    },
+    {
+        id: 11,
+        title: "Dragonfly",
+        slug: "dragonfly",
+        traits: ["Energetic", "Curious", "Distracted"],
+        story: "The Dragonfly, celebrated for its agility and adaptability, was a strong contender in the race. *element_endResult* *traits_noun*. *alliance_endResult* *path_endResult*. However, it darted around too much, exploring the world's nooks and crannies, *riddle_endResult*. *puzzle_endResult*. *calligraphy_endResult*. *spot_endResult*. Lost track of the official race path, you eventually accepted your fate and chose to continue to flit around the world.",
+        positiveDescription: "Dragonflies embody exploration, embracing curiosity to discover new realms. Approach life with curiosity and a sense of adventure, finding joy in exploration.",
+        negativeDescription: "Dragonflies may struggle with a constant need for change and may become restless. Find fulfillment in the present moment, appreciating stability and embracing opportunities for growth.",
+        fortune: "The dragonfly's wings carry it to unexplored territories. Your curious spirit will lead to exciting discoveries.",
+        image: require('../images/zodiac_selected/dragonfly.png')
+    },
+    {
+        id: 12,
+        title: "Milu Deer",
+        slug: "milu-deer",
+        traits: ["Graceful", "Friendly", "Patient"],
+        story: "The Milu Deer, embodying good fortune and everlasting life, gracefully navigated the race. *element_endResult* *traits_noun*. *alliance_endResult* *path_endResult*. Your elegant antlers and swift movements allowed it to overcome challenges, , *riddle_endResult*. *puzzle_endResult*. *calligraphy_endResult*. *spot_endResult*. Milu Deer didn't secure a place in the Zodiac. However, you became a revered symbol in Chinese culture, representing prosperity and the enduring spirit of life.",
+        positiveDescription: "Milu Deer embody compassion, radiating warmth and understanding. Nurture compassion for yourself and others, creating a harmonious environment.",
+        negativeDescription: "Milu Deer can be overly sensitive to criticism or negative feedback. Develop resilience by focusing on constructive criticism, using it as a tool for self-improvement.",
+        fortune: "The gentle presence of the milu deer brings harmony. Your compassionate nature will attract positive energy.",
+        image: require('../images/zodiac_selected/milu-deer.png')
+    }
 ]

@@ -110,7 +110,8 @@ const WhatIsYourElement = () => {
         title: elementsList[2].title,
         text: replaceElementNoun(elementsList[2].text),
         subheadline: replaceElementNoun(elementsList[2].subheadline),
-        description: replaceElementNoun(elementsList[2].description)
+        description: replaceElementNoun(elementsList[2].description),
+        element_endResult: elementsList[2].element_endResult
     };
 
     const [currentSlide, setCurrentSlide] = useState(initialSlide);
@@ -132,7 +133,7 @@ const WhatIsYourElement = () => {
     const handleButtonClick = async () => {
         const chosenElement = currentSlide.title;
         setSelectedCard(chosenElement);
-        updateUserSelection('chosenElement', chosenElement);
+        updateUserSelection('chosenElement', {choice: chosenElement, element_endResult: currentSlide.element_endResult});
 
         if (chosenElement) {
             await animateExit();
@@ -150,7 +151,8 @@ const WhatIsYourElement = () => {
             title: elementsList[newCurrentSlideIndex].title,
             text: replaceElementNoun(elementsList[newCurrentSlideIndex].text),
             subheadline: replaceElementNoun(elementsList[newCurrentSlideIndex].subheadline),
-            description: replaceElementNoun(elementsList[newCurrentSlideIndex].description)
+            description: replaceElementNoun(elementsList[newCurrentSlideIndex].description),
+            element_endResult: elementsList[newCurrentSlideIndex].element_endResult
         });
     };
 

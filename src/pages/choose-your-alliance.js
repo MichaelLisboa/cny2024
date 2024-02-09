@@ -129,7 +129,8 @@ const ChooseYourAlliance = () => {
         image: allianceList[0].image,
         text: allianceList[0].text,
         reaction: allianceList[0].reaction,
-        description: replaceElementNoun(allianceList[0].description)
+        description: replaceElementNoun(allianceList[0].description),
+        alliance_endResult: allianceList[0].alliance_endResult
     };
 
     const [currentSlide, setCurrentSlide] = useState(initialSlide);
@@ -151,7 +152,7 @@ const ChooseYourAlliance = () => {
 
     const handleButtonClick = async () => {
         const chosenAlliance = currentSlide.title;
-        updateUserSelection('chosenAlliance', chosenAlliance);
+        updateUserSelection('chosenAlliance', {choice: chosenAlliance, alliance_endResult: currentSlide.alliance_endResult});
 
         if (chosenAlliance) {
             await animateExit();
@@ -169,7 +170,8 @@ const ChooseYourAlliance = () => {
             title: allianceList[newCurrentSlideIndex].title,
             text: allianceList[newCurrentSlideIndex].text,
             reaction: allianceList[newCurrentSlideIndex].reaction,
-            description: replaceElementNoun(allianceList[newCurrentSlideIndex].description)
+            description: replaceElementNoun(allianceList[newCurrentSlideIndex].description),
+            alliance_endResult: allianceList[newCurrentSlideIndex].alliance_endResult
         });
     };
 

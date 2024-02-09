@@ -132,7 +132,11 @@ const SolveThePuzzle = () => {
     const handleOnCompletionStatusChange = useCallback((isSuccessful) => {
         setIsPuzzleComplete(isSuccessful);
         if (isSuccessful !== null && isSuccessful !== undefined) {
-            updateUserSelection('potteryPuzzleResult', isSuccessful);
+
+            updateUserSelection('potteryPuzzleResult', {
+                choice: isSuccessful,
+                puzzle_endResult: isSuccessful ? puzzleData[0].puzzle_endResult[0].true : puzzleData[0].puzzle_endResult[0].false
+              });
         }
     }, [setIsPuzzleComplete, updateUserSelection]);
 

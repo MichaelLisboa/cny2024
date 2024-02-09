@@ -130,8 +130,7 @@ const ChooseYourPath = () => {
     const handleButtonClick = async (item) => {
         const chosenPath = item.title;
         setSelectedCard(item);
-
-        updateUserSelection('chosenPath', item.title);
+        updateUserSelection('chosenPath', {choice: item.title, path_endResult: item.path_endResult});
 
         if (chosenPath) {
             await animateExit();

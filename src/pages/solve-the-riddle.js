@@ -89,6 +89,7 @@ const SolveTheRiddle = () => {
       successMessage: replaceElementNoun(content.successMessage),
       failTitle: replaceElementNoun(content.failTitle),
       failMessage: replaceElementNoun(content.failMessage),
+      riddle_endResult: content.riddle_endResult,
     });
   };
 
@@ -121,6 +122,7 @@ const SolveTheRiddle = () => {
     successMessage: replaceElementNoun(randomItems[0].successMessage),
     failTitle: replaceElementNoun(randomItems[0].failTitle),
     failMessage: replaceElementNoun(randomItems[0].failMessage),
+    riddle_endResult: randomItems[0].riddle_endResult,
   })
 
   function getRandomRiddle() {
@@ -170,6 +172,7 @@ const SolveTheRiddle = () => {
       successMessage: replaceElementNoun(newRiddle.successMessage),
       failTitle: replaceElementNoun(newRiddle.failTitle),
       failMessage: replaceElementNoun(newRiddle.failMessage),
+      riddle_endResult: newRiddle.riddle_endResult,
     };
     setCurrentSlide(initialRiddleRef.current);
     await animateExit();
@@ -181,7 +184,10 @@ const SolveTheRiddle = () => {
 
   const handleButtonClick = async (isCorrect) => {
     const chosenAnswer = currentChoice.current.answer;
-    updateUserSelection('riddleResult', isCorrect);
+    updateUserSelection('riddleResult', {
+      choice: isCorrect,
+      riddle_endResult: isCorrect ? currentSlide.riddle_endResult[0].true : currentSlide.riddle_endResult[0].false
+    });
 
     if (chosenAnswer) {
       await animateExit();
