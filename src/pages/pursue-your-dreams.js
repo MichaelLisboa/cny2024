@@ -22,9 +22,14 @@ const ImageContainer = styled.div`
   z-index: -1;
 `;
 
-const HeaderSection = styled(motion.div)`
-  // Add your header-section styles here.
+const CopyContainer = styled(motion.div)`
   text-align: center !important;
+  padding: 24px;
+
+    @media (min-width: 768px) {
+        border-radius: 16px;
+        background-color: rgba(255, 255, 255, 0.5);
+    }
 `;
 
 const BodySection = styled(motion.div)`
@@ -110,6 +115,16 @@ const PursueYourDreams = () => {
         }, 500);
     };
 
+    const emperorVariants = {
+        hidden: { opacity: 0, y: 100 },
+        visible: { opacity: 1, y: -72, transition: { duration: 0.7, delay: .4, ease: easeInOut } }
+    };
+
+    const copyContainerVariants = {
+        hidden: { opacity: 0, y: 50 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.5, delay: 1, ease: easeInOut } }
+    };
+
     return (
         <Layout>
             <BodySection
@@ -125,25 +140,37 @@ const PursueYourDreams = () => {
                                 animate={{ scale: 1, opacity: 1 }}
                                 transition={{ delay: 3, duration: 2, ease: 'easeOut' }} />
                         </div>
-                        <h3 className="mal-margin-remove mal-padding-small mal-padding-remove-vertical">
-                            {replaceElementNoun(resultData[0].headline)}
-                        </h3>
-                        <p className="mal-text-medium mal-margin-small-top mal-padding-small mal-padding-remove-vertical">
-                            {replaceElementNoun(resultData[0].message)}
-                        </p>
+                        <CopyContainer
+                            initial="hidden"
+                            animate="visible"
+                            variants={copyContainerVariants}>
+                            <h3 className="mal-margin-remove mal-padding-small mal-padding-remove-vertical">
+                                {replaceElementNoun(resultData[0].headline)}
+                            </h3>
+                            <p className="mal-text-medium mal-margin-small-top mal-padding-small mal-padding-remove-vertical">
+                                {replaceElementNoun(resultData[0].message)}
+                            </p>
+                        </CopyContainer>
                     </>
 
                 ) : (
                     <>
-                    <Image src={jadeEmperor} alt="Jade Emperor" />
-                    <div className="mal-padding-small mal-text-center">
-                        <h3 className="mal-margin-remove mal-padding-small mal-padding-remove-vertical">
-                            {replaceElementNoun(`The Jade Emperor chuckles and says, “Ah, certainly! The time has come!”`)}
-                        </h3>
-                        <p className="mal-text-medium mal-margin-small-top mal-padding-small mal-padding-remove-vertical">
-                            {replaceElementNoun(`You stand before the Jade Emperor, the atmosphere is charged with excitement. The crowd waits in anticipation as the Emperor's magic unveils your true form, revealing your role in the world.`)}
-                        </p>
-                    </div>
+                        <Image
+                            initial="hidden"
+                            animate="visible"
+                            variants={emperorVariants}
+                            src={jadeEmperor} alt="Jade Emperor" />
+                        <CopyContainer
+                            initial="hidden"
+                            animate="visible"
+                            variants={copyContainerVariants}>
+                            <h3 className="mal-margin-remove mal-padding-small mal-padding-remove-vertical">
+                                {replaceElementNoun(`The Jade Emperor chuckles and says, “Ah, certainly! The time has come!”`)}
+                            </h3>
+                            <p className="mal-text-medium mal-margin-small-top mal-padding-small mal-padding-remove-vertical">
+                                {replaceElementNoun(`You stand before the Jade Emperor, the atmosphere is charged with excitement. The crowd waits in anticipation as the Emperor's magic unveils your true form, revealing your role in the world.`)}
+                            </p>
+                        </CopyContainer>
                     </>
                 )}
 
