@@ -1,17 +1,17 @@
 import React, { useContext, useMemo, useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { motion, useAnimation, easeInOut } from 'framer-motion';
+import { motion, useAnimation } from 'framer-motion';
 import { AppContext } from '../contexts/AppContext';
 import { useDynamicTextReplacer } from '../hooks/useDynamicTextReplacer';
 import pages from '../utils/pages';
-import Layout from '../templates/layout';
+import SimpleLayout from '../templates/simple-layout';
 import Image from '../components/Image';
-import { OrnateButton } from '../components/Button';
+import { OrnateButton, OptionButton } from '../components/Button';
 import { zodiacData } from '../data';
-import getBestMatch from '../data/calculateBestMatch'
+import getBestMatch from '../data/calculateBestMatch';
 
-const Section = styled(Layout)`
+const Section = styled(motion(SimpleLayout))`
     margin-top: 72px;
     padding: 24px;  
     height: 100vh !important;
@@ -27,13 +27,17 @@ const Headline = styled.h1`
 `;
 
 const StyledAnimalImage = styled(Image)`
+    max-width: none !important;
+    width: auto !important;
+    max-height: 60vh !important;
+    overflow: hidden !important;
 
     img {
         object-fit: cover;
     }
 
     @media (min-width: 768px) {
-        max-height: 60vh;
+        max-height: 55vh;
     }
 `;
 
@@ -48,10 +52,6 @@ const TraitsList = styled.ul`
 
     li {
         user-select: none;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        -o-user-select: none;
         cursor: default;
         font-size: 0.875rem;
         color: rgba(102, 71, 56, 1);
@@ -64,20 +64,66 @@ const TraitsList = styled.ul`
     }
 `;
 
+const ButtonContainer = styled.div`
+    height: 72px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+
+    * {
+        font-size: 1rem;
+
+        @media (max-width: 576px) {
+            font-size: 0.875rem !important;
+        }
+    }
+`;
+
 const Description = styled.div`
     text-align: center;
     margin: 24px 0;
     color: rgba(102, 71, 56, 1);
 }`;
 
+const BodySection = styled(motion.div)`
+  // Your body-section styles here.
+`;
+
+const FooterSection = styled(motion.div)`
+  // Your footer-section styles here.
+`;
+
+// Define your animation variants
+const directionalVariants = {
+    // Keep 'hidden' as is if needed, or adjust similarly to 'visible' for consistency
+    visible: (direction = 'up') => ({
+        opacity: 1,
+        y: direction === 'up' ? 100 : -100, // Adjust values as needed to match the desired effect
+        transition: { type: 'tween', ease: 'easeInOut', duration: 0.5 },
+    }),
+    exit: (direction = 'up') => ({
+        opacity: 0,
+        y: direction === 'up' ? -100 : 100,
+        transition: { type: 'tween', ease: 'easeInOut', duration: 0.5 },
+    }),
+};
+
+
+
 const MeetYourInnerSelf = () => {
     const { updateUserSelection, getUserInfo } = useContext(AppContext);
     const replaceElementNoun = useDynamicTextReplacer();
     const [refreshEnabled, setRefreshEnabled] = useState(false);
+    const [content, setContent] = useState('section1');
+    const contentOrder = ['section1', 'section2', 'section3'];
     const location = useLocation();
     const navigate = useNavigate();
     const currentPage = useMemo(() => pages.find(page => page.url === location.pathname), [location.pathname]);
     const previousPage = useMemo(() => pages.find(page => page.url === currentPage.previousPage), [currentPage]);
+    const bodyControls = useAnimation();
+    const footerControls = useAnimation();
 
     const userInfo = getUserInfo();
 
@@ -108,37 +154,136 @@ const MeetYourInnerSelf = () => {
         }
     }, [userAnimal, updateUserSelection, userInfo.userAnimal]);
 
+    const animateExit = async (direction) => {
+        await bodyControls.start(directionalVariants.exit(direction));
+        await footerControls.start(directionalVariants.exit(direction));
+    };
+    
+    const animateEnter = async (direction) => {
+        // Use 'visible' variant with direction for entering animation
+        await bodyControls.start(directionalVariants.visible(direction));
+        await footerControls.start(directionalVariants.visible(direction)); // If footer needs direction-based animation
+    };
+    
+
+    const handleDragEnd = (event, info) => {
+        const offsetY = info.offset.y;
+        const swipeThreshold = 50;
+        if (offsetY < -swipeThreshold) {
+            handleSwipe('up');
+        } else if (offsetY > swipeThreshold) {
+            handleSwipe('down');
+        }
+    };
+
+    const handleSwipe = async (direction) => {
+        let nextContentIndex = contentOrder.indexOf(content);
+        if (direction === 'up' && nextContentIndex < contentOrder.length - 1) {
+            nextContentIndex++;
+        } else if (direction === 'down' && nextContentIndex > 0) {
+            nextContentIndex--;
+        }
+    
+        const nextContent = contentOrder[nextContentIndex];
+    
+        // Exit animation with current direction
+        await animateExit(direction);
+    
+        // Prepare the content to enter from the correct direction
+        // This directly manipulates the 'y' value to simulate content coming from the swipe direction
+        bodyControls.set({
+            y: direction === 'up' ? 100 : -100, // Adjust these values as necessary
+            opacity: 0
+        });
+    
+        setContent(nextContent);
+    
+        // Now animate to visible, which should smoothly transition from the set position
+        await animateEnter(); // animateEnter might not need direction anymore if set() is used
+    };
+    
+
+    const handleButtonClick = async (targetSection) => {
+        const currentIdx = contentOrder.indexOf(content);
+        const targetIdx = contentOrder.indexOf(targetSection);
+        const direction = targetIdx > currentIdx ? 'up' : 'down';
+
+        await animateExit(direction);
+        setContent(targetSection); // Update the content state to the target section
+        await animateEnter();
+    };
+
+
+
     return (
         <Section refreshEnabled={refreshEnabled}>
-                <Headline>{userAnimal.title}-Hearted {userInfo.zodiacAnimal}</Headline>
-                <div id="section-1" className="mal-flex mal-flex-column mal-flex-middle">
-                    <TraitsList>
-                        {userAnimal.traits.map((trait, index) => (
-                            <li key={index}>{trait}</li>
-                        ))}
-                    </TraitsList>
-                    <StyledAnimalImage src={userAnimal.image} alt={userAnimal.name} />
-                </div>
-                <div id="section-2" className="mal-flex mal-flex-column mal-flex-middle">
-                    <Description>
-                        <h3>There's something intriguing about you, a hidden aspect waiting to be discovered.</h3>
-                        <p>{replaceElementNoun(userAnimal.story)}</p>
-                    </Description>
-                </div>
-                <div id="section-3" className="mal-flex mal-flex-column mal-flex-middle">
-                    <OrnateButton
-                        onClick={() => navigate(previousPage.url)}
-                    >
-                        Continue
-                    </OrnateButton>
-                </div>
-                <div id="section-4" className="mal-flex mal-flex-column mal-flex-middle">
-                    <OrnateButton
-                        onClick={() => navigate(previousPage.url)}
-                    >
-                        Continue
-                    </OrnateButton>
-                </div>
+            <BodySection
+                drag="y"
+                onDragEnd={handleDragEnd}
+                dragConstraints={{ top: 0, bottom: 0 }}
+                variants={directionalVariants}
+                dragElastic={0}
+                initial="visible"
+                animate={bodyControls}
+                custom={content} // Pass current content as custom prop for dynamic variants
+            >
+                {/* Conditional rendering based on content state */}
+                {content === 'section1' && (
+                    <>
+                        <Headline>{userAnimal.title}-Hearted {userInfo.zodiacAnimal}</Headline>
+                        <TraitsList>
+                            {userAnimal.traits.map((trait, index) => (
+                                <li key={index}>{trait}</li>
+                            ))}
+                        </TraitsList>
+                        <StyledAnimalImage src={userAnimal.image} alt={userAnimal.name} />
+                    </>
+                )}
+                {content === 'section2' && (
+                    <div id="section-2">
+                        <Description>
+                            <h3>There's something intriguing about you, a hidden aspect waiting to be discovered.</h3>
+                            <p>{replaceElementNoun(userAnimal.story)}</p>
+                        </Description>
+                    </div>
+                )}
+                {content === 'section3' && (
+                    <div id="section-3">
+                        <Description>
+                            <h3>There's something intriguing about you, a hidden aspect waiting to be discovered.</h3>
+                            <p>{replaceElementNoun(userAnimal.story)}</p>
+                        </Description>
+                    </div>
+                )}
+            </BodySection>
+
+            <FooterSection
+                animate={footerControls}
+                className="footer-section">
+                {content === 'section1' && (
+                    <ButtonContainer>
+                        <OptionButton onClick={() => handleButtonClick('section2')}>
+                            Go to Section 2
+                        </OptionButton>
+                    </ButtonContainer>
+                )}
+                {content === 'section2' && (
+                    <ButtonContainer>
+                        <OptionButton onClick={() => handleButtonClick('section3')}>
+                            Go to Section 3
+                        </OptionButton>
+                    </ButtonContainer>
+                )}
+                {content === 'section3' && (
+                    <ButtonContainer>
+                        <OptionButton onClick={() => handleButtonClick('section1')}>
+                            Back to Section 1
+                        </OptionButton>
+                    </ButtonContainer>
+                )}
+            </FooterSection>
+
+
         </Section>
     );
 };
