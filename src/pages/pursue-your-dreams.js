@@ -83,7 +83,7 @@ const PursueYourDreams = () => {
     const footerControls = useAnimation();
 
     const userInfo = getUserInfo();
-    const ally = userInfo.chosenAlliance.toLowerCase().split(' ')[1];
+    const ally = userInfo.chosenAlliance.choice.toLowerCase().split(' ')[1];
 
     const AnimatedZodiacInfo = motion(ZodiacInfo);
 
