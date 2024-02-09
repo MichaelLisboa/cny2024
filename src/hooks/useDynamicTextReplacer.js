@@ -28,6 +28,7 @@ export const useDynamicTextReplacer = () => {
       '\\*path_noun\\*': userInfo?.chosenPath.choice || getDataFromLocalStorage('chosenPath').choice,
       '\\*path_endResult\\*': userInfo?.chosenPath.path_endResult || getDataFromLocalStorage('chosenPath').path_endResult,
       '\\*riddle_endResult\\*': userInfo?.riddleResult.riddle_endResult || getDataFromLocalStorage('riddleResult').riddle_endResult,
+      '\\*puzzle_endResult\\*': userInfo?.potteryPuzzleResult.puzzle_endResult || getDataFromLocalStorage('potteryPuzzleResult').puzzle_endResult,
       '\\*calligraphy_endResult\\*': userInfo?.calligraphyChallengeResult.calligraphy_endResult || getDataFromLocalStorage('calligraphyChallengeResult').calligraphy_endResult,
 
     };
