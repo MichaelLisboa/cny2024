@@ -144,10 +144,10 @@ const PursueYourDreams = () => {
                             initial="hidden"
                             animate="visible"
                             variants={copyContainerVariants}>
-                            <h3 className="mal-margin-remove mal-padding-small mal-padding-remove-vertical">
+                            <h3 className="mal-margin-remove">
                                 {replaceElementNoun(resultData[0].headline)}
                             </h3>
-                            <p className="mal-text-medium mal-margin-small-top mal-padding-small mal-padding-remove-vertical">
+                            <p className="mal-text-medium mal-margin-small-top">
                                 {replaceElementNoun(resultData[0].message)}
                             </p>
                         </CopyContainer>
@@ -164,10 +164,10 @@ const PursueYourDreams = () => {
                             initial="hidden"
                             animate="visible"
                             variants={copyContainerVariants}>
-                            <h3 className="mal-margin-remove mal-padding-small mal-padding-remove-vertical">
+                            <h3 className="mal-margin-remove">
                                 {replaceElementNoun(`The Jade Emperor chuckles and says, “Ah, certainly! The time has come!”`)}
                             </h3>
-                            <p className="mal-text-medium mal-margin-small-top mal-padding-small mal-padding-remove-vertical">
+                            <p className="mal-text-medium mal-margin-small-top">
                                 {replaceElementNoun(`You stand before the Jade Emperor, the atmosphere is charged with excitement. The crowd waits in anticipation as the Emperor's magic unveils your true form, revealing your role in the world.`)}
                             </p>
                         </CopyContainer>
