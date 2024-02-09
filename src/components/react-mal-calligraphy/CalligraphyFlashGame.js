@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import styled from 'styled-components';
 import Image from '../Image';
@@ -42,6 +42,7 @@ const CharacterButton = styled.button`
 `;
 
 const ButtonContainer = styled.div`
+    height: 72px;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -97,6 +98,14 @@ const CalligraphyFlashGame = ({ timeLimit = 30, onCompletionStatusChange }) => {
   const [timerStarted, setTimerStarted] = useState(false);
   const [correctCount, setCorrectCount] = useState(0);
   const [incorrectCount, setIncorrectCount] = useState(0);
+  const [completionStatus, setCompletionStatus] = useState(null);
+
+  useEffect(() => {
+    if (completionStatus) {
+      setIsTimeUp(true);
+      onCompletionStatusChange(correctCount, incorrectCount);
+    }
+  }, [completionStatus]);
 
   const characterOptions = useMemo(() => {
     let options = shuffleArray(characterList.filter((_, index) => index !== activeCharacterIndex)).slice(0, 8);
@@ -130,10 +139,7 @@ const CalligraphyFlashGame = ({ timeLimit = 30, onCompletionStatusChange }) => {
         <Timer
           timeLimit={timeLimit}
           puzzleActive={timerStarted}
-          onCompletionStatusChange={() => {
-            setIsTimeUp(true);
-            onCompletionStatusChange(correctCount, incorrectCount);
-          }}
+          onCompletionStatusChange={() => setCompletionStatus(true)}
           successMessage={``} />
         {!showOptions ? (
           <>
@@ -167,7 +173,7 @@ const CalligraphyFlashGame = ({ timeLimit = 30, onCompletionStatusChange }) => {
         {isTimeUp && <h2>Time's Up!</h2>}
       </GameContainer>
     ) : (
-      <ButtonContainer style={{marginTop: "50%"}}>
+      <ButtonContainer style={{ marginTop: "50%" }}>
         <OrnateButton onClick={handleButtonClick}>Start Game</OrnateButton>
       </ButtonContainer>
     )

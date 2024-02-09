@@ -51,4 +51,4 @@ function formatTime(seconds) {
     return `${paddedMinutes}:${paddedSeconds}`;
 }
 
-export default Timer;
+export default React.memo(Timer);

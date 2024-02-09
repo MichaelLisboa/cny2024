@@ -22,6 +22,7 @@ const SplashImage = styled(Image)`
 `;
 
 const ButtonContainer = styled.div`
+    height: 72px;
     display: flex;
     flex-direction: row;
     justify-content: center;
