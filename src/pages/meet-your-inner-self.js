@@ -63,15 +63,17 @@ const MeetYourInnerSelf = () => {
     const userInfo = getUserInfo();
 
     const userChoices = {
-        element: getUserInfo().chosenElement.choice.toLowerCase(),
-        trait: getUserInfo().chosenTrait,
-        alliance: getUserInfo().chosenAlliance.choice.toLowerCase(),
-        riddle: getUserInfo().riddleResult.choice,
-        puzzle: !getUserInfo().potteryPuzzleResult,
-        calligraphy: !getUserInfo().calligraphyChallengeResult,
-        wishes: getUserInfo().chosenWish.toLowerCase(),
-        path: getUserInfo().chosenPath.choice.toLowerCase()
+        element: userInfo.chosenElement.choice.toLowerCase(),
+        trait: userInfo.chosenTrait.toLowerCase(),
+        alliance: userInfo.chosenAlliance.choice.toLowerCase(),
+        riddle: userInfo.riddleResult.choice,
+        puzzle: userInfo.potteryPuzzleResult,
+        calligraphy: userInfo.calligraphyChallengeResult,
+        wishes: userInfo.chosenWish.toLowerCase(),
+        path: userInfo.chosenPath.choice.toLowerCase()
     };
+
+    console.log('userChoices', userChoices);
 
     const userAnimal = useMemo(() => {
         const matchedAnimal = getBestMatch(userChoices).animal;

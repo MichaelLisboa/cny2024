@@ -209,7 +209,7 @@ const scoringData = [
         "Unnamed: 15": null,
         "nonZodiacAnimal_id.1": 10,
         "nontZodiacAnimal_name": "Goldfish",
-        "images": "golden-fish"
+        "images": "goldfish"
     },
     {
         "resultzodiac_slug": "dragonfly",
@@ -251,13 +251,9 @@ const scoringData = [
         "Unnamed: 15": null,
         "nonZodiacAnimal_id.1": 12,
         "nontZodiacAnimal_name": "Milu Deer",
-        "images": "deer"
+        "images": "milu-deer"
     }
 ]
-
-const slugify = (s) => {
-    return s.toLowerCase().replace(/\W/g, '');
-}
 
 const calculateBestMatch = (userChoices, scoringData) => {
     const scores = scoringData.map(entry => {
@@ -283,6 +279,10 @@ const calculateBestMatch = (userChoices, scoringData) => {
     scores.sort((a, b) => b.score - a.score);
     return scores[0]; // Returns the entry with the highest score
 };
+
+const slugify = (s) => {
+    return s.toLowerCase().replace(/\W/g, '');
+}
 
 const getBestMatch = (userChoices) => {
     const bestMatch = calculateBestMatch(userChoices, scoringData);
