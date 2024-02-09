@@ -10,7 +10,11 @@ import Image from '../components/Image';
 import MalCarousel from '../components/MalCarousel';
 import { OrnateButton } from '../components/Button';
 import { wishesData } from '../data';
-import wish from "../images/tokens/calligraphy.png";
+import wealth from "../images/tokens/wealth.png";
+import health from "../images/tokens/health.png";
+import love from "../images/tokens/true-love.png";
+import career from "../images/tokens/career-success.png";
+import peace from "../images/tokens/peaceful-life.png";
 
 const SplashImage = styled(Image)`
     img {
@@ -152,7 +156,6 @@ const WhatIsYourWish = () => {
 
     const handleButtonClick = async () => {
         const chosenWish = currentSlide.title;
-        console.log(chosenWish);
         setSelectedCard(chosenWish);
         updateUserSelection('chosenWish', chosenWish);
 
@@ -201,8 +204,8 @@ const WhatIsYourWish = () => {
                     <div className="mal-padding-small mal-text-center">
                         <TraitTokenImage className="mal-padding">
                             <Image
-                                src={wish}
-                                alt={`The Trait of ${selectedCard}`} />
+                                src={currentSlide.slug === 'wealth' ? wealth : currentSlide.slug === 'health' ? health : currentSlide.slug === 'true-love' ? love : currentSlide.slug === 'career-success' ? career : peace}
+                                alt={`The Token of ${selectedCard}`} />
                         </TraitTokenImage>
                         <h4 className="mal-margin-remove">Your wish in the Year of the Dragon.</h4>
                         <h2 className="mal-margin-remove">{currentSlide.title}</h2>
