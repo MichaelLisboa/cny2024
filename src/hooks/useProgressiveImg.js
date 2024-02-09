@@ -6,9 +6,11 @@ export default function useProgressiveImg(highResSrc) {
       ? (src.default || src).replace(/([^/]+)(?=\.\w+$)/, 'tiny-$1')
       : src;
 
+  const [loading, setLoading] = useState(true);
+  
+  // Derive low resolution source immediately
   const lowResSrc = deriveLowResSrc(highResSrc);
   const [src, setSrc] = useState(lowResSrc);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const img = new Image();
@@ -21,4 +23,3 @@ export default function useProgressiveImg(highResSrc) {
 
   return [src, loading];
 };
-
