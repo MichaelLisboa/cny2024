@@ -8,9 +8,8 @@ import pages from '../utils/pages';
 import Layout from '../templates/layout';
 import Image from '../components/Image';
 import MalCarousel from '../components/MalCarousel';
-import { OrnateButton, OptionButton } from '../components/Button';
+import { OrnateButton } from '../components/Button';
 import { wishesData } from '../data';
-import wishesSplash from "../images/wishes/wishes-splash.png";
 import wish from "../images/tokens/calligraphy.png";
 
 const SplashImage = styled(Image)`
@@ -132,9 +131,12 @@ const WhatIsYourWish = () => {
     };
 
     useEffect(() => {
-        setRefreshEnabled(false);
-        return () => setRefreshEnabled(true);
-    }, [setRefreshEnabled]);
+        if (content === 'initial' || content === 'active') {
+            setRefreshEnabled(true);
+        } else {
+            setRefreshEnabled(false);
+        }
+    }, [content]);
 
     const animateExit = async () => {
         await footerControls.start({ y: 100, opacity: 0 });
@@ -219,7 +221,7 @@ const WhatIsYourWish = () => {
                     </OrnateButton>
                 ) : (
                     <OrnateButton url={nextPage.url}>
-                        {nextPage.title}
+                        Run to the finish line
                     </OrnateButton>
                 )}
             </FooterSection>

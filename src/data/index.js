@@ -503,3 +503,10 @@ export const wishesData = {
         }
     ]
 };
+
+export const resultData = [
+    {
+        headline: "At last, as you cross the finish line, the *alliance_noun* comes forward, presenting you to the illustrious Jade Emperor.",
+        message: "\“Jade Emperor, let me present to you this resilient spirit,\" proclaims the *alliance_noun*. \"They've faced trials and challenges, displaying unwavering perseverance, even in the face of setbacks.\""
+    },
+]
