@@ -84,9 +84,7 @@ const TestYourCalligraphySkills = () => {
     const headerControls = useAnimation();
     const bodyControls = useAnimation();
     const footerControls = useAnimation();
-
-    const characters = calligraphyData[0].characterList;
-    const [randomCharacter, setRandomCharacter] = useState(characters[Math.floor(Math.random() * characters.length)]);
+    const [score, setScore] = useState(null);
 
     useEffect(() => {
         setRefreshEnabled(false);
@@ -117,13 +115,31 @@ const TestYourCalligraphySkills = () => {
         }
     }, [isGameComplete]);
 
+    // useEffect(() => {
+    //     if (correctCount !== null && correctCount !== undefined && incorrectCount !== null && incorrectCount !== undefined) {
+    //         const totalAttempts = correctCount + incorrectCount;
+    //         const successPercentage = (correctCount / totalAttempts) * 100;
+    //         if (successPercentage > 70) {
+    //             setScore(true);
+    //         } else {
+    //             setScore(false);
+    //         }
+    //     }
+    // }, [correctCount, incorrectCount]);    
+
     const handleOnCompletionStatusChange = useCallback((correctCount, incorrectCount) => {
-        console.log('Correct:', correctCount, 'Incorrect:', incorrectCount);
         setIsGameComplete(true);
         if (correctCount !== null && correctCount !== undefined && incorrectCount !== null && incorrectCount !== undefined) {
-          updateUserSelection('calligraphyChallengeResult', { correct: correctCount, incorrect: incorrectCount });
+            const totalAttempts = correctCount + incorrectCount;
+            const successPercentage = (correctCount / totalAttempts) * 100;
+            if (successPercentage > 70) {
+                setScore(true);
+            } else {
+                setScore(false);
+            }
+            updateUserSelection('calligraphyChallengeResult', { correct: correctCount, incorrect: incorrectCount });
         }
-      }, [setIsGameComplete, updateUserSelection]);
+    }, [setIsGameComplete, updateUserSelection]);
 
     return (
         <Layout refreshEnabled={refreshEnabled}>
@@ -147,7 +163,7 @@ const TestYourCalligraphySkills = () => {
             <BodySection
                 animate={bodyControls}
                 className="body-section"
-                style={ content === 'game' && { justifyContent: 'center', padding: 0 }}
+                style={content === 'game' && { justifyContent: 'center', padding: 0 }}
             >
                 {content === 'initial' ? (
                     <div className="body-section-wide">
@@ -158,13 +174,23 @@ const TestYourCalligraphySkills = () => {
                         timeLimit={30}
                         onCompletionStatusChange={handleOnCompletionStatusChange} />
                 ) : content === 'complete' ? (
+                    score ? (
                     <div className="mal-text-center">
-                            <h2 className="mal-h2 mal-margin-remove-vertical">{replaceElementNoun(calligraphyData[0].successTitle)}</h2>
-                            <CalligraphyTokenImage>
-                                <Image src={success} alt={`You successfully restored the porcelain vase!`} />
-                            </CalligraphyTokenImage>
-                            <p className="mal-text-medium">{replaceElementNoun(calligraphyData[0].successMessage)}</p>
-                        </div>
+                        <h2 className="mal-h2 mal-margin-remove-vertical">{replaceElementNoun(calligraphyData[0].successTitle)}</h2>
+                        <CalligraphyTokenImage>
+                            <Image src={success} alt={`You successfully restored the porcelain vase!`} />
+                        </CalligraphyTokenImage>
+                        <p className="mal-text-medium">{replaceElementNoun(calligraphyData[0].successMessage)}</p>
+                    </div>
+                ) : (
+                    <div className="mal-text-center">
+                        <h2 className="mal-h2 mal-margin-remove-vertical">{replaceElementNoun(calligraphyData[0].failTitle)}</h2>
+                        <CalligraphyTokenImage>
+                            <Image src={fail} alt={`You failed!`} />
+                        </CalligraphyTokenImage>
+                        <p className="mal-text-medium">{replaceElementNoun(calligraphyData[0].failMessage)}</p>
+                    </div>
+                )
                 ) : null}
 
             </BodySection>

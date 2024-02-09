@@ -21,6 +21,7 @@ import { set } from 'lodash';
 // Styled Components
 const GameContainer = styled.div`
   text-align: center;
+  max-width: 600px;
   // padding: 20px;
 `;
 
