@@ -445,9 +445,9 @@ export const puzzleData = [
 
 export const calligraphyData = [
     {
-        headline: "The mist slowly shifts, guiding your gaze to a sacred scroll adorned with Chinese calligraphy characters.",
-        subheadline: "Your wit tells you that you need to rewrite the calligraphy in the scroll presented in front of you. Will you face the challenge?",
-        challengeHeadline: "Rewrite the characters. Consider the curves, the angles, the spaces between.",
+        headline: "As the mist clears, you're presented with a scroll showcasing intricate Chinese characters.",
+        subheadline: "Remember the characters displayed before you. Are you up for the challenge of recalling them from memory?",
+        challengeHeadline: "Remember the characters. Consider the curves, the angles, the spaces between.",
         challengeMessage: "Choose the applicable strokes.",
         successTitle: "Calligraphy Master",
         successMessage: "You have harnessed the art of calligraphy, a reflection of your mastery over the written expression of your true self. Embrace this newfound skill as you continue your journey.",
