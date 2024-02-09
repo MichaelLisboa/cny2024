@@ -5,7 +5,6 @@ import pages from '../utils/pages';
 import styled from 'styled-components';
 import defaultBackgroundImage from '../images/background/0-cover.jpg';
 import { AppContext } from '../contexts/AppContext';
-import RefreshContext from '../contexts/RefreshContext';
 
 const BackgroundImage = styled(motion.div)`
   position: relative;

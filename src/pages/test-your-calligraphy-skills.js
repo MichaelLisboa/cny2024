@@ -9,7 +9,7 @@ import Layout from '../templates/layout';
 import Image from '../components/Image';
 import { OrnateButton, OptionButton } from '../components/Button';
 import { calligraphyData } from '../data';
-import CalligraphyFlashGame from '../games/CalligraphyFlashGame';
+import CalligraphyFlashGame from '../components/react-mal-calligraphy/CalligraphyFlashGame';
 import scroll from "../images/calligraphy/scroll.png";
 import success from "../images/tokens/calligraphy.png";
 import fail from "../images/tokens/failed_calligraphy.png";

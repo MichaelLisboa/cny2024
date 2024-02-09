@@ -1,21 +1,21 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import styled from 'styled-components';
-import Image from '../components/Image';
-import Timer from '../components/Timer';
-import { OrnateButton, OptionButton } from '../components/Button';
+import Image from '../Image';
+import Timer from '../Timer';
+import { OrnateButton, OptionButton } from '../Button';
 
-import graceful from '../images/calligraphy/graceful.svg';
-import clever from '../images/calligraphy/clever.svg';
-import energetic from '../images/calligraphy/energetic.svg';
-import crafty from '../images/calligraphy/crafty.svg';
-import strong from '../images/calligraphy/strong.svg';
-import resilient from '../images/calligraphy/resilient.svg';
-import persevering from '../images/calligraphy/persevering.svg';
-import resourceful from '../images/calligraphy/resourceful.svg';
-import curious from '../images/calligraphy/curious.svg';
-import friendly from '../images/calligraphy/friendly.svg';
-import brave from '../images/calligraphy/brave.svg';
+import graceful from '../../images/calligraphy/graceful.svg';
+import clever from '../../images/calligraphy/clever.svg';
+import energetic from '../../images/calligraphy/energetic.svg';
+import crafty from '../../images/calligraphy/crafty.svg';
+import strong from '../../images/calligraphy/strong.svg';
+import resilient from '../../images/calligraphy/resilient.svg';
+import persevering from '../../images/calligraphy/persevering.svg';
+import resourceful from '../../images/calligraphy/resourceful.svg';
+import curious from '../../images/calligraphy/curious.svg';
+import friendly from '../../images/calligraphy/friendly.svg';
+import brave from '../../images/calligraphy/brave.svg';
 
 const GameContainer = styled.div`
   text-align: center;
@@ -137,7 +137,13 @@ const CalligraphyFlashGame = ({ timeLimit = 30, onCompletionStatusChange }) => {
           successMessage={``} />
         {!showOptions ? (
           <>
-            <FlashCardContainer key="activeCharacter" variants={variants} initial="hidden" animate="visible" exit="exit">
+            <FlashCardContainer
+              key="activeCharacter"
+              variants={variants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              onClick={() => setShowOptions(true)}>
               <Image src={characterList[activeCharacterIndex].image} alt={characterList[activeCharacterIndex].english} />
             </FlashCardContainer>
             {!isTimeUp &&
