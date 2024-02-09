@@ -116,8 +116,8 @@ const ChooseYourAlliance = () => {
 
     const location = useLocation();
     const currentPage = useMemo(() => pages.find(page => page.url === location.pathname), [location.pathname]);
-  const nextPage = useMemo(() => pages.find(page => page.url === currentPage.nextPage), [currentPage]);
-  const previousPage = useMemo(() => pages.find(page => page.url === currentPage.previousPage), [currentPage]);
+    const nextPage = useMemo(() => pages.find(page => page.url === currentPage.nextPage), [currentPage]);
+    const previousPage = useMemo(() => pages.find(page => page.url === currentPage.previousPage), [currentPage]);
     const headerControls = useAnimation();
     const bodyControls = useAnimation();
     const footerControls = useAnimation();
@@ -152,7 +152,7 @@ const ChooseYourAlliance = () => {
 
     const handleButtonClick = async () => {
         const chosenAlliance = currentSlide.title;
-        updateUserSelection('chosenAlliance', {choice: chosenAlliance, alliance_endResult: currentSlide.alliance_endResult});
+        updateUserSelection('chosenAlliance', { choice: chosenAlliance, alliance_endResult: currentSlide.alliance_endResult });
 
         if (chosenAlliance) {
             await animateExit();
@@ -227,9 +227,9 @@ const ChooseYourAlliance = () => {
                             <img src={currentSlide.image} alt={currentSlide.title} />
                         </StyledImage>
                         <div className="footer-section mal-position-bottom mal-position-large">
-                        <OrnateButton url={nextPage.url}>
-                            {nextPage.title}
-                        </OrnateButton>
+                            <OrnateButton url={nextPage.url}>
+                                {nextPage.title}
+                            </OrnateButton>
                         </div>
                     </div>
                 )}

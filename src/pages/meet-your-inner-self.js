@@ -11,14 +11,17 @@ import { OrnateButton } from '../components/Button';
 import { zodiacData } from '../data';
 import getBestMatch from '../data/calculateBestMatch'
 
-const Section = styled.section`
+const Section = styled(Layout)`
     margin-top: 72px;
     padding: 24px;  
     height: 100vh !important;
-    overflow-y: auto;
+    overflow: scroll !important;
 `;
 
 const Headline = styled.h1`
+    margin-top: -56px;
+    margin-bottom: 0px;
+    line-height: 1;
     text-align: center;
     color: rgba(51, 124, 118, 1);
 `;
@@ -70,12 +73,10 @@ const Description = styled.div`
 const MeetYourInnerSelf = () => {
     const { updateUserSelection, getUserInfo } = useContext(AppContext);
     const replaceElementNoun = useDynamicTextReplacer();
-    const [content, setContent] = useState('initial');
-    const [refreshEnabled, setRefreshEnabled] = useState(true);
+    const [refreshEnabled, setRefreshEnabled] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
     const currentPage = useMemo(() => pages.find(page => page.url === location.pathname), [location.pathname]);
-    const nextPage = useMemo(() => pages.find(page => page.url === currentPage.nextPage), [currentPage]);
     const previousPage = useMemo(() => pages.find(page => page.url === currentPage.previousPage), [currentPage]);
 
     const userInfo = getUserInfo();
@@ -91,12 +92,14 @@ const MeetYourInnerSelf = () => {
         path: userInfo.chosenPath.choice.toLowerCase()
     };
 
-    console.log('userChoices', userChoices);
-
     const userAnimal = useMemo(() => {
         const matchedAnimal = getBestMatch(userChoices).animal;
         const matchedAnimalData = zodiacData.find(animal => animal.slug === matchedAnimal);
         return matchedAnimalData;
+    }, []);
+
+    useEffect(() => {
+        setRefreshEnabled(false);
     }, []);
 
     useEffect(() => {
@@ -106,20 +109,36 @@ const MeetYourInnerSelf = () => {
     }, [userAnimal, updateUserSelection, userInfo.userAnimal]);
 
     return (
-        <Section>
-            <div className="mal-container mal-flex mal-flex-column mal-flex-middle">
-            <Headline>{userAnimal.title}-Hearted {userInfo.zodiacAnimal}</Headline>
-            <TraitsList>
-                {userAnimal.traits.map((trait, index) => (
-                    <li key={index}>{trait}</li>
-                ))}
-            </TraitsList>
-            <StyledAnimalImage src={userAnimal.image} alt={userAnimal.name} />
-            <Description>
-                <h3>There's something intriguing about you, a hidden aspect waiting to be discovered.</h3>
-                <p>{replaceElementNoun(userAnimal.story)}</p>
-            </Description>
-            </div>
+        <Section refreshEnabled={refreshEnabled}>
+                <Headline>{userAnimal.title}-Hearted {userInfo.zodiacAnimal}</Headline>
+                <div id="section-1" className="mal-flex mal-flex-column mal-flex-middle">
+                    <TraitsList>
+                        {userAnimal.traits.map((trait, index) => (
+                            <li key={index}>{trait}</li>
+                        ))}
+                    </TraitsList>
+                    <StyledAnimalImage src={userAnimal.image} alt={userAnimal.name} />
+                </div>
+                <div id="section-2" className="mal-flex mal-flex-column mal-flex-middle">
+                    <Description>
+                        <h3>There's something intriguing about you, a hidden aspect waiting to be discovered.</h3>
+                        <p>{replaceElementNoun(userAnimal.story)}</p>
+                    </Description>
+                </div>
+                <div id="section-3" className="mal-flex mal-flex-column mal-flex-middle">
+                    <OrnateButton
+                        onClick={() => navigate(previousPage.url)}
+                    >
+                        Continue
+                    </OrnateButton>
+                </div>
+                <div id="section-4" className="mal-flex mal-flex-column mal-flex-middle">
+                    <OrnateButton
+                        onClick={() => navigate(previousPage.url)}
+                    >
+                        Continue
+                    </OrnateButton>
+                </div>
         </Section>
     );
 };
