@@ -12,18 +12,18 @@ const DatePickerContainer = styled.div`
   position: relative;
 `;
 
-const DateInput = styled.input`
-    font-size: 2.75rem;
-    font-style: italic;
-    width: 80%;
-    max-width: 480px;
+const DateInput = styled.button`
+    font-size: 1.75rem;
+    font-style: italic; 
+    font-weight: 100;
+    width: 100% !important;
     padding: 8px 16px;
-    border: none;
+    border: 1px solid rgba(178, 85, 72, 1);
     border-radius: 8px;
     background-color: rgba(255, 255, 255, 0.5);
     outline: none;
     text-align: center;
-    color: #888;
+    color: rgba(178, 162, 151, 0.75);
     cursor: pointer;
     transition: background-color 0.2s ease-in-out;
     &:hover {
@@ -143,12 +143,11 @@ const WelcomeNobleBeings = () => {
             <div className="header-section mal-text-center" />
             <div className="body-section mal-text-center">
                 <div className="mal-margin-bottom-large mal-padding">
-                    <h1 className="mal-margin-remove-top">Welcome, noble beings!</h1>
+                    <h2 className="mal-margin-remove-top">Welcome, noble beings!</h2>
                     <p className="mal-text-medium">As an ethereal spirit, you're standing at the threshold of The Grand Race. The Jade Emperor has called upon all spirits to compete for a place in the Chinese Zodiac.</p>
                 </div>
                 <DatePickerContainer>
                     <DateInput
-                        className="dateInput"
                         type="text"
                         inputMode='none'
                         value={birthdate || 'YYYY-MM-DD'}
@@ -159,7 +158,9 @@ const WelcomeNobleBeings = () => {
                             setShowDatePicker(true); // Show the date picker
                         }}
                         onKeyDown={handleKeyPress}
-                    />
+                    >
+                        <span className="mal-text-nowrap">{birthdate || 'Enter your birthdate'}</span>
+                        </DateInput>
                     {showDatePicker && (
                         <div className="datePickerPopup">
                             <DatePicker
