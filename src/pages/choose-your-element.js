@@ -33,12 +33,19 @@ const StyledMalCarousel = styled(MalCarousel)`
     .slide {
         background-color: transparent;
 
-        &.slide img {
+        img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 16px;
+        }
+
+        // media query for larger screens
+        @media (min-width: 768px) {
+            img {
                 max-height: 45vh;
-                height: 100%;
-                object-fit: cover;
-                object-position: center;
-                border-radius: 16px;
+            }
         }
 
         &.slide-current img {

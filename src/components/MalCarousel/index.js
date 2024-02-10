@@ -23,8 +23,8 @@ const Card = styled(motion.div)`
   }
 
   img {
-    width: 100%;
-    // max-height: 30vh;
+    width: auto;
+    height: 100%;
     object-fit: contain;
     object-position: center;
   }
