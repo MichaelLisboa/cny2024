@@ -25,7 +25,7 @@ const TraitTokenContainer = styled.div`
 
 const TraitTokenImage = styled.div`
     width: auto;
-    padding: 32px 0 8px 0;
+    padding: 0 0 8px 0;
 
     img {
         height: 100%;
