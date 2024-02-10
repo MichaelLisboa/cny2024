@@ -24,11 +24,11 @@ const GameContainer = styled.div`
 
 const FlashCardContainer = styled(motion.div)`
   margin: 0 auto;
-  padding: 48px 0 16px 0;
+  padding: 24px 0 16px 0;
 
   img {
-    width: 90vw;
-    max-height: 40vh;
+    width: 100%;
+    max-height: 45vh;
     object-fit: contain;
   }
 `;
@@ -61,9 +61,9 @@ const ButtonContainer = styled.div`
 const OptionsGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
+  gap: 16px;
 
-  padding: 48px 0;
+  padding: 24px 32px;
 `;
 
 // Animation Variants
