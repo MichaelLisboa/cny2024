@@ -8,6 +8,7 @@ import pages from '../utils/pages';
 import Layout from '../templates/layout';
 import Image from '../components/Image';
 import MalCarousel from '../components/MalCarousel';
+import TraitToken from '../components/TraitToken';
 import { OrnateButton } from '../components/Button';
 import { wishesData } from '../data';
 import wealth from "../images/tokens/wealth.png";
@@ -201,16 +202,13 @@ const WhatIsYourWish = () => {
                         />
                     </div>
                 ) : (
-                    <div className="mal-padding-small mal-text-center">
-                        <TraitTokenImage className="mal-padding">
-                            <Image
-                                src={currentSlide.slug === 'wealth' ? wealth : currentSlide.slug === 'health' ? health : currentSlide.slug === 'true-love' ? love : currentSlide.slug === 'career-success' ? career : peace}
-                                alt={`The Token of ${selectedCard}`} />
-                        </TraitTokenImage>
-                        <h4 className="mal-margin-remove">Your wish in the Year of the Dragon.</h4>
-                        <h2 className="mal-margin-remove">{currentSlide.title}</h2>
-                        <p className="mal-text-medium">{currentSlide.resultMessage}</p>
-                    </div>
+                    <TraitToken
+                    trait={currentSlide.slug === 'wealth' ? wealth : currentSlide.slug === 'health' ? health : currentSlide.slug === 'true-love' ? love : currentSlide.slug === 'career-success' ? career : peace}
+                    selected={selectedCard}
+                    subheadline={`Your wish in the Year of the Dragon.`}
+                    title={currentSlide.title}
+                    description={currentSlide.resultMessage}
+                />
                 )}
 
             </BodySection>
