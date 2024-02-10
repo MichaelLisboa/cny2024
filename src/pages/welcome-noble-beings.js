@@ -14,8 +14,7 @@ const DatePickerContainer = styled.div`
 
 const DateInput = styled.button`
     font-size: 1.75rem;
-    font-style: italic; 
-    font-weight: 100;
+    font-weight: 300;
     width: 100% !important;
     padding: 8px 16px;
     border: 1px solid rgba(178, 85, 72, 1);
@@ -143,7 +142,7 @@ const WelcomeNobleBeings = () => {
             <div className="header-section mal-text-center" />
             <div className="body-section mal-text-center">
                 <div className="mal-margin-bottom-large mal-padding">
-                    <h2 className="mal-margin-remove-top">Welcome, noble beings!</h2>
+                    <h1 className="mal-margin-remove-top">Welcome, noble beings!</h1>
                     <p className="mal-text-medium">As an ethereal spirit, you're standing at the threshold of The Grand Race. The Jade Emperor has called upon all spirits to compete for a place in the Chinese Zodiac.</p>
                 </div>
                 <DatePickerContainer>
