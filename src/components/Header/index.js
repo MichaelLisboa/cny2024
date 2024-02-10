@@ -25,17 +25,17 @@ const Header = () => {
     return (
         <header style={headerStyle}>
             <div className="mal-width-1-2@m mal-grid mal-grid-collapse mal-child-width-1-3 mal-padding-small mal-padding-remove-vertical mal-flex mal-flex-middle mal-flex-center">
-                <div className="mal-grid-col">
+                {/* <div className="mal-grid-col">
                     <span>The Adventure</span>
-                </div>
+                </div> */}
                 <div>
                     <a href="/">
                         <img style={{height: "56px"}} src={logo} alt="Welcome to the year of The Dragon" />
                     </a>
                 </div>
-                <div className="mal-grid-col">
+                {/* <div className="mal-grid-col">
                     <span>Your fortune</span>
-                </div>
+                </div> */}
             </div>
         </header>
     );
