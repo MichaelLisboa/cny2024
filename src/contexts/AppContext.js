@@ -12,6 +12,7 @@ const getInitialState = () => {
       height: window.innerHeight,
       width: window.innerWidth,
     },
+    actionsSkippedOrFailed: 0,
     userInfo: {
       birthdate: '',
       zodiacAnimal: '',
@@ -40,6 +41,16 @@ const reducer = (state, action) => {
       const newState = { ...state, userInfo: updatedUserInfo };
       localStorage.setItem('userState', JSON.stringify(newState));
       return newState;
+    case 'INCREMENT_SKIP_FAIL_COUNT':
+      const newCount = state.actionsSkippedOrFailed + 1;
+      const newStateIncrement = { ...state, actionsSkippedOrFailed: newCount };
+      localStorage.setItem('userState', JSON.stringify(newStateIncrement));
+      return newStateIncrement;
+    case 'DECREMENT_SKIP_FAIL_COUNT':
+      const newCountDecrement = state.actionsSkippedOrFailed - 1;
+      const newStateDecrement = { ...state, actionsSkippedOrFailed: newCountDecrement };
+      localStorage.setItem('userState', JSON.stringify(newStateDecrement));
+      return newStateDecrement;
     default:
       return state;
   }
@@ -51,6 +62,14 @@ export function AppProvider({ children }) {
   const updateBrowserSize = useCallback(debounce(() => {
     dispatch({ type: 'SET_BROWSER_SIZE', payload: { height: window.innerHeight, width: window.innerWidth } });
   }, 250), []);
+
+  const incrementSkipFailCount = () => {
+    dispatch({ type: 'INCREMENT_SKIP_FAIL_COUNT' });
+  };
+
+  const decrementSkipFailCount = () => {
+    dispatch({ type: 'DECREMENT_SKIP_FAIL_COUNT' });
+  };
 
   useEffect(() => {
     window.addEventListener('resize', updateBrowserSize);
@@ -81,12 +100,15 @@ export function AppProvider({ children }) {
   const getUserInfo = () => state.userInfo;
 
   return (
-    <AppContext.Provider value={{ 
-        getBrowserSize,
-        getUserInfo,
-        updateUserInfo, 
-        updateUserSelection,
-        state // Exposing the entire state is optional depending on your needs
+    <AppContext.Provider value={{
+      getBrowserSize,
+      actionsSkippedOrFailed: state.actionsSkippedOrFailed,
+      incrementSkipFailCount,
+      decrementSkipFailCount,
+      getUserInfo,
+      updateUserInfo,
+      updateUserSelection,
+      state // Exposing the entire state is optional depending on your needs
     }}>
       {children}
     </AppContext.Provider>

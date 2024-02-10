@@ -71,7 +71,13 @@ const FooterSection = styled(motion.div)`
 `;
 
 const TestYourCalligraphySkills = () => {
-    const { updateUserSelection, getUserInfo } = useContext(AppContext);
+    const { 
+        updateUserSelection,
+        getUserInfo,
+        actionsSkippedOrFailed,
+        incrementSkipFailCount,
+        decrementSkipFailCount } = useContext(AppContext);
+
     const replaceElementNoun = useDynamicTextReplacer();
     const [content, setContent] = useState('initial');
     const [isGameComplete, setIsGameComplete] = useState(null);
@@ -85,6 +91,8 @@ const TestYourCalligraphySkills = () => {
     const bodyControls = useAnimation();
     const footerControls = useAnimation();
     const [score, setScore] = useState(null);
+
+    console.log("actionsSkippedOrFailed", actionsSkippedOrFailed);
 
     useEffect(() => {
         if (content === 'initial' || content === 'complete') {
@@ -197,6 +205,7 @@ const TestYourCalligraphySkills = () => {
                         <OptionButton onClick={
                             async () => {
                                 updateUserSelection('calligraphyChallengeResult', false);
+                                incrementSkipFailCount();
                                 await animateExit();
                                 navigate(nextPage?.url);
                             }

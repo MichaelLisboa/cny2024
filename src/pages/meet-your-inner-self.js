@@ -10,17 +10,18 @@ import Image from '../components/Image';
 import { zodiacData } from '../data';
 import getBestMatch from '../data/calculateBestMatch'
 
-import cat from '../images/icons/animals/cat.png';
-import crab from '../images/icons/animals/crab.png';
-import crane from '../images/icons/animals/crane.png';
-import dragonfly from '../images/icons/animals/dragonfly.png';
-import duck from '../images/icons/animals/duck.png';
-import goldfish from '../images/icons/animals/goldfish.png';
-import koifish from '../images/icons/animals/koi-fish.png';
-import panda from '../images/icons/animals/panda.png';
-import pangolin from '../images/icons/animals/pangolin.png';
-import phoenix from '../images/icons/animals/phoenix.png';
-import redpanda from '../images/icons/animals/red-panda.png';
+import cat from '../images/icons/animals/cat.svg';
+import crab from '../images/icons/animals/crab.svg';
+import crane from '../images/icons/animals/crane.svg';
+import dragonfly from '../images/icons/animals/dragonfly.svg';
+import duck from '../images/icons/animals/duck.svg';
+import goldfish from '../images/icons/animals/goldfish.svg';
+import koifish from '../images/icons/animals/koi-fish.svg';
+import panda from '../images/icons/animals/panda.svg';
+import pangolin from '../images/icons/animals/pangolin.svg';
+import phoenix from '../images/icons/animals/phoenix.svg';
+import redpanda from '../images/icons/animals/red-panda.svg';
+import miludeer from '../images/icons/animals/milu-deer.svg';
 
 const zodiacAnimals = {
     cat,
@@ -33,7 +34,8 @@ const zodiacAnimals = {
     panda,
     pangolin,
     phoenix,
-    redpanda
+    redpanda,
+    miludeer
 };
 
 

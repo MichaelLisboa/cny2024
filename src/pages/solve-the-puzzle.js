@@ -69,7 +69,12 @@ const FooterSection = styled(motion.div)`
 `;
 
 const SolveThePuzzle = () => {
-    const { updateUserSelection, getUserInfo } = useContext(AppContext);
+    const { 
+        updateUserSelection,
+        getUserInfo,
+        actionsSkippedOrFailed,
+        incrementSkipFailCount,
+        decrementSkipFailCount } = useContext(AppContext);
     const replaceElementNoun = useDynamicTextReplacer();
     const [content, setContent] = useState('initial');
     const [isPuzzleComplete, setIsPuzzleComplete] = useState(null);
@@ -78,13 +83,24 @@ const SolveThePuzzle = () => {
     const navigate = useNavigate();
     const currentPage = useMemo(() => pages.find(page => page.url === location.pathname), [location.pathname]);
     const nextPage = useMemo(() => pages.find(page => page.url === currentPage.nextPage), [currentPage]);
-    const previousPage = useMemo(() => pages.find(page => page.url === currentPage.previousPage), [currentPage]);
     const headerControls = useAnimation();
     const bodyControls = useAnimation();
     const footerControls = useAnimation();
 
     const puzzles = puzzleData[0].puzzlesList;
     const [randomPuzzle, setRandomPuzzle] = useState(puzzles[Math.floor(Math.random() * puzzles.length)]);
+
+    useEffect(() => {
+        if (actionsSkippedOrFailed >= 3) {
+          console.log('User has failed or skipped 3 times');
+        }
+      }, [actionsSkippedOrFailed]);
+
+      useEffect(() => {
+        if (isPuzzleComplete === false) {
+            incrementSkipFailCount();
+        }
+    }, [isPuzzleComplete]);
 
     useEffect(() => {
         if (content === 'initial' || content === 'complete') {
@@ -95,6 +111,7 @@ const SolveThePuzzle = () => {
     }, [content]);
 
     const handleReset = async () => {
+        decrementSkipFailCount();
         let newRandomPuzzle;
         do {
             newRandomPuzzle = puzzles[Math.floor(Math.random() * puzzles.length)];
@@ -132,7 +149,6 @@ const SolveThePuzzle = () => {
     const handleOnCompletionStatusChange = useCallback((isSuccessful) => {
         setIsPuzzleComplete(isSuccessful);
         if (isSuccessful !== null && isSuccessful !== undefined) {
-
             updateUserSelection('potteryPuzzleResult', {
                 choice: isSuccessful,
                 puzzle_endResult: isSuccessful ? puzzleData[0].puzzle_endResult[0].true : puzzleData[0].puzzle_endResult[0].false
@@ -167,7 +183,7 @@ const SolveThePuzzle = () => {
                         <SplashImage src={puzzle} alt="Puzzle" />
                     </div>
                 ) : content === 'complete' ? (
-                    getUserInfo().potteryPuzzleResult ? (
+                    getUserInfo().potteryPuzzleResult.choice ? (
                         <div className="mal-text-center">
                             <h2 className="mal-h2 mal-margin-remove-vertical">{replaceElementNoun(puzzleData[0].successTitle)}</h2>
                             <PuzzleTokenImage>
@@ -205,6 +221,7 @@ const SolveThePuzzle = () => {
                         <OptionButton onClick={
                             async () => {
                                 updateUserSelection('potteryPuzzleResult', false);
+                                incrementSkipFailCount();
                                 await animateExit();
                                 navigate(nextPage.url);
                             }

@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useRef, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { motion, useAnimation } from 'framer-motion';
@@ -69,17 +69,30 @@ const FooterSection = styled(motion.div)`
 `;
 
 const SolveTheRiddle = () => {
-  const { updateUserSelection, getUserInfo } = useContext(AppContext);
+  const { 
+    updateUserSelection,
+    getUserInfo,
+    actionsSkippedOrFailed,
+    incrementSkipFailCount,
+    decrementSkipFailCount } = useContext(AppContext);
+
   const replaceElementNoun = useDynamicTextReplacer();
   const [content, setContent] = useState('initial');
   const location = useLocation();
   const currentPage = useMemo(() => pages.find(page => page.url === location.pathname), [location.pathname]);
   const nextPage = useMemo(() => pages.find(page => page.url === currentPage.nextPage), [currentPage]);
-  const previousPage = useMemo(() => pages.find(page => page.url === currentPage.previousPage), [currentPage]);
   const headerControls = useAnimation();
   const bodyControls = useAnimation();
   const footerControls = useAnimation();
   const paragraphControls = useAnimation();
+
+  //  check if the user has skipped or failed 3 times in a useffect
+  useEffect(() => {
+    if (actionsSkippedOrFailed >= 3) {
+      console.log('User has failed or skipped 3 times');
+    }
+  }, [actionsSkippedOrFailed]);
+
 
   const setCurrentSlideState = (content) => {
     setCurrentSlide({
@@ -165,7 +178,7 @@ const SolveTheRiddle = () => {
   const handleReset = async () => {
     // updateUserSelection('riddleResult', null);
     const newRiddle = getRandomRiddle();
-    
+    decrementSkipFailCount();
     initialRiddleRef.current = {
       ...newRiddle,
       title: replaceElementNoun(newRiddle.title),
@@ -191,8 +204,10 @@ const SolveTheRiddle = () => {
   }
 
   const handleButtonClick = async (isCorrect) => {
-    console.log('isCorrect', isCorrect);
     const chosenAnswer = currentChoice.current.answer;
+    if(!isCorrect) {
+      incrementSkipFailCount();
+    }
     updateUserSelection('riddleResult', {
       choice: isCorrect,
       riddle_endResult: isCorrect ? currentSlide.riddle_endResult[0].true : currentSlide.riddle_endResult[0].false
