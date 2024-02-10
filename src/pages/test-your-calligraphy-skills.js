@@ -7,6 +7,7 @@ import { useDynamicTextReplacer } from '../hooks/useDynamicTextReplacer';
 import pages from '../utils/pages';
 import Layout from '../templates/layout';
 import Image from '../components/Image';
+import TraitToken from '../components/TraitToken';
 import { OrnateButton, OptionButton } from '../components/Button';
 import { calligraphyData } from '../data';
 import CalligraphyFlashGame from '../components/react-mal-calligraphy/CalligraphyFlashGame';
@@ -115,7 +116,7 @@ const TestYourCalligraphySkills = () => {
         if (isGameComplete) {
             animateExit().then(() => setContent('complete')).then(() => animateEnter());
         }
-    }, [isGameComplete]); 
+    }, [isGameComplete]);
 
     const handleOnCompletionStatusChange = useCallback((correctCount, incorrectCount) => {
         setIsGameComplete(true);
@@ -131,7 +132,8 @@ const TestYourCalligraphySkills = () => {
                 correct: correctCount,
                 incorrect: incorrectCount,
                 success: score,
-                calligraphy_endResult: score ? calligraphyData[0].calligraphy_endResult[0].true : calligraphyData[0].calligraphy_endResult[0].false});
+                calligraphy_endResult: score ? calligraphyData[0].calligraphy_endResult[0].true : calligraphyData[0].calligraphy_endResult[0].false
+            });
         }
     }, [setIsGameComplete, updateUserSelection]);
 
@@ -168,22 +170,22 @@ const TestYourCalligraphySkills = () => {
                         onCompletionStatusChange={handleOnCompletionStatusChange} />
                 ) : content === 'complete' ? (
                     score ? (
-                    <div className="mal-text-center">
-                        <h2 className="mal-h2 mal-margin-remove-vertical">{replaceElementNoun(calligraphyData[0].successTitle)}</h2>
-                        <CalligraphyTokenImage>
-                            <Image src={success} alt={`You successfully restored the porcelain vase!`} />
-                        </CalligraphyTokenImage>
-                        <p className="mal-text-medium">{replaceElementNoun(calligraphyData[0].successMessage)}</p>
-                    </div>
-                ) : (
-                    <div className="mal-text-center">
-                        <h2 className="mal-h2 mal-margin-remove-vertical">{replaceElementNoun(calligraphyData[0].failTitle)}</h2>
-                        <CalligraphyTokenImage>
-                            <Image src={fail} alt={`You failed!`} />
-                        </CalligraphyTokenImage>
-                        <p className="mal-text-medium">{replaceElementNoun(calligraphyData[0].failMessage)}</p>
-                    </div>
-                )
+                        <TraitToken
+                            trait={success}
+                            selected={null}
+                            subheadline={null}
+                            title={replaceElementNoun(calligraphyData[0].successTitle)}
+                            description={replaceElementNoun(calligraphyData[0].successMessage)}
+                        />
+                    ) : (
+                        <TraitToken
+                            trait={fail}
+                            selected={null}
+                            subheadline={null}
+                            title={replaceElementNoun(calligraphyData[0].failTitle)}
+                            description={replaceElementNoun(calligraphyData[0].failMessage)}
+                        />
+                    )
                 ) : null}
 
             </BodySection>
