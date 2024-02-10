@@ -7,9 +7,35 @@ import { useDynamicTextReplacer } from '../hooks/useDynamicTextReplacer';
 import pages from '../utils/pages';
 import SimpleLayout from '../templates/simple-layout';
 import Image from '../components/Image';
-import { OrnateButton, OptionButton } from '../components/Button';
 import { zodiacData } from '../data';
 import getBestMatch from '../data/calculateBestMatch'
+
+import cat from '../images/icons/animals/cat.png';
+import crab from '../images/icons/animals/crab.png';
+import crane from '../images/icons/animals/crane.png';
+import dragonfly from '../images/icons/animals/dragonfly.png';
+import duck from '../images/icons/animals/duck.png';
+import goldfish from '../images/icons/animals/goldfish.png';
+import koifish from '../images/icons/animals/koi-fish.png';
+import panda from '../images/icons/animals/panda.png';
+import pangolin from '../images/icons/animals/pangolin.png';
+import phoenix from '../images/icons/animals/phoenix.png';
+import redpanda from '../images/icons/animals/red-panda.png';
+
+const zodiacAnimals = {
+    cat,
+    crab,
+    crane,
+    dragonfly,
+    duck,
+    goldfish,
+    koifish,
+    panda,
+    pangolin,
+    phoenix,
+    redpanda
+};
+
 
 const Section = styled(SimpleLayout)`
     padding: 72px 24px 128px 24px;  
@@ -67,6 +93,26 @@ const TraitsList = styled.ul`
         padding: 4px 8px;
         border-radius: 30px;
         border: 1px solid rgba(178, 85, 72, 1);
+    }
+`;
+
+const StyledIcon = styled(Image)`
+    width: 100%;
+    height: auto;
+`;
+
+const IconRow = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: space-evenly;
+    gap: 16px;
+    flex-wrap: nowrap;
+    margin: 24px 0;
+
+    img {
+        width: 64px;
+        height: 64px;
     }
 `;
 
@@ -177,6 +223,42 @@ const MeetYourInnerSelf = () => {
                     <Description>
                         <h3>There's something intriguing about you, a hidden aspect waiting to be discovered.</h3>
                         <p>{replaceElementNoun(userAnimal.story)}</p>
+                    </Description>
+                </div>
+                <div id="section-3" className="mal-flex mal-flex-column mal-flex-middle">
+                    <Description>
+                        <h3>What the Year of the Dragon brings for {userAnimal.title}</h3>
+                        <p>{replaceElementNoun(userAnimal.fortune)}</p>
+                    </Description>
+                </div>
+                <div id="section-4" className="mal-flex mal-flex-column mal-flex-middle">
+                    <Description>
+                        <h4>Most compatible with</h4>
+                        <IconRow>                          
+                            {userAnimal.resultzodiacCompatible.map((zodiac, index) => (
+                                <div key={index}>
+                                    <StyledIcon src={zodiacAnimals[zodiac]} alt={zodiac} />
+                                    <p>{zodiac}</p>
+                                </div>
+                            ))}
+                        </IconRow>
+                        <h4>Least compatible with</h4>
+                        <IconRow>
+                            {userAnimal.resultzodiacIncompatible.map((zodiac, index) => (
+                                <div key={index}>
+                                    <StyledIcon src={zodiacAnimals[zodiac]} alt={zodiac} />
+                                    <p>{zodiac}</p>
+                                </div>
+                            ))}
+                        </IconRow>
+                    </Description>
+                </div>
+                <div id="section-5" className="mal-flex mal-flex-column mal-flex-middle">
+                    <Description>
+                        <h4>Good traits</h4>
+                        <p>{replaceElementNoun(userAnimal.positiveDescription)}</p>
+                        <h4>Bad traits</h4>
+                        <p>{replaceElementNoun(userAnimal.negativeDescription)}</p>
                     </Description>
                 </div>
             </BodySection>

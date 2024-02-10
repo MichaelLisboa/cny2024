@@ -16,10 +16,10 @@ const BackgroundImage = styled(motion.div)`
 const BackgroundImg = styled(motion.img)`
   position: absolute;
   z-index: -1;
-  bottom: 0;
+  top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 140%;
   object-fit: cover;
   will-change: transform;
 `;

@@ -604,7 +604,9 @@ export const zodiacData = [
         positiveDescription: "Cranes embody determination, facing challenges with resilience. Cranes embody determination, facing challenges with resilience.",
         negativeDescription: "Cranes tend to overanalyze situations, leading to indecision. Practice mindfulness and focus on the present. Set clear goals to avoid overthinking.",
         fortune: "The path of perseverance will lead you to great heights. Stay focused, and success will be your companion.",
-        image: require('../images/zodiac_selected/crane.png')
+        image: require('../images/zodiac_selected/crane.png'),
+        resultzodiacCompatible: ["koifish", "panda"],
+        resultzodiacIncompatible: ["cat", "goldfish"]
     },
     {
         id: 2,
@@ -615,7 +617,9 @@ export const zodiacData = [
         positiveDescription: "Red Pandas are adaptable, thriving in various environments. Embrace change willingly and see challenges as opportunities for growth.",
         negativeDescription: "Red Pandas may be overly shy and hesitant to take risks. Gradually expose yourself to new experiences, building confidence over time.",
         fortune: "Like the adaptable bamboo, your flexibility will bring unexpected blessings. A journey of growth awaits.",
-        image: require('../images/zodiac_selected/red-panda.png')
+        image: require('../images/zodiac_selected/red-panda.png'),
+        resultzodiacCompatible: ["duck", "dragonfly", "cat"],
+        resultzodiacIncompatible: ["pangolin", "miludeer"]
     },
     {
         id: 3,
@@ -626,7 +630,9 @@ export const zodiacData = [
         positiveDescription: "Cats value independence, capable of navigating life with self-reliance. Cultivate self-confidence, knowing that your independence is a strength.",
         negativeDescription: "Cats can be distant and may struggle with expressing emotions openly. Work on forming deeper connections by expressing feelings and engaging in open communication.",
         fortune: "The lone cat thrives in solitude, yet its presence is felt. Your independence will lead to unique achievements.",
-        image: require('../images/zodiac_selected/cat.png')
+        image: require('../images/zodiac_selected/cat.png'),
+        resultzodiacCompatible: ["redpanda", "crab"],
+        resultzodiacIncompatible: ["duck", "phoenix", "crane"]
     },
     {
         id: 4,
@@ -637,7 +643,9 @@ export const zodiacData = [
         positiveDescription: "Pangolins are tenacious, persisting in the face of challenges. Apply tenacity in all endeavors, understanding that challenges are stepping stones to success.",
         negativeDescription: "Pangolins may avoid confrontations, leading to unresolved issues. Face challenges directly, learning to address conflicts constructively.",
         fortune: "The armor of tenacity will shield you on your journey. Your unwavering spirit will carve a path to triumph.",
-        image: require('../images/zodiac_selected/pangolin.png')
+        image: require('../images/zodiac_selected/pangolin.png'),
+        resultzodiacCompatible: ["cat", "crab"],
+        resultzodiacIncompatible: ["koifish", "miludeer", "redpanda"]
     },
     {
         id: 5,
@@ -648,7 +656,9 @@ export const zodiacData = [
         positiveDescription: "Koi Fish embody ambition, swimming against currents to reach greater heights. Set ambitious goals and persevere, knowing each effort propels you closer to success.",
         negativeDescription: "Koi Fish may act on impulses without considering long-term consequences. Develop a habit of thoughtful decision-making, considering both short-term and long-term effects.",
         fortune: "Like the leaping koi, your ambitions will be recognized. As you swim upstream, doors of opportunity open.",
-        image: require('../images/zodiac_selected/koi-fish.png')
+        image: require('../images/zodiac_selected/koi-fish.png'),
+        resultzodiacCompatible: ["crane", "goldfish"],
+        resultzodiacIncompatible: ["cat", "duck"]
     },
     {
         id: 6,
@@ -659,7 +669,9 @@ export const zodiacData = [
         positiveDescription: "Ducks exemplify kindness, fostering harmonious relationships. Spread kindness in every interaction, creating a positive ripple effect.",
         negativeDescription: "Ducks might take on too many responsibilities, leading to burnout. Learn to set boundaries and prioritize tasks, ensuring a balanced and sustainable workload.",
         fortune: "Like gentle ripples, your kindness will touch many hearts. Good fortune follows the path of the kind-hearted duck.",
-        image: require('../images/zodiac_selected/duck.png')
+        image: require('../images/zodiac_selected/duck.png'),
+        resultzodiacCompatible: ["redpanda", "panda", "miludeer"],
+        resultzodiacIncompatible: ["cat", "koifish"]
     },
     {
         id: 7,
@@ -670,7 +682,9 @@ export const zodiacData = [
         positiveDescription: "Pandas exhibit resilience, bouncing back from setbacks. Develop inner strength and resilience, knowing challenges are temporary.",
         negativeDescription: "Pandas may struggle with making decisions, fearing making the wrong choice. Trust your instincts, make decisions confidently, and view mistakes as opportunities for growth.",
         fortune: "The bamboo bends but does not break. Your resilience ensures that challenges become stepping stones to success.",
-        image: require('../images/zodiac_selected/panda.png')
+        image: require('../images/zodiac_selected/panda.png'),
+        resultzodiacCompatible: ["phoenix", "crane", "duck"],
+        resultzodiacIncompatible: ["dragonfly", "crab"]
     },
     {
         id: 8,
@@ -681,7 +695,9 @@ export const zodiacData = [
         positiveDescription: "Crabs display adaptability, seamlessly adjusting to changing circumstances. Navigate change with grace, embracing adaptability as a valuable life skill.",
         negativeDescription: "Crabs can be stubborn and resistant to change. Cultivate adaptability and openness to new ideas, embracing change as a chance for personal development.",
         fortune: "The agile crab navigates changing tides effortlessly. Your adaptability will bring fortune in unexpected ways.",
-        image: require('../images/zodiac_selected/crab.png')
+        image: require('../images/zodiac_selected/crab.png'),
+        resultzodiacCompatible: ["pangolin", "phoenix"],
+        resultzodiacIncompatible: ["panda", "goldfish"]
     },
     {
         id: 9,
@@ -692,7 +708,9 @@ export const zodiacData = [
         positiveDescription: "Phoenixes embody hope, rising from challenges with renewed strength. Cultivate hope in challenging times, knowing every setback is a prelude to a magnificent comeback.",
         negativeDescription: "Phoenixes may set unrealistic expectations for themselves and others. Focus on achievable goals, celebrating progress rather than aiming for perfection.",
         fortune: "The phoenix's flame of hope illuminates even the darkest paths. Your optimistic spirit will guide you to greatness.",
-        image: require('../images/zodiac_selected/phoenix.png')
+        image: require('../images/zodiac_selected/phoenix.png'),
+        resultzodiacCompatible: ["panda", "goldfish", "crab"],
+        resultzodiacIncompatible: ["cat", "dragonfly"]
     },
     {
         id: 10,
@@ -703,7 +721,9 @@ export const zodiacData = [
         positiveDescription: "Goldfish are symbols of good fortune and prosperity. Embrace a positive mindset, attracting good fortune with gratitude and optimism.",
         negativeDescription: "Goldfish might struggle with forgetfulness, impacting daily tasks. Develop organizational habits, such as using reminders and schedules, to enhance memory.",
         fortune: "Like the golden scales of the goldfish, fortune smiles upon you. Abundance and prosperity are in your future.",
-        image: require('../images/zodiac_selected/goldfish.png')
+        image: require('../images/zodiac_selected/goldfish.png'),
+        resultzodiacCompatible: ["phoenix", "koifish"],
+        resultzodiacIncompatible: ["crane", "crab"]
     },
     {
         id: 11,
@@ -714,7 +734,9 @@ export const zodiacData = [
         positiveDescription: "Dragonflies embody exploration, embracing curiosity to discover new realms. Approach life with curiosity and a sense of adventure, finding joy in exploration.",
         negativeDescription: "Dragonflies may struggle with a constant need for change and may become restless. Find fulfillment in the present moment, appreciating stability and embracing opportunities for growth.",
         fortune: "The dragonfly's wings carry it to unexplored territories. Your curious spirit will lead to exciting discoveries.",
-        image: require('../images/zodiac_selected/dragonfly.png')
+        image: require('../images/zodiac_selected/dragonfly.png'),
+        resultzodiacCompatible: ["redpanda", "miludeer"],
+        resultzodiacIncompatible: ["panda", "phoenix"]
     },
     {
         id: 12,
@@ -725,6 +747,8 @@ export const zodiacData = [
         positiveDescription: "Milu Deer embody compassion, radiating warmth and understanding. Nurture compassion for yourself and others, creating a harmonious environment.",
         negativeDescription: "Milu Deer can be overly sensitive to criticism or negative feedback. Develop resilience by focusing on constructive criticism, using it as a tool for self-improvement.",
         fortune: "The gentle presence of the milu deer brings harmony. Your compassionate nature will attract positive energy.",
-        image: require('../images/zodiac_selected/milu-deer.png')
+        image: require('../images/zodiac_selected/milu-deer.png'),
+        resultzodiacCompatible: ["duck", "dragonfly"],
+        resultzodiacIncompatible: ["pangolin", "redpanda"]
     }
 ];

@@ -8,6 +8,7 @@ import pages from '../utils/pages';
 import Layout from '../templates/layout';
 import Image from '../components/Image';
 import MalCarousel from '../components/MalCarousel';
+import TraitToken from '../components/TraitToken';
 import { OrnateButton } from '../components/Button';
 import { traitsList } from '../data';
 import trait from "../images/tokens/trait.png";
@@ -33,17 +34,6 @@ const DescriptionText = styled.p`
     text-align: center;
     margin: 0;
     padding: 0;
-`;
-
-const TraitTokenImage = styled.div`
-    width: auto;
-    padding: 32px;
-
-    img {
-        height: 100%;
-        max-height: 25vh;
-        object-fit: contain;
-    }
 `;
 
 const HeaderSection = styled(motion.div)`
@@ -167,16 +157,13 @@ const ChooseYourTrait = () => {
                         />
                     </div>
                 ) : (
-                    <div className="mal-padding-small mal-text-center">
-                        <TraitTokenImage className="mal-padding">
-                            <Image
-                                src={trait}
-                                alt={`The Trait of ${selectedCard}`} />
-                        </TraitTokenImage>
-                        <h4 className="mal-margin-remove">{currentSlide.subheadline}</h4>
-                        <h2 className="mal-margin-remove">{currentSlide.title}</h2>
-                        <p>{currentSlide.description}</p>
-                    </div>
+                    <TraitToken
+                        trait={trait}
+                        selected={selectedCard}
+                        subheadline={currentSlide.subheadline}
+                        title={currentSlide.title}
+                        description={currentSlide.description}
+                    />
                 )}
             </BodySection>
             <FooterSection

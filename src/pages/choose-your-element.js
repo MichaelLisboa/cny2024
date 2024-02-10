@@ -6,10 +6,10 @@ import { AppContext } from '../contexts/AppContext';
 import { useDynamicTextReplacer } from '../hooks/useDynamicTextReplacer';
 import pages from '../utils/pages';
 import Layout from '../templates/layout';
+import TraitToken from '../components/TraitToken';
 import { elementsList } from '../data';
 import MalCarousel from '../components/MalCarousel';
 import { OrnateButton } from '../components/Button';
-import Image from '../components/Image';
 
 const scaleAnimation = keyframes`
   0% {
@@ -133,7 +133,7 @@ const WhatIsYourElement = () => {
     const handleButtonClick = async () => {
         const chosenElement = currentSlide.title;
         setSelectedCard(chosenElement);
-        updateUserSelection('chosenElement', {choice: chosenElement, element_endResult: currentSlide.element_endResult});
+        updateUserSelection('chosenElement', { choice: chosenElement, element_endResult: currentSlide.element_endResult });
 
         if (chosenElement) {
             await animateExit();
@@ -184,17 +184,13 @@ const WhatIsYourElement = () => {
                         />
                     </div>
                 ) : (
-                    <div className="mal-padding-small mal-text-center">
-                        <ElementTokenImage className="mal-padding">
-                            <Image
-                                src={elementTokenImage}
-                                alt={`The Element of ${selectedCard}`}
-                                loading="lazy" />
-                        </ElementTokenImage>
-                        <h4 className="mal-margin-remove">{currentSlide.subheadline}</h4>
-                        <h2 className="mal-margin-remove">{currentSlide.title}</h2>
-                        <p>{currentSlide.description}</p>
-                    </div>
+                    <TraitToken
+                        trait={elementTokenImage}
+                        selected={selectedCard}
+                        subheadline={currentSlide.subheadline}
+                        title={currentSlide.title}
+                        description={currentSlide.description}
+                    />
                 )}
             </BodySection>
             <FooterSection

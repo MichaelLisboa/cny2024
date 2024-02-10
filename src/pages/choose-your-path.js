@@ -7,6 +7,7 @@ import { useDynamicTextReplacer } from '../hooks/useDynamicTextReplacer';
 import pages from '../utils/pages';
 import Layout from '../templates/layout';
 import Image from '../components/Image';
+import TraitToken from '../components/TraitToken';
 import { pathsList } from '../data';
 import { OrnateButton } from '../components/Button';
 import path from "../images/tokens/path.png";
@@ -192,15 +193,13 @@ const ChooseYourPath = () => {
                         ))}
                     </PathItemContainer>
                 ) : (
-                    <div className="mal-padding-small mal-text-center">
-                        <PathTokenImage className="mal-padding">
-                            <Image
-                                src={path}
-                                alt={`The Path of ${selectedCard}`} />
-                        </PathTokenImage>
-                        <h2 className="mal-margin-remove">{replaceElementNoun(selectedCard.title)}</h2>
-                        <p>{replaceElementNoun(selectedCard.description)}</p>
-                    </div>
+                    <TraitToken
+                        trait={path}
+                        selected={selectedCard}
+                        subheadline={null}
+                        title={replaceElementNoun(selectedCard.title)}
+                        description={replaceElementNoun(selectedCard.description)}
+                    />
                 )}
             </BodySection>
 

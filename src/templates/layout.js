@@ -10,9 +10,8 @@ const BackgroundImage = styled(motion.div)`
   position: relative;
   width: 100%;
   height: 100%;
-  overflow-y: ${({ height }) => height < 630 ? 'auto' : 'hidden'};
-  overflow-x: hidden;
-  box-shadow: 0 0 24px rgba(0, 0, 0, 0.15);
+  // overflow-y: ${({ height }) => height < 630 ? 'auto' : 'hidden'};
+  overflow-x: hidden !important;
 `;
 
 const BackgroundImg = styled(motion.img)`

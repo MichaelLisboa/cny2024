@@ -8,8 +8,9 @@ import pages from '../utils/pages';
 import Layout from '../templates/layout';
 import MalCarousel from '../components/MalCarousel/MalCarousel2';
 import Image from '../components/Image';
+import TraitToken from '../components/TraitToken';
 import { riddlesList } from '../data';
-import { OrnateButton } from '../components/Button';
+import { OrnateButton, OptionButton } from '../components/Button';
 import success from "../images/tokens/riddle.png";
 import fail from "../images/tokens/failed_riddle.png";
 
@@ -37,14 +38,20 @@ const DescriptionText = styled.p`
     width: 75%;
 `;
 
-const RiddleTokenImage = styled.div`
-    width: auto;
-    padding: 32px;
+const ButtonContainer = styled.div`
+    height: 72px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
 
-    img {
-        height: 100%;
-        max-height: 25vh;
-        object-fit: contain;
+    * {
+        font-size: 1rem;
+
+        @media (max-width: 576px) { // When the viewport is 576px or less
+            font-size: 0.875rem !important; // Reduce the font size even more
+        }
     }
 `;
 
@@ -156,8 +163,9 @@ const SolveTheRiddle = () => {
   };
 
   const handleReset = async () => {
-    updateUserSelection('riddleResult', null);
+    // updateUserSelection('riddleResult', null);
     const newRiddle = getRandomRiddle();
+    
     initialRiddleRef.current = {
       ...newRiddle,
       title: replaceElementNoun(newRiddle.title),
@@ -172,7 +180,7 @@ const SolveTheRiddle = () => {
       successMessage: replaceElementNoun(newRiddle.successMessage),
       failTitle: replaceElementNoun(newRiddle.failTitle),
       failMessage: replaceElementNoun(newRiddle.failMessage),
-      riddle_endResult: newRiddle.riddle_endResult,
+      riddle_endResult: newRiddle?.riddle_endResult,
     };
     setCurrentSlide(initialRiddleRef.current);
     await animateExit();
@@ -183,6 +191,7 @@ const SolveTheRiddle = () => {
   }
 
   const handleButtonClick = async (isCorrect) => {
+    console.log('isCorrect', isCorrect);
     const chosenAnswer = currentChoice.current.answer;
     updateUserSelection('riddleResult', {
       choice: isCorrect,
@@ -226,30 +235,21 @@ const SolveTheRiddle = () => {
             />
           </div>
         ) :
-          getUserInfo().riddleResult ? (
-            <div className="mal-text-center">
-              <h3 className="mal-h2 mal-margin-remove-vertical">{initialRiddleRef.current.result}</h3>
-              <RiddleTokenImage>
-                <Image
-                  src={success}
-                  alt={initialRiddleRef.current.result} />
-              </RiddleTokenImage>
-              <h2 className="mal-h3 mal-margin-remove-vertical">{initialRiddleRef.current.successTitle}</h2>
-              <p className="mal-text-medium mal-text-italic">"{initialRiddleRef.current.successMessage}"</p>
-            </div>
+          getUserInfo().riddleResult.choice ? (
+            <TraitToken
+              trait={success}
+              selected={currentChoice.current.answer}
+              subheadline={initialRiddleRef.current.successTitle}
+              description={initialRiddleRef.current.successMessage}
+              title={initialRiddleRef.current.result}
+            />
           ) :
-            <div className="mal-text-center">
-              <RiddleTokenImage className="mal-padding">
-                <Image
-                  src={fail}
-                  alt={initialRiddleRef.current.failMessage} />
-              </RiddleTokenImage>
-              <h2 className="mal-h3 mal-margin-remove-vertical">{initialRiddleRef.current.failTitle}</h2>
-              <p className="mal-text-medium mal-text-italic">"{initialRiddleRef.current.failMessage}"</p>
-              <button
-                className="mal-button mal-button-small mal-button-primary mal-border-rounded"
-                onClick={handleReset}> Would you like to try again?</button>
-            </div>
+            <TraitToken
+              trait={fail}
+              selected={currentChoice.current.answer}
+              description={`"${initialRiddleRef.current.failMessage}"`}
+              title={initialRiddleRef.current.failTitle}
+            />
         }
       </BodySection>
       <FooterSection
@@ -262,14 +262,19 @@ const SolveTheRiddle = () => {
             {currentChoice.current.answer}
           </OrnateButton>
         ) :
-          getUserInfo().riddleResult ? (
+          getUserInfo().riddleResult.choice ? (
             <OrnateButton url={nextPage.url}>
               {nextPage.title}
             </OrnateButton>
           ) : (
-            <OrnateButton url={nextPage.url}>
-              {nextPage.title}
-            </OrnateButton>
+            <ButtonContainer>
+              <OptionButton onClick={handleReset}>
+                Try again?
+              </OptionButton>
+              <OptionButton url={nextPage.url}>
+                Continue your journey
+              </OptionButton>
+            </ButtonContainer>
           )}
       </FooterSection>
     </Layout >
