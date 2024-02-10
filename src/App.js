@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { AppProvider } from './contexts/AppContext';
 import { AnimatePresence } from 'framer-motion';
@@ -61,6 +61,21 @@ function getElementForPage(page) {
 function App() {
   const { isIOS, prompt } = useIsIOS();
   const [isMobile, setIsMobile] = useState(false)
+  const [installPromptEvent, setInstallPromptEvent] = useState(null);
+
+  // useEffect(() => {
+  //   const captureInstallPrompt = (e) => {
+  //     // Prevent the default prompt display
+  //     e.preventDefault();
+  //     // Save the event for later use
+  //     setInstallPromptEvent(e);
+  //   };
+
+  //   window.addEventListener('beforeinstallprompt', captureInstallPrompt);
+
+  //   // Cleanup on component unmount
+  //   return () => window.removeEventListener('beforeinstallprompt', captureInstallPrompt);
+  // }, []);
 
   return (
     <AppProvider> {/* Wrap your application with AppProvider */}

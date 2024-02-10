@@ -150,6 +150,7 @@ const WelcomeNobleBeings = () => {
                     <DateInput
                         className="dateInput"
                         type="text"
+                        readonly
                         value={birthdate || 'YYYY-MM-DD'}
                         disabled={showDatePicker}
                         onChange={handleInputChange}
