@@ -6,7 +6,6 @@ import { AppContext } from '../contexts/AppContext';
 import { useDynamicTextReplacer } from '../hooks/useDynamicTextReplacer';
 import pages from '../utils/pages';
 import Layout from '../templates/layout';
-import Image from '../components/Image';
 import MalCarousel from '../components/MalCarousel';
 import TraitToken from '../components/TraitToken';
 import { OrnateButton } from '../components/Button';
@@ -56,7 +55,6 @@ const ChooseYourTrait = () => {
     const location = useLocation();
     const currentPage = useMemo(() => pages.find(page => page.url === location.pathname), [location.pathname]);
     const nextPage = useMemo(() => pages.find(page => page.url === currentPage.nextPage), [currentPage]);
-    const previousPage = useMemo(() => pages.find(page => page.url === currentPage.previousPage), [currentPage]);
     const headerControls = useAnimation();
     const bodyControls = useAnimation();
     const footerControls = useAnimation();

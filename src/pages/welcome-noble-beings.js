@@ -4,11 +4,9 @@ import { AppContext } from '../contexts/AppContext'; // Import AppContext
 import pages from '../utils/pages';
 import Layout from '../templates/layout';
 import styled from 'styled-components';
-import { motion } from 'framer-motion';
 import { DayPicker } from 'react-day-picker'; // Import DayPicker component
 import 'react-day-picker/dist/style.css';
 import '../styles/DatePickerStyles.css';
-import { OrnateButton } from '../components/Button';
 
 const DatePickerContainer = styled.div`
   position: relative;
@@ -53,7 +51,7 @@ const WelcomeNobleBeings = () => {
     const navigate = useNavigate();
     const currentPage = useMemo(() => pages.find(page => page.url === location.pathname), [location.pathname]);
     const nextPage = useMemo(() => pages.find(page => page.url === currentPage.nextPage), [currentPage]);
-    const previousPage = useMemo(() => pages.find(page => page.url === currentPage.previousPage), [currentPage]);
+    const [refreshEnabled] = useState(true);
 
 
     const [birthdate, setBirthdate] = useState('');
@@ -141,7 +139,7 @@ const WelcomeNobleBeings = () => {
     };
 
     return (
-        <Layout>
+        <Layout refreshEnabled={refreshEnabled}>
             <div className="header-section mal-text-center" />
             <div className="body-section mal-text-center">
                 <div className="mal-margin-bottom-large mal-padding">

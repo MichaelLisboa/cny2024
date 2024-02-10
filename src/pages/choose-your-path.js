@@ -6,7 +6,6 @@ import { AppContext } from '../contexts/AppContext';
 import { useDynamicTextReplacer } from '../hooks/useDynamicTextReplacer';
 import pages from '../utils/pages';
 import Layout from '../templates/layout';
-import Image from '../components/Image';
 import TraitToken from '../components/TraitToken';
 import { pathsList } from '../data';
 import { OrnateButton } from '../components/Button';
@@ -44,30 +43,12 @@ const PathItemContent = styled.div`
 `;
 
 const PathItemTitle = styled.h3`
+  display: inline;
   margin: 0;
-`;
-
-const DescriptionText = styled.p`
-    display: block;
-    font-size: 0.75rem;
-    font-family: Lato, sans-serif;
-    font-weight: 400;
-    font-style: italic;
-    color: #322F20;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-`;
-
-const PathTokenImage = styled.div`
-    width: auto;
-    padding: 32px;
-
-    img {
-        height: 100%;
-        max-height: 25vh;
-        object-fit: contain;
-    }
+  padding: 0 8px !important;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  line-height: 0.5 !important;
 `;
 
 const HeaderSection = styled(motion.div)`
@@ -91,7 +72,6 @@ const ChooseYourPath = () => {
     const location = useLocation();
     const currentPage = useMemo(() => pages.find(page => page.url === location.pathname), [location.pathname]);
     const nextPage = useMemo(() => pages.find(page => page.url === currentPage.nextPage), [currentPage]);
-    const previousPage = useMemo(() => pages.find(page => page.url === currentPage.previousPage), [currentPage]);
     const headerControls = useAnimation();
     const bodyControls = useAnimation();
     const footerControls = useAnimation();

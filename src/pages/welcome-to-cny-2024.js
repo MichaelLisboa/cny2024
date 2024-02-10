@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import pages from '../utils/pages';
 import Layout from '../templates/layout';
@@ -8,10 +8,11 @@ function WelcomeToCny2024() {
     const location = useLocation();
     const currentPage = pages.find(page => page.url === location.pathname);
     const nextPage = pages.find(page => page.url === currentPage.nextPage);
+    const [refreshEnabled] = useState(true);
 
 
     return (
-        <Layout>
+        <Layout refreshEnabled={refreshEnabled}>
             <div className="body-section mal-text-center">
                 <div className="mal-margin-bottom-large mal-padding">
                     <h4 className="mal-margin-remove-vertical">Embark on a mystical journey to</h4>
