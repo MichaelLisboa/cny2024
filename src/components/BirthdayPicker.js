@@ -1,14 +1,8 @@
-import React, { useContext, useState, useMemo } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { AppContext } from '../contexts/AppContext'; // Import AppContext
-import pages from '../utils/pages';
-import Layout from '../templates/layout';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { motion } from 'framer-motion';
 import { DayPicker } from 'react-day-picker'; // Import DayPicker component
 import 'react-day-picker/dist/style.css';
 import '../styles/DatePickerStyles.css';
-import { OrnateButton } from '../components/Button';
 
 const DatePickerContainer = styled.div`
   position: relative;
@@ -47,14 +41,7 @@ const DatePicker = styled(DayPicker)`
   padding: 16px;
 `;
 
-const WelcomeNobleBeings = () => {
-    const { updateUserInfo } = useContext(AppContext); // Use the context
-    const location = useLocation();
-    const navigate = useNavigate();
-    const currentPage = useMemo(() => pages.find(page => page.url === location.pathname), [location.pathname]);
-    const nextPage = useMemo(() => pages.find(page => page.url === currentPage.nextPage), [currentPage]);
-    const previousPage = useMemo(() => pages.find(page => page.url === currentPage.previousPage), [currentPage]);
-
+function BirthdayPicker({ onBirthdaySubmit }) {
 
     const [birthdate, setBirthdate] = useState('');
     const [showDatePicker, setShowDatePicker] = useState(false);
@@ -73,10 +60,8 @@ const WelcomeNobleBeings = () => {
             console.error("Year is invalid. It should be between 1924 and 2024.");
             return; // Stop the function
         }
-        updateUserInfo(date);
-        // Navigate to the next page with useNavigate
-        navigate(nextPage.url);
 
+        console.log('Submitting birthdate:', date);
     };
 
     const handleDateChange = (date) => {
@@ -110,11 +95,6 @@ const WelcomeNobleBeings = () => {
         let year = inputDate.split('-')[0];
 
         try {
-            if (year < 1924 || year > 2024) {
-                console.error("Invalid birthdate format. Expected format is yyyy-mm-dd.");
-            } else {
-                console.error("Invalid birthdate format. Expected format is yyyy-mm-dd.");
-            }
 
             if (year.length > 4) {
                 year = year.slice(0, 4); // Limit year to 4 digits
@@ -141,43 +121,45 @@ const WelcomeNobleBeings = () => {
     };
 
     return (
-        <Layout>
+        <>
             <div className="header-section mal-text-center" />
             <div className="body-section mal-text-center">
-                <div className="mal-margin-bottom-large mal-padding">
-                    <h1 className="mal-margin-remove-top">Welcome, noble beings!</h1>
-                    <p className="mal-text-medium">As an ethereal spirit, you're standing at the threshold of The Grand Race. The Jade Emperor has called upon all spirits to compete for a place in the Chinese Zodiac.</p>
+                <div className="mal-container mal-width-1-1">
+                    <div className="mal-margin-bottom-large mal-padding">
+                        <h1 className="mal-margin-remove-top">When were you born?</h1>
+                        <p className="mal-text-medium">Every decision shapes your destiny. Find out which extraordinary creature you're destined to become.</p>
+                    </div>
+                    <DatePickerContainer>
+                        <DateInput
+                            className="dateInput"
+                            type="text"
+                            value={birthdate || 'YYYY-MM-DD'}
+                            disabled={showDatePicker}
+                            onChange={handleInputChange}
+                            onClick={(e) => {
+                                e.target.value = ''; // Clear the date input field
+                                setShowDatePicker(true); // Show the date picker
+                            }}
+                            onKeyDown={handleKeyPress}
+                        />
+                        {showDatePicker && (
+                            <div className="datePickerPopup">
+                                <DatePicker
+                                    selected={birthdate ? new Date(birthdate) : undefined}
+                                    onDayClick={handleDateChange}
+                                    mode="single"
+                                    captionLayout="dropdown"
+                                    fromYear={1924}
+                                    toYear={today.getFullYear()}
+                                    modifiers={modifiers}
+                                />
+                            </div>
+                        )}
+                    </DatePickerContainer>
                 </div>
-                <DatePickerContainer>
-                    <DateInput
-                        className="dateInput"
-                        type="text"
-                        value={birthdate || 'YYYY-MM-DD'}
-                        disabled={showDatePicker}
-                        onChange={handleInputChange}
-                        onClick={(e) => {
-                            e.target.value = ''; // Clear the date input field
-                            setShowDatePicker(true); // Show the date picker
-                        }}
-                        onKeyDown={handleKeyPress}
-                    />
-                    {showDatePicker && (
-                        <div className="datePickerPopup">
-                            <DatePicker
-                                selected={birthdate ? new Date(birthdate) : undefined}
-                                onDayClick={handleDateChange}
-                                mode="single"
-                                captionLayout="dropdown"
-                                fromYear={1924}
-                                toYear={today.getFullYear()}
-                                modifiers={modifiers}
-                            />
-                        </div>
-                    )}
-                </DatePickerContainer>
             </div>
-        </Layout>
+        </>
     );
-};
+}
 
-export default WelcomeNobleBeings;
+export default BirthdayPicker;

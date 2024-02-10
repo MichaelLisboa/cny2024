@@ -1,4 +1,4 @@
-const zodiac = [{
+export const zodiac = [{
     "chapter": 1,
     "name": "Rat",
     "years": [1912, 1924, 1936, 1948, 1960, 1972, 1984, 1996, 2008, 2020, 2032],

@@ -240,7 +240,7 @@ const MeetYourInnerSelf = () => {
                             {userAnimal.resultzodiacCompatible.map((zodiac, index) => (
                                 <div key={index}>
                                     <StyledIcon src={zodiacAnimals[zodiac]} alt={zodiac} />
-                                    <p>{zodiac}</p>
+                                    <p className='mal-text-small mal-text-capitalize'>{zodiac}</p>
                                 </div>
                             ))}
                         </IconRow>
@@ -249,7 +249,7 @@ const MeetYourInnerSelf = () => {
                             {userAnimal.resultzodiacIncompatible.map((zodiac, index) => (
                                 <div key={index}>
                                     <StyledIcon src={zodiacAnimals[zodiac]} alt={zodiac} />
-                                    <p>{zodiac}</p>
+                                    <p className='mal-text-small mal-text-capitalize'>{zodiac}</p>
                                 </div>
                             ))}
                         </IconRow>

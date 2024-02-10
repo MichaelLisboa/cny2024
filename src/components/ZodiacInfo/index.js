@@ -4,11 +4,9 @@ import { motion, easeInOut } from 'framer-motion';
 import Image from '../Image';
 
 const StyledAnimalImage = styled.div`
-  height: 70vh !important;
-  max-height: 70vh;
   width: auto;
   position: absolute;
-  top: 0;
+  top: -72px;
   z-index: 2;
 `;
 
@@ -18,19 +16,9 @@ const StyledElementImage = styled.div`
   z-index: 1;
 `;
 
-const ZodiacLabel = styled(motion.div)`
-  position: relative;
-  margin-top: 48px;
-  text-align: center;
-`;
-
 const ImageContainer = styled.div`
   position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 60vh !important;
+  height: 100% !important;
 `;
 
 const ZodiacInfo = ({ animal, element }) => {
@@ -68,9 +56,6 @@ const ZodiacInfo = ({ animal, element }) => {
                     <Image src={animalImage} alt={animal} />
                 </StyledAnimalImage>
             </motion.div>
-            <ZodiacLabel initial="hidden" animate="visible" variants={zodiacLabelAnimation}>
-                <h3>{element} {animal}</h3>
-            </ZodiacLabel>
         </ImageContainer>
     );
 };

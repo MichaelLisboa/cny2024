@@ -4,8 +4,8 @@ import { AppProvider } from './contexts/AppContext';
 import { AnimatePresence } from 'framer-motion';
 import Header from './components/Header';
 import pages from './utils/pages';
+import GetYourFortune from './pages/get-your-fortune';
 import WelcomeToCny2024 from './pages/welcome-to-cny-2024';
-import WhenWereYouBorn from './pages/when-were-you-born';
 import WelcomeNobleBeings from './pages/welcome-noble-beings';
 import WhatIsYourElement from './pages/choose-your-element';
 import ChooseYourCup from './pages/choose-your-cup';
@@ -27,8 +27,6 @@ function getElementForPage(page) {
   switch (page.url) {
     case "/":
       return <WelcomeToCny2024 />;
-    case "/when-were-you-born":
-      return <WhenWereYouBorn />;
     case "/welcome-noble-beings":
       return <WelcomeNobleBeings />;
     case "/choose-your-element":
@@ -51,6 +49,8 @@ function getElementForPage(page) {
       return <PursueYourDreams />;
     case "/meet-your-inner-self":
       return <MeetYourInnerSelf />;
+    case "/get-your-fortune":
+      return <GetYourFortune />;
     default:
       return null;
   }
@@ -59,8 +59,8 @@ function getElementForPage(page) {
 function App() {
   return (
     <AppProvider> {/* Wrap your application with AppProvider */}
-      <Header />
       <Router>
+      <Header />
         <AnimatePresence mode='wait'>
           <Routes>
             {pages.map((page, index) => (
