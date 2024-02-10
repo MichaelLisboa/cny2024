@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { AppProvider } from './contexts/AppContext';
 import { AnimatePresence } from 'framer-motion';
+import useIsIOS from "./hooks/useIsIOS"
+import {InstallPWA} from "./components/InstallPWA"
 import Header from './components/Header';
 import pages from './utils/pages';
 import GetYourFortune from './pages/get-your-fortune';
@@ -57,10 +59,13 @@ function getElementForPage(page) {
 }
 
 function App() {
+  const { isIOS, prompt } = useIsIOS();
+  const [isMobile, setIsMobile] = useState(false)
+
   return (
     <AppProvider> {/* Wrap your application with AppProvider */}
       <Router>
-      <Header />
+        <Header />
         <AnimatePresence mode='wait'>
           <Routes>
             {pages.map((page, index) => (

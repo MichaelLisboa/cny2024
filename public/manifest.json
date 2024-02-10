@@ -18,6 +18,21 @@
       "sizes": "512x512"
     }
   ],
+  "screenshots": [
+      {
+          "src": "meta-cover.jpg",
+          "sizes": "1200x627",
+          "type": "image/gif",
+          "form_factor": "wide",
+          "label": "心中的龙"
+      },
+      {
+          "src": "meta-cover.jpg",
+          "sizes": "1200x627",
+          "type": "image/gif",
+          "label": "心中的龙"
+      }
+  ],
   "start_url": "/?utm_source=CNY2024_app&utm_medium=app&utm_campaign=CNY2024_app",
   "theme_color": "#F5E3CA",
   "background_color": "#B25548",
