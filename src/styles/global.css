@@ -109,6 +109,12 @@
   }
 }
 
+@media only screen and (max-height: 600px) {
+  html {
+    font-size: 10px !important; /* Reduced base font size */
+  }
+}
+
 .html-drag-refresh {
   -webkit-overflow-scrolling: touch;
   background-color: rgba(243,220,191,1);
