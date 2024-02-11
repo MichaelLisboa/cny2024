@@ -89,12 +89,15 @@ const TraitsList = styled.ul`
         cursor: default;
         font-size: 0.875rem;
         color: rgba(102, 71, 56, 1);
-        background-color: rgba(253, 247, 230, 1);
+        background-color: rgba(253, 247, 230, 0.25);
         font-family: Inknut Antiqua, Georgia, serif;
         font-weight: 400;
         padding: 4px 8px;
         border-radius: 30px;
         border: 1px solid rgba(178, 85, 72, 1);
+        text-transform: capitalize;
+        white-space: nowrap;
+        z-index: 1;
     }
 `;
 
@@ -118,35 +121,22 @@ const IconRow = styled.div`
     }
 `;
 
-const ButtonContainer = styled.div`
-    height: 72px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    padding-left: 16px !important;
-    padding-right: 16px !important;
-
-    * {
-        font-size: 1rem;
-
-        @media (max-width: 576px) { // When the viewport is 576px or less
-            font-size: 0.875rem !important; // Reduce the font size even more
-        }
-    }
-`;
-
 const Description = styled.div`
     text-align: center;
     margin: 24px 0;
     color: rgba(102, 71, 56, 1);
+
+    h3, h4 {
+        margin: 0;
+    }
+
+    p {
+        margin: 8px 0 32px;
+    }
 }`;
 
 const BodySection = styled(motion.div)`
   // Add your body-section styles here.
-`;
-
-const FooterSection = styled(motion.div)`
-  // Add your footer-section styles here.
 `;
 
 const MeetYourInnerSelf = () => {
