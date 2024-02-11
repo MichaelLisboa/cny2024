@@ -92,7 +92,7 @@ const pages = [
       },
     },
     {
-      title: "Your crossroads",
+      title: "Your at a crossroads",
       url: "/choose-your-path",
       previousPage: "/solve-the-riddle",
       nextPage: "/solve-the-puzzle",
@@ -136,21 +136,6 @@ const pages = [
         animationIterationCount: '1',
       },
     },
-    // {
-    //   title: "Embrace what's in front of you",
-    //   url: "/embrace-whats-in-front-of-you",
-    //   previousPage: "/test-your-calligraphy-skills",
-    //   nextPage: "/pursue-your-dreams",
-    //   sectionTitle: "Spot the Difference",
-    //   sectionIcon: require("../images/icons/spot-the-difference.svg"),
-    //   bgImage: require("../images/background/8-spot-the-difference.jpg"),
-    //   backgroundAnimation: {
-    //     animationName: 'scaleDownAnimation',
-    //     animationDuration: '20s',
-    //     animationTimingFunction: 'linear',
-    //     animationIterationCount: '1',
-    //   },
-    // },
     {
       title: "What is your wish?",
       url: "/what-is-your-wish",
@@ -204,6 +189,21 @@ const pages = [
       sectionTitle: null,
       sectionIcon: null,
       bgImage: require("../images/background/10-result-animal.jpg"),
+      backgroundAnimation: {
+        animationName: 'slideAnimation',
+        animationDuration: '20s',
+        animationTimingFunction: 'linear',
+        animationIterationCount: '1',
+      },
+    },
+    {
+      title: "Not the good place",
+      url: "/not-the-good-place",
+      previousPage: null,
+      nextPage: null,
+      sectionTitle: null,
+      sectionIcon: null,
+      bgImage: require("../images/background/11-despair.jpg"),
       backgroundAnimation: {
         animationName: 'slideAnimation',
         animationDuration: '20s',

@@ -26,14 +26,15 @@ const PathItemContainer = styled(motion.div)`
 `;
 
 const PathItem = styled(motion.div)`
-  flex: 1;
-  background-size: cover;
-  background-position: center;
-  position: relative;
-  background-image: url(${props => props.bgImage});
-  width: 100%;
-  background-repeat: no-repeat;
-  overflow: visible;
+    flex: 1;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    background-image: url(${props => props.image});
+    width: 100%;
+    background-repeat: no-repeat;
+    overflow: visible;
+    cursor: pointer;
 `;
 
 const PathItemContent = styled.div`
@@ -111,7 +112,7 @@ const ChooseYourPath = () => {
     const handleButtonClick = async (item) => {
         const chosenPath = item.title;
         setSelectedCard(item);
-        updateUserSelection('chosenPath', {choice: item.title, path_endResult: item.path_endResult});
+        updateUserSelection('chosenPath', { choice: item.title, path_endResult: item.path_endResult });
 
         if (chosenPath) {
             await animateExit();
@@ -160,7 +161,7 @@ const ChooseYourPath = () => {
                             <PathItem
                                 key={index}
                                 variants={item}
-                                bgImage={item.image}
+                                image={item.image}
                                 onClick={() => handleButtonClick(item)}
                                 custom={index}
                                 initial={{ opacity: 0, y: 50 }}

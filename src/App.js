@@ -7,6 +7,7 @@ import {InstallPWA} from "./components/InstallPWA"
 import Header from './components/Header';
 import pages from './utils/pages';
 import GetYourFortune from './pages/get-your-fortune';
+import NotTheGoodPlace from './pages/not-the-good-place';
 import WelcomeToCny2024 from './pages/welcome-to-cny-2024';
 import WelcomeNobleBeings from './pages/welcome-noble-beings';
 import WhatIsYourElement from './pages/choose-your-element';
@@ -53,8 +54,10 @@ function getElementForPage(page) {
       return <MeetYourInnerSelf />;
     case "/get-your-fortune":
       return <GetYourFortune />;
+      case "/not-the-good-place":
+        return <NotTheGoodPlace />;
     default:
-      return null;
+      return <WelcomeToCny2024 />;
   }
 }
 
@@ -78,8 +81,9 @@ function App() {
   // }, []);
 
   return (
-    <AppProvider> {/* Wrap your application with AppProvider */}
+
       <Router>
+        <AppProvider> {/* Wrap your application with AppProvider */}
         <Header />
         <AnimatePresence mode='wait'>
           <Routes>
@@ -92,8 +96,8 @@ function App() {
             ))}
           </Routes>
         </AnimatePresence>
+        </AppProvider>
       </Router>
-    </AppProvider>
   );
 }
 

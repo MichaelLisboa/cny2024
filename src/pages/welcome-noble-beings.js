@@ -1,6 +1,7 @@
 import React, { useContext, useState, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AppContext } from '../contexts/AppContext'; // Import AppContext
+import useRedirectOnFail from '../hooks/useRedirectOnFail';
 import pages from '../utils/pages';
 import Layout from '../templates/layout';
 import styled from 'styled-components';
@@ -55,6 +56,8 @@ const WelcomeNobleBeings = () => {
 
     const [birthdate, setBirthdate] = useState('');
     const [showDatePicker, setShowDatePicker] = useState(false);
+    useRedirectOnFail();
+    
 
     const onSubmit = (date) => {
         // Check if the date matches the expected format

@@ -7,7 +7,7 @@ import { useDynamicTextReplacer } from '../hooks/useDynamicTextReplacer';
 import pages from '../utils/pages';
 import Layout from '../templates/layout';
 import MalCarousel from '../components/MalCarousel/MalCarousel2';
-import Image from '../components/Image';
+import useRedirectOnFail from '../hooks/useRedirectOnFail';
 import TraitToken from '../components/TraitToken';
 import { riddlesList } from '../data';
 import { OrnateButton, OptionButton } from '../components/Button';
@@ -75,7 +75,6 @@ const SolveTheRiddle = () => {
     actionsSkippedOrFailed,
     incrementSkipFailCount,
     decrementSkipFailCount } = useContext(AppContext);
-
   const replaceElementNoun = useDynamicTextReplacer();
   const [content, setContent] = useState('initial');
   const location = useLocation();
@@ -84,7 +83,7 @@ const SolveTheRiddle = () => {
   const headerControls = useAnimation();
   const bodyControls = useAnimation();
   const footerControls = useAnimation();
-  const paragraphControls = useAnimation();
+  const {shouldRedirect} = useRedirectOnFail();
 
   //  check if the user has skipped or failed 3 times in a useffect
   useEffect(() => {
@@ -286,7 +285,7 @@ const SolveTheRiddle = () => {
               <OptionButton onClick={handleReset}>
                 Try again?
               </OptionButton>
-              <OptionButton url={nextPage.url}>
+              <OptionButton url={shouldRedirect ? '/not-the-good-place' : nextPage?.url}>
                 Continue your journey
               </OptionButton>
             </ButtonContainer>

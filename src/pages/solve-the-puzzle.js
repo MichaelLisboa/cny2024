@@ -8,6 +8,7 @@ import pages from '../utils/pages';
 import Layout from '../templates/layout';
 import Image from '../components/Image';
 import { OrnateButton, OptionButton } from '../components/Button';
+import useRedirectOnFail from '../hooks/useRedirectOnFail';
 import JigsawPuzzle from '../components/react-mal-jigsaw';
 import { puzzleData } from '../data';
 import puzzle from "../images/jigsaw/puzzle.png";
@@ -86,6 +87,7 @@ const SolveThePuzzle = () => {
     const headerControls = useAnimation();
     const bodyControls = useAnimation();
     const footerControls = useAnimation();
+    const {shouldRedirect} = useRedirectOnFail();
 
     const puzzles = puzzleData[0].puzzlesList;
     const [randomPuzzle, setRandomPuzzle] = useState(puzzles[Math.floor(Math.random() * puzzles.length)]);
@@ -223,7 +225,7 @@ const SolveThePuzzle = () => {
                                 updateUserSelection('potteryPuzzleResult', false);
                                 incrementSkipFailCount();
                                 await animateExit();
-                                navigate(nextPage.url);
+                                navigate(shouldRedirect ? '/not-the-good-place' : nextPage?.url);
                             }
                         }>
                             No, let's move on
@@ -243,7 +245,7 @@ const SolveThePuzzle = () => {
                             <OptionButton onClick={handleReset}>
                                 Try it again?
                             </OptionButton>
-                            <OptionButton url={nextPage.url}>
+                            <OptionButton url={shouldRedirect ? '/not-the-good-place' : nextPage?.url}>
                                 Continue your journey
                             </OptionButton>
                         </ButtonContainer>

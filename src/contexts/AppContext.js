@@ -1,4 +1,5 @@
 import React, { createContext, useReducer, useEffect, useCallback } from 'react';
+import { useLocation } from 'react-router-dom';
 import { determineZodiacAnimalAndElement } from '../utils/GetZodiacAnimal.js';
 import debounce from 'lodash/debounce';
 
@@ -13,6 +14,8 @@ const getInitialState = () => {
       width: window.innerWidth,
     },
     actionsSkippedOrFailed: 0,
+    currentLocation: '',
+    previousLocation: '',
     userInfo: {
       birthdate: '',
       zodiacAnimal: '',
@@ -42,15 +45,36 @@ const reducer = (state, action) => {
       localStorage.setItem('userState', JSON.stringify(newState));
       return newState;
     case 'INCREMENT_SKIP_FAIL_COUNT':
-      const newCount = state.actionsSkippedOrFailed + 1;
-      const newStateIncrement = { ...state, actionsSkippedOrFailed: newCount };
-      localStorage.setItem('userState', JSON.stringify(newStateIncrement));
-      return newStateIncrement;
+      if (typeof state.actionsSkippedOrFailed === 'number') {
+        const updatedCount = state.actionsSkippedOrFailed + 1;
+        // Check if the threshold is reached
+        if (updatedCount >= 2) {
+          // Transition to boolean true since the threshold is reached
+          return { ...state, actionsSkippedOrFailed: true };
+        } else {
+          return { ...state, actionsSkippedOrFailed: updatedCount };
+        }
+      }
+      // If already a boolean (true), it remains true
+      return state;
+
     case 'DECREMENT_SKIP_FAIL_COUNT':
-      const newCountDecrement = state.actionsSkippedOrFailed - 1;
-      const newStateDecrement = { ...state, actionsSkippedOrFailed: newCountDecrement };
-      localStorage.setItem('userState', JSON.stringify(newStateDecrement));
-      return newStateDecrement;
+      if (typeof state.actionsSkippedOrFailed === 'boolean') {
+        // If already transitioned to boolean and is true, toggle to false
+        return { ...state, actionsSkippedOrFailed: false };
+      }
+      // If still a number, decrement unless it's already at 0
+      if (state.actionsSkippedOrFailed > 0) {
+        const updatedCount = state.actionsSkippedOrFailed - 1;
+        return { ...state, actionsSkippedOrFailed: updatedCount };
+      }
+      return state;
+
+    case 'SET_CURRENT_LOCATION':
+      return { ...state, currentLocation: action.payload };
+    case 'SET_PREVIOUS_LOCATION':
+      return { ...state, previousLocation: action.payload };
+
     default:
       return state;
   }
@@ -58,7 +82,7 @@ const reducer = (state, action) => {
 
 export function AppProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
-
+  const location = useLocation(); // Use the useLocation hook here
   const updateBrowserSize = useCallback(debounce(() => {
     dispatch({ type: 'SET_BROWSER_SIZE', payload: { height: window.innerHeight, width: window.innerWidth } });
   }, 250), []);
@@ -70,6 +94,11 @@ export function AppProvider({ children }) {
   const decrementSkipFailCount = () => {
     dispatch({ type: 'DECREMENT_SKIP_FAIL_COUNT' });
   };
+
+  useEffect(() => {
+    // Dispatch action to update the current location
+    dispatch({ type: 'SET_CURRENT_LOCATION', payload: location.pathname });
+  }, [location]);
 
   useEffect(() => {
     window.addEventListener('resize', updateBrowserSize);
@@ -95,6 +124,7 @@ export function AppProvider({ children }) {
 
   // Selector function for browser size
   const getBrowserSize = () => state.browserSize;
+  const currentLocation = () => state.currentLocation;
 
   // Selector function for user info
   const getUserInfo = () => state.userInfo;
@@ -102,6 +132,7 @@ export function AppProvider({ children }) {
   return (
     <AppContext.Provider value={{
       getBrowserSize,
+      currentLocation,
       actionsSkippedOrFailed: state.actionsSkippedOrFailed,
       incrementSkipFailCount,
       decrementSkipFailCount,

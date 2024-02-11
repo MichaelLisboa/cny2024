@@ -7,6 +7,7 @@ import { useDynamicTextReplacer } from '../hooks/useDynamicTextReplacer';
 import pages from '../utils/pages';
 import Layout from '../templates/layout';
 import Image from '../components/Image';
+import useRedirectOnFail from '../hooks/useRedirectOnFail';
 import TraitToken from '../components/TraitToken';
 import { OrnateButton, OptionButton } from '../components/Button';
 import { calligraphyData } from '../data';
@@ -39,17 +40,6 @@ const ButtonContainer = styled.div`
     }
 `;
 
-const CalligraphyTokenImage = styled.div`
-    width: auto;
-    padding: 32px;
-
-    img {
-        height: 100%;
-        max-height: 25vh;
-        object-fit: contain;
-    }
-`;
-
 const HeaderSection = styled(motion.div)`
   // Add your header-section styles here.
 `;
@@ -71,13 +61,12 @@ const FooterSection = styled(motion.div)`
 `;
 
 const TestYourCalligraphySkills = () => {
-    const { 
+    const {
         updateUserSelection,
         getUserInfo,
         actionsSkippedOrFailed,
         incrementSkipFailCount,
         decrementSkipFailCount } = useContext(AppContext);
-
     const replaceElementNoun = useDynamicTextReplacer();
     const [content, setContent] = useState('initial');
     const [isGameComplete, setIsGameComplete] = useState(null);
@@ -86,13 +75,11 @@ const TestYourCalligraphySkills = () => {
     const navigate = useNavigate();
     const currentPage = useMemo(() => pages.find(page => page.url === location.pathname), [location.pathname]);
     const nextPage = useMemo(() => pages.find(page => page.url === currentPage.nextPage), [currentPage]);
-    const previousPage = useMemo(() => pages.find(page => page.url === currentPage.previousPage), [currentPage]);
     const headerControls = useAnimation();
     const bodyControls = useAnimation();
     const footerControls = useAnimation();
     const [score, setScore] = useState(null);
-
-    console.log("actionsSkippedOrFailed", actionsSkippedOrFailed);
+    const { shouldRedirect } = useRedirectOnFail();
 
     useEffect(() => {
         if (content === 'initial' || content === 'complete') {
@@ -207,7 +194,7 @@ const TestYourCalligraphySkills = () => {
                                 updateUserSelection('calligraphyChallengeResult', false);
                                 incrementSkipFailCount();
                                 await animateExit();
-                                navigate(nextPage?.url);
+                                navigate(shouldRedirect ? '/not-the-good-place' : nextPage?.url);
                             }
                         }>
                             No, let's move on
@@ -217,7 +204,7 @@ const TestYourCalligraphySkills = () => {
                         </OptionButton>
                     </ButtonContainer>
                 ) : content === 'complete' ? (
-                    <OrnateButton url={`${nextPage.url}`}>{nextPage.title}</OrnateButton>
+                    <OrnateButton url={`${nextPage?.url}`}>{nextPage.title}</OrnateButton>
                 ) : null}
             </FooterSection>
         </Layout>

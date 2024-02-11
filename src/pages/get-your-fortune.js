@@ -316,6 +316,8 @@ const TraitsList = styled.ul`
         border-radius: 30px;
         border: 1px solid rgba(178, 85, 72, 1);
         text-transform: capitalize;
+        white-space: nowrap;
+
     }
 `;
 
@@ -477,8 +479,6 @@ function GetYourFortune() {
         disabled: { after: today },
     };
 
-    console.log('zodiacData', zodiacData);
-
     return (
         <SimpleLayout>
             {!userInfo.birthdate ?
@@ -530,7 +530,7 @@ function GetYourFortune() {
                                 <div id="section-1" className="mal-flex mal-flex-column mal-flex-middle">
                                     <Headline>{userInfo.zodiacElement} {zodiacAnimal}</Headline>
                                     <TraitsList>
-                                        {zodiacData.positive_traits.map((trait, index) => (
+                                        {zodiacData.positive_traits.slice(0,3).map((trait, index) => (
                                             <li key={index}>{trait}</li>
                                         ))}
                                     </TraitsList>

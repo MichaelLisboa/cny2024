@@ -50,6 +50,9 @@ const startAnimation = (controls, animationConfig) => {
     case 'slideScaleAnimation':
       controls.start({ x: '-10%', scale: 1.2, transition: { duration: 30, ease: 'easeInOut' } });
       break;
+    case 'slideAnimation':
+      controls.start({ x: '50%', y: '0', transition: { duration: 30, ease: 'easeOut' } });
+      break;
     // Add more cases for different animations
     default:
       // Default animation or no animation
