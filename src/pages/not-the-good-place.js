@@ -85,7 +85,7 @@ function NotTheGoodPlace() {
                 animate={bodyControls}
                 className="body-section">
                 <p className="mal-text-large">{replaceElementNoun(`Oh no, spirit of *element_noun*!`)}</p>
-                <h2>{replaceElementNoun(`You've wandered into the Shadows.`)}</h2>
+                <h2>{replaceElementNoun(`You've wandered into the Not So Good Place.`)}</h2>
                 <p className="mal-text-medium">
                     {replaceElementNoun(`It seems the choices you've made do not align with the essence of your spirit, leading you away from your destination. Fear not, for this is but a bend in your journey, not the end. The wisdom of the *element_noun* still flows within you.`)}
                 </p>
