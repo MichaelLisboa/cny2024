@@ -90,7 +90,7 @@ function NotTheGoodPlace() {
                     {replaceElementNoun(`It seems the choices you've made do not align with the essence of your spirit, leading you away from your destination. Fear not, for this is but a bend in your journey, not the end. The wisdom of the *element_noun* still flows within you.`)}
                 </p>
                 <p className="mal-text-medium mal-margin-remove-vertical">
-                    {replaceElementNoun(`Reflect upon your decisions and seek the balance within and let your *alliance_noun* guide you back to the path that leads to enlightenment and glory.`)}
+                    {replaceElementNoun(`Reflect upon your decisions and seek the balance within and let the *alliance_noun* guide you back to the path that leads to enlightenment and glory.`)}
                 </p>
 
             </BodySection>
