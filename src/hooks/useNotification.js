@@ -3,7 +3,7 @@ import {useState} from "react";
 export const useNotification = (initialMode = false) => {
     const [notificationOpen, setNotificationOpen] = useState(initialMode);
     const toggle = () => setNotificationOpen(!notificationOpen);
-
+    console.log("useNotification", notificationOpen);
     return [notificationOpen, setNotificationOpen, toggle];
 }
 

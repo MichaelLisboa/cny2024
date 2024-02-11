@@ -22,9 +22,7 @@ import PursueYourDreams from './pages/pursue-your-dreams';
 import MeetYourInnerSelf from './pages/meet-your-inner-self';
 
 import ReactGA from 'react-ga';
-
 ReactGA.initialize('G-4SZM7TT0QN');
-
 
 function getElementForPage(page) {
   switch (page.url) {
@@ -66,22 +64,22 @@ function App() {
   const [isMobile, setIsMobile] = useState(false)
   const [installPromptEvent, setInstallPromptEvent] = useState(null);
 
-  // useEffect(() => {
-  //   const captureInstallPrompt = (e) => {
-  //     // Prevent the default prompt display
-  //     e.preventDefault();
-  //     // Save the event for later use
-  //     setInstallPromptEvent(e);
-  //   };
+  useEffect(() => {
+    const captureInstallPrompt = (e) => {
+      // Prevent the default prompt display
+      e.preventDefault();
+      // Save the event for later use
+      setInstallPromptEvent(e);
+    };
 
-  //   window.addEventListener('beforeinstallprompt', captureInstallPrompt);
+    window.addEventListener('beforeinstallprompt', captureInstallPrompt);
 
-  //   // Cleanup on component unmount
-  //   return () => window.removeEventListener('beforeinstallprompt', captureInstallPrompt);
-  // }, []);
+    // Cleanup on component unmount
+    return () => window.removeEventListener('beforeinstallprompt', captureInstallPrompt);
+  }, []);
 
   return (
-
+    <>
       <Router>
         <AppProvider> {/* Wrap your application with AppProvider */}
         <Header />
@@ -98,6 +96,8 @@ function App() {
         </AnimatePresence>
         </AppProvider>
       </Router>
+      {prompt && <InstallPWA />}
+      </>
   );
 }
 
