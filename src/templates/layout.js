@@ -51,7 +51,16 @@ const startAnimation = (controls, animationConfig) => {
       controls.start({ x: '-10%', scale: 1.2, transition: { duration: 30, ease: 'easeInOut' } });
       break;
     case 'slideAnimation':
-      controls.start({ x: '50%', y: '0', transition: { duration: 30, ease: 'easeOut' } });
+      controls.start({
+        x: ['0%', '50%', '0%'], // Start at 0%, move to 50%, and back to 0%
+        transition: {
+          duration: 30,
+          ease: 'easeOut',
+          repeat: Infinity, // Repeat the animation infinitely
+          repeatType: 'reverse', // Move back and forth
+        }
+      });
+      
       break;
     // Add more cases for different animations
     default:
