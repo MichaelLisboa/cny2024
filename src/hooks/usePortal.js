@@ -3,8 +3,6 @@ import { useRef, useEffect} from "react";
 function usePortal(id) {
     const rootElemRef = useRef(null);
 
-    console.log("usePortal", id);
-
     useEffect(function setupElement() {
         const existingParent = document.querySelector(`#${id}`);
         const parentElem = existingParent || createRootElement(id);

@@ -17,11 +17,9 @@ function checkForIOS() {
 
     const prompt = (isNaN(days) || days > 30) && isIOS;
 
-    // if (prompt && "localStorage" in window) {
-    //     localStorage.setItem("installItsUSPrompt", today);
-    // }
-
-    console.log("isIPhone", isIPhone);
+    if (prompt && "localStorage" in window) {
+        localStorage.setItem("installItsUSPrompt", today);
+    }
 
     return {isIPhone, isIPad, isIOS, isSafari, prompt};
 }
