@@ -113,7 +113,7 @@ const IconRow = styled.div`
     align-items: space-evenly;
     gap: 16px;
     flex-wrap: nowrap;
-    margin: 24px 0;
+    margin: 16px 0 0 0;
 
     img {
         width: 64px;
@@ -123,7 +123,7 @@ const IconRow = styled.div`
 
 const Description = styled.div`
     text-align: center;
-    margin: 24px 0;
+    margin: 16px 0;
     color: rgba(102, 71, 56, 1);
 
     h3, h4 {
@@ -211,19 +211,19 @@ const MeetYourInnerSelf = () => {
                     </TraitsList>
                     <StyledAnimalImage src={userAnimal.image} alt={userAnimal.name} />
                 </div>
-                <div id="section-2" className="mal-flex mal-flex-column mal-flex-middle">
+                <div id="section-2">
                     <Description>
                         <h3>There's something intriguing about you, a hidden aspect waiting to be discovered.</h3>
                         <p>{replaceElementNoun(userAnimal.story)}</p>
                     </Description>
                 </div>
-                <div id="section-3" className="mal-flex mal-flex-column mal-flex-middle">
+                <div id="section-3">
                     <Description>
                         <h3>What the Year of the Dragon brings for {userAnimal.title}</h3>
                         <p>{replaceElementNoun(userAnimal.fortune)}</p>
                     </Description>
                 </div>
-                <div id="section-4" className="mal-flex mal-flex-column mal-flex-middle">
+                <div id="section-4">
                     <Description>
                         <h4>Most compatible with</h4>
                         <IconRow>                          
@@ -245,7 +245,7 @@ const MeetYourInnerSelf = () => {
                         </IconRow>
                     </Description>
                 </div>
-                <div id="section-5" className="mal-flex mal-flex-column mal-flex-middle">
+                <div id="section-5">
                     <Description>
                         <h4>Good traits</h4>
                         <p>{replaceElementNoun(userAnimal.positiveDescription)}</p>

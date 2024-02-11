@@ -337,7 +337,7 @@ function GetYourFortune() {
                                         <p className="mal-text-medium">{zodiacData.fortune.advice}</p>
                                     </Description>
                                 </div>
-                                <div id="section-5" className="mal-flex mal-flex-column mal-flex-middle">
+                                <div id="section-5">
                                     <Description>
                                         <h4>Most compatible with</h4>
                                         <IconRow>
