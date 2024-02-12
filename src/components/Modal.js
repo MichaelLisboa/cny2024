@@ -22,11 +22,10 @@ const ModalContainer = styled(motion.div)`
     justify-content: center;
     align-items: center;
     z-index: 10001;
-    box-shadow: 0px 5px 24px rgba(0, 0, 0, 0.8);
 `;
 
 const ModalContent = styled.div`
-    background: #FDF7E6;
+    background: rgba(253, 247, 230, 1);
     padding: 32px;
     max-width: 80%;
     max-height: 50vh;
@@ -37,8 +36,8 @@ const ModalContent = styled.div`
 `;
 
 const CloseButton = styled.button`
-    background: #FEECD6;
-    color: #664738;
+    background: rgba(254, 236, 214, 1);
+    color: rgba(102, 71, 56, 1);
     font-size: 0.875rem;
     font-weight: 700;
     font-family: "Inknut Antiqua", Georgia, serif;
@@ -48,7 +47,7 @@ const CloseButton = styled.button`
     border-radius: 16px;
     padding: 4px 8px;
     margin: 16px auto 8px auto !important;
-    border: 8px double #AF3830;
+    border: 8px double rgba(175, 56, 48, 1);
     box-shadow: 0px 5px 16px rgba(0, 0, 0, 0.2);
     cursor: pointer;
 
@@ -60,8 +59,6 @@ const CloseButton = styled.button`
         box-shadow: 0px 5px 32px rgba(0, 0, 0, 0.25);
     }
 `;
-
-
 
 const Modal = ({ children, closeOnEscape = true, closeOnBackgroundClick = true, closeButton, onClose }) => {
     const [isOpen, setIsOpen] = useState(true);
