@@ -45,18 +45,17 @@ const DatePickerContainer = styled.div`
   position: relative;
 `;
 
-const DateInput = styled.input`
-    font-size: 2.75rem;
-    font-style: italic;
-    width: 80%;
-    max-width: 480px;
+const DateInput = styled.button`
+    font-size: 1.75rem;
+    font-weight: 300;
+    width: 100% !important;
     padding: 8px 16px;
-    border: none;
+    border: 1px solid rgba(178, 85, 72, 1);
     border-radius: 8px;
     background-color: rgba(255, 255, 255, 0.5);
     outline: none;
     text-align: center;
-    color: #888;
+    color: rgba(178, 162, 151, 0.75);
     cursor: pointer;
     transition: background-color 0.2s ease-in-out;
     &:hover {
@@ -270,8 +269,8 @@ function GetYourFortune() {
                             </div>
                             <DatePickerContainer>
                                 <DateInput
-                                    className="dateInput"
                                     type="text"
+                                    inputMode='none'
                                     value={birthdate || 'YYYY-MM-DD'}
                                     disabled={showDatePicker}
                                     onChange={handleInputChange}
@@ -280,7 +279,9 @@ function GetYourFortune() {
                                         setShowDatePicker(true); // Show the date picker
                                     }}
                                     onKeyDown={handleKeyPress}
-                                />
+                                >
+                                    <span className="mal-text-nowrap">{birthdate || 'Enter your birthdate'}</span>
+                                </DateInput>
                                 {showDatePicker && (
                                     <div className="datePickerPopup">
                                         <DatePicker
@@ -308,7 +309,7 @@ function GetYourFortune() {
                                 <div id="section-1" className="mal-flex mal-flex-column mal-flex-middle">
                                     <Headline>{userInfo.zodiacElement} {zodiacAnimal}</Headline>
                                     <TraitsList>
-                                        {zodiacData.positive_traits.slice(0,3).map((trait, index) => (
+                                        {zodiacData.positive_traits.slice(0, 3).map((trait, index) => (
                                             <li key={index}>{trait}</li>
                                         ))}
                                     </TraitsList>
