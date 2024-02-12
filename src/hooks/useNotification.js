@@ -15,6 +15,5 @@ export const useNotificationWithData = (initialMode = false, initialSelected = n
             setSelected(null)
         }
     }
-
     return {notificationOpen, setNotificationOpen, selected, setSelected, setNotificationState};
 }
