@@ -92,7 +92,7 @@ const pages = [
       },
     },
     {
-      title: "Your at a crossroads",
+      title: "You are at a crossroads",
       url: "/choose-your-path",
       previousPage: "/solve-the-riddle",
       nextPage: "/solve-the-puzzle",
