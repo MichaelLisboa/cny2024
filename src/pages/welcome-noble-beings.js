@@ -32,7 +32,6 @@ const WelcomeNobleBeings = () => {
 
     return (
         <Layout refreshEnabled={refreshEnabled}>
-            <div className="header-section mal-text-center" />
             <div className="body-section mal-text-center">
                 <div className="mal-margin-bottom-large mal-padding">
                     <h1 className="mal-margin-remove-top">Welcome, noble beings!</h1>

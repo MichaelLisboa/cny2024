@@ -126,20 +126,15 @@ function GetYourFortune() {
     return (
         <SimpleLayout>
             {!userInfo.birthdate ?
-                <>
-                    <div className="header-section mal-text-center" />
-                    <div className="body-section mal-text-center">
-                        <div className="mal-container mal-width-1-1">
-                            <div className="mal-margin-bottom-large mal-padding">
-                                <h1 className="mal-margin-remove-top">When were you born?</h1>
-                                <p className="mal-text-medium">Every decision shapes your destiny. Find out which extraordinary creature you're destined to become.</p>
-                            </div>
-                            <BirthdatePicker
-                                updateUserInfo={updateUserInfo} />
-                        </div>
+                <div style={{marginTop: "-50%"}} className="body-section mal-text-center mal-flex mal-flex-column mal-flex-center">
+                    <div className="mal-margin-bottom-large mal-padding">
+                        <p className="mal-h4 mal-margin-remove-vertical">What does the</p>
+                        <p className="mal-h2 mal-margin-remove-vertical mal-text-nowrap">Year of the Dragon</p>
+                        <p className="mal-h4 mal-margin-remove-vertical">hold for you?</p>
                     </div>
-                    <div className="footer-section" />
-                </>
+                    <BirthdatePicker
+                        updateUserInfo={updateUserInfo} />
+                </div>
                 :
                 (
                     zodiacAnimal && (
