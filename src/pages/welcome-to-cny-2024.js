@@ -1,13 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import pages from '../utils/pages';
 import Layout from '../templates/layout';
 import Modal from '../components/Modal';
-import { AppContext } from '../contexts/AppContext';
 import { OrnateButton } from '../components/Button';
 
 function WelcomeToCny2024() {
-    const { updateUserSelection, getUserInfo } = useContext(AppContext);
     const location = useLocation();
     const [dataExists, setDataExists] = useState(false)
     const currentPage = pages.find(page => page.url === location.pathname);
@@ -45,7 +43,9 @@ function WelcomeToCny2024() {
                     closeOnEscape={true}
                     closeOnBackgroundClick={false}
                     closeButton={`Yes, start the adventure again!`}
-                    onClose={handleModalClose}>
+                    onClose={handleModalClose}
+                    // onCancel={`No, thanks`}
+                    >
                     <h3 className="mal-margin-remove-vertical">You've been here before.</h3>
                     <p className="mal-margin-small">Would you like to start the adventure again?</p>
                 </Modal>

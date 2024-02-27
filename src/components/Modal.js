@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const Background = styled(motion.div)`
     position: fixed;
@@ -60,7 +61,25 @@ const CloseButton = styled.button`
     }
 `;
 
-const Modal = ({ children, closeOnEscape = true, closeOnBackgroundClick = true, closeButton, onClose }) => {
+
+
+const CancelButton = styled.button`
+    background: transparent;
+    color: rgba(102, 71, 56, 1);
+    font-size: 0.75rem;
+    font-weight: 400;
+    font-family: "Inknut Antiqua", Georgia, serif;
+    letter-spacing: -0.015rem;
+    white-space: nowrap;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+        font-weight: 700;
+    }
+`;
+
+const Modal = ({ children, closeOnEscape = true, closeOnBackgroundClick = true, closeButton, onClose, onCancel = false }) => {
     const [isOpen, setIsOpen] = useState(true);
 
     useEffect(() => {
@@ -88,6 +107,11 @@ const Modal = ({ children, closeOnEscape = true, closeOnBackgroundClick = true, 
         }
     };
 
+    const handleCancel = (e) => {
+        e.preventDefault();
+        setIsOpen(false);
+    };
+
     return (
         <AnimatePresence>
             {isOpen && (
@@ -109,6 +133,11 @@ const Modal = ({ children, closeOnEscape = true, closeOnBackgroundClick = true, 
                             <div className="mal-width-1-1 mal-text-center">
                                 <CloseButton onClick={handleClose}>{closeButton}</CloseButton>
                             </div>
+                            {onCancel && (
+                                <div className="mal-width-1-1 mal-text-center mal-margin-small-top">
+                                    <CancelButton to="/" onClick={(e) => handleCancel(e)}>{onCancel}</CancelButton>
+                                </div>
+                            )}
                         </ModalContent>
                     </ModalContainer>
                 </>
