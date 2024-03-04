@@ -113,6 +113,7 @@ function GetYourFortune() {
     const [zodiacAnimal, setZodiacAnimal] = useState('');
     const AnimatedZodiacInfo = motion(ZodiacInfo);
     const userInfo = getUserInfo();
+    const [refreshEnabled] = useState(true);
 
     useEffect(() => {
         if (userInfo.zodiacAnimal) {
@@ -124,7 +125,7 @@ function GetYourFortune() {
     const zodiacData = zodiac.find(z => z.name.toLowerCase() === userInfo.zodiacAnimal.toLowerCase());
 
     return (
-        <SimpleLayout>
+        <SimpleLayout refreshEnabled={refreshEnabled}>
             {!userInfo.birthdate ?
                 <div style={{marginTop: "-50%"}} className="body-section mal-text-center mal-flex mal-flex-column mal-flex-center">
                     <div className="mal-margin-bottom-large mal-padding">
