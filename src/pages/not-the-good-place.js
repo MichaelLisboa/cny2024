@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { motion, useAnimation } from 'framer-motion';
+import { motion } from 'framer-motion';
+import { usePageAnimations } from '../contexts/AnimationContext';
 import { useDynamicTextReplacer } from '../hooks/useDynamicTextReplacer';
 import useRedirectOnFail from '../hooks/useRedirectOnFail';
 import Layout from '../templates/layout';
@@ -54,9 +55,7 @@ const FooterSection = styled(motion.div)`
 function NotTheGoodPlace() {
     const [refreshEnabled] = useState(true);
     const replaceElementNoun = useDynamicTextReplacer();
-    const bodyControls = useAnimation();
-    const footerControls = useAnimation();
-
+    const { controls } = usePageAnimations();
     const isMounted = useRef(false);
     const { previousPage } = useRedirectOnFail();
 
@@ -67,22 +66,10 @@ function NotTheGoodPlace() {
         };
     }, []);
 
-    const animateExit = async () => {
-        if (!isMounted.current) return;
-        await footerControls.start({ y: 100, opacity: 0 });
-        await bodyControls.start({ y: 100, opacity: 0 });
-    };
-
-    const animateEnter = async () => {
-        if (!isMounted.current) return;
-        await bodyControls.start({ y: 0, opacity: 1, transition: { delay: 0.025 } });
-        await footerControls.start({ y: 0, opacity: 1, transition: { delay: 0.05 } });
-    };
-
     return (
         <Layout refreshEnabled={refreshEnabled}>
             <BodySection
-                animate={bodyControls}
+                animate={controls.bodyControls}
                 className="body-section">
                 <p className="mal-text-large">{replaceElementNoun(`Oh no, spirit of *element_noun*!`)}</p>
                 <h2>{replaceElementNoun(`You've wandered into the Not So Good Place.`)}</h2>
@@ -95,7 +82,7 @@ function NotTheGoodPlace() {
 
             </BodySection>
             <FooterSection
-                animate={footerControls}
+                animate={controls.footerControls}
                 className="footer-section"
             >
                 <ButtonContainer>

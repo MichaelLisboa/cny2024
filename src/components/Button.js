@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import buttonDefaultImage from '../images/button_default@2x.png';
 import buttonHoverImage from '../images/button_hover.png';
-import buttonActiveImage from '../images/button_active.png';
 import optionButtonDefaultImage from '../images/option_button_default.png';
 
 const StyledLink = styled(Link)`

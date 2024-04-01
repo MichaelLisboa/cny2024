@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useMemo, useContext, useRef } from 'react';
-import { motion, useAnimation } from 'framer-motion';
+import { motion, useAnimation, useCycle } from 'framer-motion';
 import { useLocation, useNavigate } from 'react-router-dom';
 import pages from '../utils/pages';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import defaultBackgroundImage from '../images/background/0-cover.jpg';
 import { AppContext } from '../contexts/AppContext';
 
@@ -60,7 +60,7 @@ const startAnimation = (controls, animationConfig) => {
           repeatType: 'reverse', // Move back and forth
         }
       });
-      
+
       break;
     // Add more cases for different animations
     default:
@@ -70,7 +70,60 @@ const startAnimation = (controls, animationConfig) => {
   }
 };
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.5 } },
+  exit: {
+    opacity: 0,
+    transition: { ease: 'easeInOut', duration: 0.5 }
+  }
+};
+
 const isTouchDevice = () => window.matchMedia('(hover: none)').matches;
+
+const refreshVariants = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1, transition: { duration: 0.5 } },
+  exit: { opacity: 0, transition: { duration: 0.5 } }
+};
+
+const RefreshIndicator = styled(motion.div)`
+  position: absolute;
+  top: 72px;
+  left: 0;
+  right: 0;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: 700;
+  z-index: 1000;
+  animation: rotate 2s linear infinite;
+
+  @keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }`;
+
+const StyledSvg = styled(motion.svg)`
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: #231F20;
+  stroke-linecap: round;
+`;
+
+const RefreshIconAnimation = () => {
+  return (
+    <StyledSvg xmlns="http://www.w3.org/2000/svg" fill="none" height="24" width="24" viewBox="0 0 48 48">
+      <g clip-path="url(#a)">
+        <path stroke="#231F20" stroke-linecap="square" stroke-miterlimit="10" stroke-width="7" d="M41.2 33.3c-1.6 3-4 5.7-7 7.7a20 20 0 1 1 6.5-27" />
+        <path fill="#231F20" d="m30.8 14 12.5 12.7 4.8-17.3L30.8 14Z" />
+      </g>
+    </StyledSvg>
+  );
+}
 
 const Layout = ({ children, refreshEnabled = true }) => {
   const navigate = useNavigate();
@@ -171,50 +224,69 @@ const Layout = ({ children, refreshEnabled = true }) => {
     img.onerror = (e) => console.error('Failed to load image', e);
   }, [currentPage, controls]);
 
+  const refreshIcon = RefreshIconAnimation();
+
   return (
-    <BackgroundImage
-      height={browserSize.height}
-      drag={refreshEnabled && enableDragRefresh ? "y" : undefined}
-      dragConstraints={enableDragRefresh ? { top: 0, bottom: 0 } : undefined}
-      dragElastic={enableDragRefresh ? 0.2 : 0}
-      onDragStart={onDragStart}
-      onDragEnd={onDragEnd}
-      onDrag={onDrag}
-      style={{
-        overflow: getOverflowStyle(),
-        overflowX: 'hidden'
-      }}
-    >
-      <BackgroundImg
-        ref={imageRef}
-        src={currentPage?.bgImage || defaultBackgroundImage}
-        animate={controls}
-        initial={{ scale: 2 }}
-      />
-      <motion.section
-        initial={{ y: browserSize.height }}
-        animate={{ y: 0 }}
-        exit={{ y: browserSize.height }}
-        transition={{ type: 'spring', stiffness: 90, damping: 20 }}
-        style={{ height: browserSize.height }}
+    <>
+      {isDragging && dragDirection === 'down' && (
+        <RefreshIndicator
+          initial="initial"
+          animate="animate"
+          variants={refreshVariants}
+          exit="exit">
+          {refreshIcon}
+        </RefreshIndicator>
+      )}
+      <BackgroundImage
+        height={browserSize.height}
+        drag={refreshEnabled && enableDragRefresh ? "y" : undefined}
+        dragConstraints={enableDragRefresh ? { top: 0, bottom: 0 } : undefined}
+        dragElastic={enableDragRefresh ? 0.2 : 0}
+        onDragStart={onDragStart}
+        onDragEnd={onDragEnd}
+        onDrag={onDrag}
+        initial="hidden"
+        animate="visible"
+        variants={containerVariants}
+        exit="exit"
+        style={{
+          overflow: getOverflowStyle(),
+          overflowX: 'hidden'
+        }}
       >
-        <MalContainer className="mal-container mal-container-small">
-          <Header className="chapter-title">
-            <h3>&nbsp;</h3>
-            <div className="icon-title mal-flex mal-flex-middle">
-              <img
-                className="mal-margin-small-right"
-                src={currentPage?.sectionIcon?.default}
-                alt={currentPage?.sectionTitle}
-              />
-              <h4 className="mal-margin-remove mal-padding-remove">{currentPage?.sectionTitle}</h4>
-            </div>
-          </Header>
-          {children}
-        </MalContainer>
-      </motion.section>
-    </BackgroundImage>
+        <BackgroundImg
+          ref={imageRef}
+          src={currentPage?.bgImage || defaultBackgroundImage}
+          animate={controls}
+          initial={{ scale: 2 }}
+        />
+        <motion.section
+          initial={{ y: browserSize.height }}
+          animate={{ y: 0 }}
+          exit={{ y: browserSize.height }}
+          enter={{ y: 0 }}
+          transition={{ type: 'spring', stiffness: 90, damping: 20 }}
+          style={{ height: browserSize.height }}
+        >
+          <MalContainer className="mal-container mal-container-small">
+            <Header className="chapter-title">
+              <h3>&nbsp;</h3>
+              <div className="icon-title mal-flex mal-flex-middle">
+                <img
+                  className="mal-margin-small-right"
+                  src={currentPage?.sectionIcon?.default}
+                  alt={currentPage?.sectionTitle}
+                />
+                <h4 className="mal-margin-remove mal-padding-remove">{currentPage?.sectionTitle}</h4>
+              </div>
+            </Header>
+            {children}
+          </MalContainer>
+        </motion.section>
+      </BackgroundImage>
+    </>
   );
 }
 
 export default Layout;
+

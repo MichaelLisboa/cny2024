@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { motion, useAnimation } from 'framer-motion';
 import { AppContext } from '../contexts/AppContext';
+import { usePageAnimations } from '../contexts/AnimationContext';
 import { useDynamicTextReplacer } from '../hooks/useDynamicTextReplacer';
 import pages from '../utils/pages';
 import Layout from '../templates/layout';
@@ -84,9 +85,7 @@ const SolveThePuzzle = () => {
     const navigate = useNavigate();
     const currentPage = useMemo(() => pages.find(page => page.url === location.pathname), [location.pathname]);
     const nextPage = useMemo(() => pages.find(page => page.url === currentPage.nextPage), [currentPage]);
-    const headerControls = useAnimation();
-    const bodyControls = useAnimation();
-    const footerControls = useAnimation();
+    const { animateEnter, animateExit, controls } = usePageAnimations();
     const {shouldRedirect} = useRedirectOnFail();
 
     const puzzles = puzzleData[0].puzzlesList;
@@ -130,18 +129,6 @@ const SolveThePuzzle = () => {
         }, 500);
     };
 
-    const animateExit = async () => {
-        await footerControls.start({ y: 100, opacity: 0 });
-        await bodyControls.start({ y: 100, opacity: 0 });
-        await headerControls.start({ y: 100, opacity: 0 });
-    };
-
-    const animateEnter = async () => {
-        await headerControls.start({ y: 0, opacity: 1, transition: { delay: 0.01 } });
-        await bodyControls.start({ y: 0, opacity: 1, transition: { delay: 0.025 } });
-        await footerControls.start({ y: 0, opacity: 1, transition: { delay: 0.05 } });
-    };
-
     const handleButtonClick = async () => {
         await animateExit();
         setContent('newContent');
@@ -161,7 +148,7 @@ const SolveThePuzzle = () => {
     return (
         <Layout refreshEnabled={refreshEnabled}>
             <HeaderSection
-                animate={headerControls}
+                animate={controls.headerControls}
                 className="header-section"
             >
                 {content === 'initial' ? (
@@ -179,7 +166,9 @@ const SolveThePuzzle = () => {
                     )}
             </HeaderSection>
 
-            <BodySection animate={bodyControls} className="body-section">
+            <BodySection
+                animate={controls.bodyControls}
+                className="body-section">
                 {content === 'initial' ? (
                     <div className="body-section-wide">
                         <SplashImage src={puzzle} alt="Puzzle" />
@@ -215,7 +204,7 @@ const SolveThePuzzle = () => {
             </BodySection>
 
             <FooterSection
-                animate={footerControls}
+                animate={controls.footerControls}
                 className="footer-section"
             >
                 {content === 'initial' ? (

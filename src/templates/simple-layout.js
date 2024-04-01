@@ -69,8 +69,16 @@ const startAnimation = (controls, animationConfig) => {
   }
 };
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.5 } },
+  exit: {
+    opacity: 0,
+    transition: { ease: 'easeInOut', duration: 0.5}
+  }
+};
+
 const SimpleLayout = ({ children }) => {
-  const navigate = useNavigate();
   const location = useLocation();
   const { getBrowserSize } = useContext(AppContext);
   const browserSize = getBrowserSize();
@@ -102,6 +110,10 @@ const SimpleLayout = ({ children }) => {
   return (
     <BackgroundImage
       height={browserSize.height}
+      initial="hidden"
+      animate="visible"
+      variants={containerVariants}
+      exit="exit"
     >
       <BackgroundImg
         ref={imageRef}

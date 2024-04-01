@@ -1,8 +1,9 @@
 import React, { useContext, useState, useEffect, useMemo, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import { motion, useAnimation } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { AppContext } from '../contexts/AppContext';
+import { usePageAnimations } from '../contexts/AnimationContext';
 import { useDynamicTextReplacer } from '../hooks/useDynamicTextReplacer';
 import pages from '../utils/pages';
 import Layout from '../templates/layout';
@@ -75,11 +76,9 @@ const TestYourCalligraphySkills = () => {
     const navigate = useNavigate();
     const currentPage = useMemo(() => pages.find(page => page.url === location.pathname), [location.pathname]);
     const nextPage = useMemo(() => pages.find(page => page.url === currentPage.nextPage), [currentPage]);
-    const headerControls = useAnimation();
-    const bodyControls = useAnimation();
-    const footerControls = useAnimation();
     const [score, setScore] = useState(null);
     const { shouldRedirect } = useRedirectOnFail();
+    const { animateEnter, animateExit, controls } = usePageAnimations();
 
     useEffect(() => {
         if (content === 'initial' || content === 'complete') {
@@ -88,18 +87,6 @@ const TestYourCalligraphySkills = () => {
             setRefreshEnabled(false);
         }
     }, [content]);
-
-    const animateExit = async () => {
-        await footerControls.start({ y: 100, opacity: 0 });
-        await bodyControls.start({ y: 100, opacity: 0 });
-        await headerControls.start({ y: 100, opacity: 0 });
-    };
-
-    const animateEnter = async () => {
-        await headerControls.start({ y: 0, opacity: 1, transition: { delay: 0.01 } });
-        await bodyControls.start({ y: 0, opacity: 1, transition: { delay: 0.025 } });
-        await footerControls.start({ y: 0, opacity: 1, transition: { delay: 0.05 } });
-    };
 
     const handleButtonClick = async () => {
         await animateExit();
@@ -135,7 +122,7 @@ const TestYourCalligraphySkills = () => {
     return (
         <Layout refreshEnabled={refreshEnabled}>
             <HeaderSection
-                animate={headerControls}
+                animate={controls.headerControls}
                 className="header-section"
             >
                 {content === 'initial' ? (
@@ -152,7 +139,7 @@ const TestYourCalligraphySkills = () => {
                     ) : null}
             </HeaderSection>
             <BodySection
-                animate={bodyControls}
+                animate={controls.bodyControls}
                 className="body-section"
             >
                 {content === 'initial' ? (
@@ -185,7 +172,7 @@ const TestYourCalligraphySkills = () => {
 
             </BodySection>
             <FooterSection
-                animate={footerControls}
+                animate={controls.footerControls}
                 className="footer-section">
                 {content === 'initial' ? (
                     <ButtonContainer>

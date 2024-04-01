@@ -1,8 +1,10 @@
 import React, { useContext, useState, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import { motion, useAnimation } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { AppContext } from '../contexts/AppContext';
+import { usePageAnimations } from '../contexts/AnimationContext';
+
 import { useDynamicTextReplacer } from '../hooks/useDynamicTextReplacer';
 import pages from '../utils/pages';
 import Layout from '../templates/layout';
@@ -23,9 +25,9 @@ const StyledMalCarousel = styled(MalCarousel)`
   }
 `;
 
-const DescriptionText = styled.p`
+const DescriptionText = styled(motion.p)`
     display: block;
-    font-size: 0.75rem;
+    font-size: 1.25rem;
     font-family: Lato, sans-serif;
     font-weight: 400;
     font-style: italic;
@@ -48,16 +50,14 @@ const FooterSection = styled(motion.div)`
 `;
 
 const ChooseYourTrait = () => {
-    const { updateUserSelection, getUserInfo } = useContext(AppContext);
+    const { updateUserSelection } = useContext(AppContext);
     const replaceElementNoun = useDynamicTextReplacer();
     const [content, setContent] = useState('initial');
     const [selectedCard, setSelectedCard] = useState(null);
     const location = useLocation();
     const currentPage = useMemo(() => pages.find(page => page.url === location.pathname), [location.pathname]);
     const nextPage = useMemo(() => pages.find(page => page.url === currentPage.nextPage), [currentPage]);
-    const headerControls = useAnimation();
-    const bodyControls = useAnimation();
-    const footerControls = useAnimation();
+    const { animateEnter, animateExit, controls } = usePageAnimations();
 
     // Function to get random index
     const getRandomIndex = (length) => Math.floor(Math.random() * length);
@@ -91,18 +91,6 @@ const ChooseYourTrait = () => {
         }
     );
 
-
-    const animateExit = async () => {
-        await footerControls.start({ y: 100, opacity: 0 });
-        await bodyControls.start({ y: 100, opacity: 0 });
-        await headerControls.start({ y: 100, opacity: 0 });
-    };
-
-    const animateEnter = async () => {
-        await bodyControls.start({ y: 0, opacity: 1, transition: { delay: 0.025 } });
-        await footerControls.start({ y: 0, opacity: 1, transition: { delay: 0.05 } });
-    };
-
     const handleButtonClick = async () => {
         const chosenTrait = currentSlide.title;
         setSelectedCard(chosenTrait);
@@ -131,18 +119,18 @@ const ChooseYourTrait = () => {
     return (
         <Layout>
             <HeaderSection
-                animate={headerControls}
+                animate={controls.headerControls}
                 className="header-section"
             >
                 {content === 'initial' ? (
                     <div className="mal-margin-bottom-large mal-padding-remove-horizontal">
                         <h3 className="mal-margin-remove-top">Emperor Jade presents you with five shimmering cups, each radiating a unique essence of a distinct personality trait. </h3>
-                        <p className="mal-text-medium mal-margin-small-top">Choose your cup wisely.</p>
+                        <DescriptionText animate={controls.elementControls}>Choose your cup wisely.</DescriptionText>
                     </div>
                 ) : ``}
             </HeaderSection>
             <BodySection
-                animate={bodyControls}
+                animate={controls.bodyControls}
                 className="body-section"
             >
                 {content === 'initial' ? (
@@ -165,7 +153,7 @@ const ChooseYourTrait = () => {
                 )}
             </BodySection>
             <FooterSection
-                animate={footerControls}
+                animate={controls.footerControls}
                 className="footer-section"
             >
                 {content === 'initial' ? (

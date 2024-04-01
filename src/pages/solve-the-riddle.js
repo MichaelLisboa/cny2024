@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import { motion, useAnimation } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { AppContext } from '../contexts/AppContext';
+import { usePageAnimations } from '../contexts/AnimationContext';
 import { useDynamicTextReplacer } from '../hooks/useDynamicTextReplacer';
 import pages from '../utils/pages';
 import Layout from '../templates/layout';
@@ -80,9 +81,7 @@ const SolveTheRiddle = () => {
   const location = useLocation();
   const currentPage = useMemo(() => pages.find(page => page.url === location.pathname), [location.pathname]);
   const nextPage = useMemo(() => pages.find(page => page.url === currentPage.nextPage), [currentPage]);
-  const headerControls = useAnimation();
-  const bodyControls = useAnimation();
-  const footerControls = useAnimation();
+  const { animateEnter, animateExit, controls } = usePageAnimations();
   const {shouldRedirect} = useRedirectOnFail();
 
   //  check if the user has skipped or failed 3 times in a useffect
@@ -157,18 +156,6 @@ const SolveTheRiddle = () => {
   const [currentSlide, setCurrentSlide] = useState(initialRiddleRef.current);
   const currentChoice = useRef(currentSlide.choices[currentSlide.index]);
 
-  const animateExit = async () => {
-    await footerControls.start({ y: 100, opacity: 0 });
-    await bodyControls.start({ y: 100, opacity: 0 });
-    await headerControls.start({ y: 100, opacity: 0 });
-  };
-
-  const animateEnter = async () => {
-    await headerControls.start({ y: 0, opacity: 1, transition: { delay: 0.025 } });
-    await bodyControls.start({ y: 0, opacity: 1, transition: { delay: 0.025 } });
-    await footerControls.start({ y: 0, opacity: 1, transition: { delay: 0.05 } });
-  };
-
   const handleCurrentSlideChange = (newCurrentSlideIndex) => {
     currentChoice.current = currentSlide.choices[newCurrentSlideIndex];
     setCurrentSlideState(currentSlide);
@@ -224,7 +211,7 @@ const SolveTheRiddle = () => {
   return (
     <Layout>
       <HeaderSection
-        animate={headerControls}
+        animate={controls.headerControls}
         className="header-section"
       >
         {content === 'initial' ?
@@ -235,7 +222,7 @@ const SolveTheRiddle = () => {
           : null}
       </HeaderSection>
       <BodySection
-        animate={bodyControls}
+        animate={controls.bodyControls}
         className="body-section"
       >
         {content === 'initial' ? (
@@ -267,7 +254,7 @@ const SolveTheRiddle = () => {
         }
       </BodySection>
       <FooterSection
-        animate={footerControls}
+        animate={controls.footerControls}
         className="footer-section"
       >
         {content === 'initial' ? (

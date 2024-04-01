@@ -1,8 +1,9 @@
 import React, { useContext, useState, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
-import { motion, useAnimation } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { AppContext } from '../contexts/AppContext';
+import { usePageAnimations } from '../contexts/AnimationContext';
 import { useDynamicTextReplacer } from '../hooks/useDynamicTextReplacer';
 import pages from '../utils/pages';
 import Layout from '../templates/layout';
@@ -74,16 +75,6 @@ const DescriptionText = styled.p`
     padding: 0;
 `;
 
-const ElementTokenImage = styled.div`
-    width: auto;
-    padding: 32px;
-
-    img {
-        height: 100%;
-        max-height: 25vh;
-        object-fit: contain;
-    }
-`;
 
 const HeaderSection = styled(motion.div)`
   // Add your header-section styles here.
@@ -106,9 +97,6 @@ const WhatIsYourElement = () => {
     const location = useLocation();
     const currentPage = useMemo(() => pages.find(page => page.url === location.pathname), [location.pathname]);
     const nextPage = useMemo(() => pages.find(page => page.url === currentPage.nextPage), [currentPage]);
-    const headerControls = useAnimation();
-    const bodyControls = useAnimation();
-    const footerControls = useAnimation();
 
     const initialSlide = {
         index: 2,
@@ -121,20 +109,7 @@ const WhatIsYourElement = () => {
     };
 
     const [currentSlide, setCurrentSlide] = useState(initialSlide);
-
-
-    const animateExit = async () => {
-        await footerControls.start({ y: 100, opacity: 0 });
-        await new Promise(resolve => setTimeout(resolve, 5));
-        await bodyControls.start({ y: 100, opacity: 0 });
-        await new Promise(resolve => setTimeout(resolve, 5));
-        await headerControls.start({ y: 100, opacity: 0 });
-    };
-
-    const animateEnter = async () => {
-        await bodyControls.start({ y: 0, opacity: 1, transition: { delay: 0.025 } });
-        await footerControls.start({ y: 0, opacity: 1, transition: { delay: 0.05 } });
-    };
+    const { animateEnter, animateExit, controls } = usePageAnimations();
 
     const handleButtonClick = async () => {
         const chosenElement = currentSlide.title;
@@ -167,7 +142,7 @@ const WhatIsYourElement = () => {
     return (
         <Layout>
             <HeaderSection
-                animate={headerControls}
+                animate={controls.headerControls}
                 className="header-section mal-text-center"
             >
                 {content === 'initial' ? (
@@ -177,7 +152,7 @@ const WhatIsYourElement = () => {
                 ) : null}
             </HeaderSection>
             <BodySection
-                animate={bodyControls}
+                animate={controls.bodyControls}
                 className="body-section"
             >
                 {content === 'initial' ? (
@@ -200,7 +175,7 @@ const WhatIsYourElement = () => {
                 )}
             </BodySection>
             <FooterSection
-                animate={footerControls}
+                animate={controls.footerControls}
                 className="footer-section"
             >
                 {content === 'initial' ? (

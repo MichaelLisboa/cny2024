@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { motion, useAnimation } from 'framer-motion';
 import { AppContext } from '../contexts/AppContext';
+import { usePageAnimations } from '../contexts/AnimationContext';
 import { useDynamicTextReplacer } from '../hooks/useDynamicTextReplacer';
 import pages from '../utils/pages';
 import Layout from '../templates/layout';
@@ -73,9 +74,8 @@ const ChooseYourPath = () => {
     const location = useLocation();
     const currentPage = useMemo(() => pages.find(page => page.url === location.pathname), [location.pathname]);
     const nextPage = useMemo(() => pages.find(page => page.url === currentPage.nextPage), [currentPage]);
-    const headerControls = useAnimation();
-    const bodyControls = useAnimation();
-    const footerControls = useAnimation();
+    const { animateExit, animateEnter, controls } = usePageAnimations();
+    const pathControls = useAnimation();
 
     // Function to get random index
     const getRandomIndex = (length) => Math.floor(Math.random() * length);
@@ -98,17 +98,6 @@ const ChooseYourPath = () => {
         return randomIndices.map(index => pathsList[index]);
     }, [pathsList]);
 
-    const animateExit = async () => {
-        await footerControls.start({ y: 100, opacity: 0 });
-        await bodyControls.start({ y: 100, opacity: 0 });
-        await headerControls.start({ y: 100, opacity: 0 });
-    };
-
-    const animateEnter = async () => {
-        await bodyControls.start({ y: 0, opacity: 1, transition: { delay: 0.025 } });
-        await footerControls.start({ y: 0, opacity: 1, transition: { delay: 0.05 } });
-    };
-
     const handleButtonClick = async (item) => {
         const chosenPath = item.title;
         setSelectedCard(item);
@@ -123,10 +112,8 @@ const ChooseYourPath = () => {
         }
     };
 
-    const controls = useAnimation();
-
     useEffect(() => {
-        controls.start(i => ({
+        pathControls.start(i => ({
             opacity: 1,
             y: 0,
             transition: {
@@ -135,12 +122,12 @@ const ChooseYourPath = () => {
                 ease: 'easeOut',
             },
         }));
-    }, [controls]);
+    }, [pathControls]);
 
     return (
         <Layout>
             <HeaderSection
-                animate={headerControls}
+                animate={controls.headerControls}
                 className="header-section"
             >
                 {content === 'initial' ? (
@@ -153,7 +140,7 @@ const ChooseYourPath = () => {
                 ) : ``}
             </HeaderSection>
             <BodySection
-                animate={bodyControls}
+                animate={controls.bodyControls}
                 className="body-section">
                 {content === 'initial' ? (
                     <PathItemContainer initial="hidden" animate="show">
@@ -165,7 +152,7 @@ const ChooseYourPath = () => {
                                 onClick={() => handleButtonClick(item)}
                                 custom={index}
                                 initial={{ opacity: 0, y: 50 }}
-                                animate={controls}
+                                animate={pathControls}
                             >
                                 <PathItemContent>
                                     <PathItemTitle>{replaceElementNoun(item.title)}</PathItemTitle>
@@ -185,7 +172,7 @@ const ChooseYourPath = () => {
             </BodySection>
 
             <FooterSection
-                animate={footerControls}
+                animate={controls.footerControls}
                 className="footer-section"
             >
                 {content === 'initial' ? null : (

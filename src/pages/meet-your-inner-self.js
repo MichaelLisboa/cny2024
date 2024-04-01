@@ -1,8 +1,9 @@
 import React, { useContext, useMemo, useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { motion, useAnimation, easeInOut } from 'framer-motion';
+import { motion, easeInOut } from 'framer-motion';
 import { AppContext } from '../contexts/AppContext';
+import { usePageAnimations } from '../contexts/AnimationContext';
 import { useDynamicTextReplacer } from '../hooks/useDynamicTextReplacer';
 import pages from '../utils/pages';
 import SimpleLayout from '../templates/simple-layout';
@@ -148,8 +149,7 @@ const MeetYourInnerSelf = () => {
     const navigate = useNavigate();
     const currentPage = useMemo(() => pages.find(page => page.url === location.pathname), [location.pathname]);
     const previousPage = useMemo(() => pages.find(page => page.url === currentPage.previousPage), [currentPage]);
-    const bodyControls = useAnimation();
-    const footerControls = useAnimation();
+    const { controls, animateExit, animateEnter } = usePageAnimations();
 
     const userInfo = getUserInfo();
 
@@ -180,16 +180,6 @@ const MeetYourInnerSelf = () => {
         }
     }, [userAnimal, updateUserSelection, userInfo.userAnimal]);
 
-    const animateExit = async () => {
-        await footerControls.start({ y: 100, opacity: 0 });
-        await bodyControls.start({ y: 100, opacity: 0 });
-    };
-
-    const animateEnter = async () => {
-        await bodyControls.start({ y: 0, opacity: 1, transition: { delay: 0.025 } });
-        await footerControls.start({ y: 0, opacity: 1, transition: { delay: 0.05 } });
-    };
-
     const handleButtonClick = async () => {
         await animateExit();
         setContent('complete');
@@ -199,18 +189,18 @@ const MeetYourInnerSelf = () => {
     return (
         <Section refreshEnabled={refreshEnabled}>
             <BodySection
-                animate={bodyControls}
+                animate={controls.bodyControls}
                 className="body-section"
             >
                 <Headline>{userAnimal.title}-Hearted {userInfo.zodiacAnimal}</Headline>
-                <div id="section-1" className="mal-flex mal-flex-column mal-flex-middle">
+                <motion.div animate={controls.footerControls} id="section-1" className="mal-flex mal-flex-column mal-flex-middle">
                     <TraitsList>
                         {userAnimal.traits.map((trait, index) => (
-                            <li key={index}>{trait}</li>
+                            <motion.li animate={controls.elementControls} key={index}>{trait}</motion.li>
                         ))}
                     </TraitsList>
                     <StyledAnimalImage src={userAnimal.image} alt={userAnimal.name} />
-                </div>
+                </motion.div>
                 <div id="section-2">
                     <Description>
                         <h3>There's something intriguing about you, a hidden aspect waiting to be discovered.</h3>

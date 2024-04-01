@@ -1,8 +1,9 @@
 import React, { useContext, useMemo, useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { motion, useAnimation, easeInOut } from 'framer-motion';
+import { motion, easeInOut } from 'framer-motion';
 import { AppContext } from '../contexts/AppContext';
+import { usePageAnimations } from '../contexts/AnimationContext';
 import { useDynamicTextReplacer } from '../hooks/useDynamicTextReplacer';
 import pages from '../utils/pages';
 import Layout from '../templates/layout';
@@ -78,9 +79,8 @@ const PursueYourDreams = () => {
     const currentPage = useMemo(() => pages.find(page => page.url === location.pathname), [location.pathname]);
     const nextPage = useMemo(() => pages.find(page => page.url === currentPage.nextPage), [currentPage]);
     const previousPage = useMemo(() => pages.find(page => page.url === currentPage.previousPage), [currentPage]);
-    const headerControls = useAnimation();
-    const bodyControls = useAnimation();
-    const footerControls = useAnimation();
+    const { controls, animateEnter, animateExit } = usePageAnimations();
+    
 
     const userInfo = getUserInfo();
     const ally = userInfo.chosenAlliance.choice.toLowerCase().split(' ')[1];
@@ -94,18 +94,6 @@ const PursueYourDreams = () => {
             setRefreshEnabled(false);
         }
     }, [content]);
-
-    const animateExit = async () => {
-        await footerControls.start({ y: 100, opacity: 0 });
-        await bodyControls.start({ y: 100, opacity: 0 });
-        await headerControls.start({ y: 100, opacity: 0 });
-    };
-
-    const animateEnter = async () => {
-        await headerControls.start({ y: 0, opacity: 1, transition: { delay: 0.01 } });
-        await bodyControls.start({ y: 0, opacity: 1, transition: { delay: 0.025 } });
-        await footerControls.start({ y: 0, opacity: 1, transition: { delay: 0.05 } });
-    };
 
     const handleButtonClick = async () => {
         await animateExit();
@@ -128,7 +116,7 @@ const PursueYourDreams = () => {
     return (
         <Layout>
             <BodySection
-                animate={bodyControls}
+                animate={controls.bodyControls}
                 className="body-section"
             >
                 {content === 'initial' ? (
@@ -176,7 +164,7 @@ const PursueYourDreams = () => {
 
             </BodySection>
             <FooterSection
-                animate={footerControls}
+                animate={controls.footerControls}
                 className="footer-section"
             >
                 {content === 'initial' ? (

@@ -1,9 +1,9 @@
-import React, {useState, useEffect} from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import { AppProvider } from './contexts/AppContext';
 import { AnimatePresence } from 'framer-motion';
 import useIsIOS from "./hooks/useIsIOS"
-import {InstallPWA} from "./components/InstallPWA"
+import { InstallPWA } from "./components/InstallPWA"
 import Header from './components/Header';
 import pages from './utils/pages';
 import GetYourFortune from './pages/get-your-fortune';
@@ -52,14 +52,15 @@ function getElementForPage(page) {
       return <MeetYourInnerSelf />;
     case "/get-your-fortune":
       return <GetYourFortune />;
-      case "/not-the-good-place":
-        return <NotTheGoodPlace />;
+    case "/not-the-good-place":
+      return <NotTheGoodPlace />;
     default:
       return <WelcomeToCny2024 />;
   }
 }
 
 function App() {
+  const location = useLocation();
   const { isIOS, prompt } = useIsIOS();
   const [isMobile, setIsMobile] = useState(false)
   const [installPromptEvent, setInstallPromptEvent] = useState(null);
@@ -80,11 +81,10 @@ function App() {
 
   return (
     <>
-      <Router>
-        <AppProvider> {/* Wrap your application with AppProvider */}
+      <AppProvider> {/* Wrap your application with AppProvider */}
         <Header />
         <AnimatePresence mode='wait'>
-          <Routes>
+          <Routes location={location} key={location.key}>
             {pages.map((page, index) => (
               <Route
                 key={index}
@@ -94,10 +94,9 @@ function App() {
             ))}
           </Routes>
         </AnimatePresence>
-        </AppProvider>
-      </Router>
+      </AppProvider>
       {prompt && <InstallPWA />}
-      </>
+    </>
   );
 }
 
