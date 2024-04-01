@@ -99,7 +99,7 @@ const RefreshIndicator = styled(motion.div)`
   font-size: 1.2rem;
   font-weight: 700;
   z-index: 1000;
-  animation: rotate 2s linear infinite;
+  animation: rotate 1s linear infinite;
 
   @keyframes rotate {
     0% { transform: rotate(0deg); }
@@ -117,10 +117,8 @@ const StyledSvg = styled(motion.svg)`
 const RefreshIconAnimation = () => {
   return (
     <StyledSvg xmlns="http://www.w3.org/2000/svg" fill="none" height="24" width="24" viewBox="0 0 48 48">
-      <g clip-path="url(#a)">
-        <path stroke="#231F20" stroke-linecap="square" stroke-miterlimit="10" stroke-width="7" d="M41.2 33.3c-1.6 3-4 5.7-7 7.7a20 20 0 1 1 6.5-27" />
+        <path stroke="#231F20" stroke-linecap="round" stroke-width="8" d="M41.2 33.3c-1.6 3-4 5.7-7 7.7a20 20 0 1 1 6.5-27" />
         <path fill="#231F20" d="m30.8 14 12.5 12.7 4.8-17.3L30.8 14Z" />
-      </g>
     </StyledSvg>
   );
 }
