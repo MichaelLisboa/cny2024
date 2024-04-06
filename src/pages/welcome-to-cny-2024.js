@@ -12,7 +12,7 @@ function WelcomeToCny2024() {
     const currentPage = pages.find(page => page.url === location.pathname);
     const nextPage = pages.find(page => page.url === currentPage.nextPage);
     const [refreshEnabled] = useState(true);
-    const { animateEnter, animateExit, elementControls } = usePageAnimations();
+    const { animateEnter, animateExit } = usePageAnimations();
 
     useEffect(() => {
         const userInfo = localStorage.getItem('userState');
@@ -50,7 +50,7 @@ function WelcomeToCny2024() {
             <Layout refreshEnabled={refreshEnabled}>
                 <div className="body-section mal-text-center">
                     <div className="mal-margin-bottom-large mal-padding">
-                        <h4 animate={elementControls} className="mal-margin-remove-vertical">Embark on a mystical journey to</h4>
+                        <h4 className="mal-margin-remove-vertical">Embark on a mystical journey to</h4>
                         <h1 className="mal-margin-remove-top">Discover your innate zodiac!</h1>
                         <p className="mal-text-medium">Every decision shapes your destiny. Find out which extraordinary creature you're destined to become.</p>
                     </div>

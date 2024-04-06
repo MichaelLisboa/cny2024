@@ -11,6 +11,7 @@ import TraitToken from '../components/TraitToken';
 import { elementsList } from '../data';
 import MalCarousel from '../components/MalCarousel';
 import { OrnateButton } from '../components/Button';
+import { delay } from 'lodash';
 
 const scaleAnimation = keyframes`
   0% {
@@ -109,7 +110,7 @@ const WhatIsYourElement = () => {
     };
 
     const [currentSlide, setCurrentSlide] = useState(initialSlide);
-    const { animateEnter, animateExit, controls } = usePageAnimations();
+    const { animations, animateEnter, animateExit, controls } = usePageAnimations();
 
     const handleButtonClick = async () => {
         const chosenElement = currentSlide.title;

@@ -83,9 +83,16 @@ const reducer = (state, action) => {
 export function AppProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
   const location = useLocation(); // Use the useLocation hook here
-  const updateBrowserSize = useCallback(debounce(() => {
-    dispatch({ type: 'SET_BROWSER_SIZE', payload: { height: window.innerHeight, width: window.innerWidth } });
-  }, 250), []);
+
+  const updateBrowserSize = useCallback(
+    debounce(() => {
+      dispatch({
+        type: 'SET_BROWSER_SIZE',
+        payload: { height: window.innerHeight, width: window.innerWidth },
+      });
+    }, 250),
+    [] // Empty dependency array
+  );
 
   const incrementSkipFailCount = () => {
     dispatch({ type: 'INCREMENT_SKIP_FAIL_COUNT' });

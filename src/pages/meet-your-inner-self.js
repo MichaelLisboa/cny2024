@@ -196,7 +196,7 @@ const MeetYourInnerSelf = () => {
                 <motion.div animate={controls.footerControls} id="section-1" className="mal-flex mal-flex-column mal-flex-middle">
                     <TraitsList>
                         {userAnimal.traits.map((trait, index) => (
-                            <motion.li animate={controls.elementControls} key={index}>{trait}</motion.li>
+                            <motion.li key={index}>{trait}</motion.li>
                         ))}
                     </TraitsList>
                     <StyledAnimalImage src={userAnimal.image} alt={userAnimal.name} />

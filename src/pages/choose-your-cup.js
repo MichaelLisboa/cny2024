@@ -125,7 +125,7 @@ const ChooseYourTrait = () => {
                 {content === 'initial' ? (
                     <div className="mal-margin-bottom-large mal-padding-remove-horizontal">
                         <h3 className="mal-margin-remove-top">Emperor Jade presents you with five shimmering cups, each radiating a unique essence of a distinct personality trait. </h3>
-                        <DescriptionText animate={controls.elementControls}>Choose your cup wisely.</DescriptionText>
+                        <DescriptionText>Choose your cup wisely.</DescriptionText>
                     </div>
                 ) : ``}
             </HeaderSection>
