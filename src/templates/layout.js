@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo, useContext, useRef } from 'react';
-import { motion, useAnimation, useCycle } from 'framer-motion';
+import { motion, useAnimation, AnimatePresence } from 'framer-motion';
 import { useLocation, useNavigate } from 'react-router-dom';
 import pages from '../utils/pages';
 import styled, { keyframes } from 'styled-components';

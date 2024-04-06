@@ -1,7 +1,7 @@
 import React, { useContext, useState, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { AppContext } from '../contexts/AppContext';
 import { usePageAnimations } from '../contexts/AnimationContext';
 import { useDynamicTextReplacer } from '../hooks/useDynamicTextReplacer';
@@ -11,7 +11,7 @@ import TraitToken from '../components/TraitToken';
 import { elementsList } from '../data';
 import MalCarousel from '../components/MalCarousel';
 import { OrnateButton } from '../components/Button';
-import { delay } from 'lodash';
+import { TextPerCharAnimation } from '../components/TextPerCharAnimation';
 
 const scaleAnimation = keyframes`
   0% {
@@ -143,38 +143,69 @@ const WhatIsYourElement = () => {
     return (
         <Layout>
             <HeaderSection
-                animate={controls.headerControls}
                 className="header-section mal-text-center"
             >
-                {content === 'initial' ? (
-                    <div className="mal-margin-bottom-large mal-padding-remove-horizontal">
-                        <h3 className="mal-margin-remove-top">You find yourself in an ethereal realm, surrounded by a captivating aura of...</h3>
-                    </div>
-                ) : null}
+                <AnimatePresence mode='wait'>
+                    {content === 'initial' ? (
+                        <motion.div
+                            key="header"
+                            initial="hidden"
+                            animate="visible"
+                            exit="exit"
+                            variants={animations.slideUpFadeIn} // Adjust according to the desired animation
+                        >
+                            <div className="mal-margin-bottom-large mal-padding-remove-horizontal">
+                                <h3 className="mal-margin-remove-top">
+                                    <TextPerCharAnimation
+                                        text="You find yourself in an ethereal realm, surrounded by a captivating aura of..."
+                                        animationVariant={animations.textFadeInByChar}
+                                    />
+                                </h3>
+                            </div>
+                        </motion.div>
+                    ) : null}
+                </AnimatePresence>
             </HeaderSection>
-            <BodySection
-                animate={controls.bodyControls}
-                className="body-section"
-            >
-                {content === 'initial' ? (
-                    <div className="mal-padding mal-padding-remove-vertical">
-                        <StyledMalCarousel
-                            elementsList={elementsList}
-                            initialSlide={initialSlide.index}
-                            onCurrentSlideChange={handleCurrentSlideChange}
-                            handleCardClick={handleButtonClick}
-                        />
-                    </div>
-                ) : (
-                    <TraitToken
-                        trait={elementTokenImage}
-                        selected={selectedCard}
-                        subheadline={currentSlide.subheadline}
-                        title={currentSlide.title}
-                        description={currentSlide.description}
-                    />
-                )}
+
+            <BodySection className="body-section">
+                <AnimatePresence mode='wait'>
+                    {content === 'initial' ? (
+                        <motion.div
+                            key="carousel"
+                            initial="hidden"
+                            animate="visible"
+                            exit="exit"
+                            variants={animations.slideUpFadeIn} // Adjust according to the desired animation
+                        >
+                            <div className="mal-padding mal-padding-remove-vertical">
+                                <StyledMalCarousel
+                                    elementsList={elementsList}
+                                    initialSlide={initialSlide.index}
+                                    onCurrentSlideChange={handleCurrentSlideChange}
+                                    handleCardClick={handleButtonClick}
+                                />
+                            </div>
+                        </motion.div>
+                    ) : (
+                        <motion.div
+                            key="traitToken"
+                            initial="hidden"
+                            animate="visible"
+                            exit="exit"
+                            variants={{ ...animations.slideUpFadeIn }} // Adjust according to the desired animation
+                        >
+                            <TraitToken
+                                trait={elementTokenImage}
+                                selected={selectedCard}
+                                subheadline={currentSlide.subheadline}
+                                title={currentSlide.title}
+                                description={currentSlide.description}
+                            />
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </BodySection>
+
             <FooterSection
                 animate={controls.footerControls}
                 className="footer-section"

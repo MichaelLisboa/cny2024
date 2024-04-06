@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
+import { usePageAnimations } from '../contexts/AnimationContext';
 import Image from '../components/Image';
 
 const TraitTokenContainer = styled.div`
@@ -35,14 +37,32 @@ const TraitTokenImage = styled.div`
 `;
 
 const TraitToken = ({ trait, selected, subheadline, title, description }) => {
+    const { animations } = usePageAnimations();
     return (
         <TraitTokenContainer>
             <TraitTokenImage className="mal-padding">
                 <Image src={trait} alt={`The Trait of ${selected}`} />
             </TraitTokenImage>
-            <h4>{subheadline}</h4>
-            <h2>{title}</h2>
-            <p className="mal-text-medium">{description}</p>
+            <motion.div
+                variants={{
+                    hidden: { ...animations.slideUpFadeIn.hidden },
+                    visible: {
+                        ...animations.slideUpFadeIn.visible,
+                        transition: {
+                            ...animations.slideUpFadeIn.visible.transition,
+                            delay: 0.125 // Delay in seconds
+                        }
+                    },
+                    exit: { ...animations.slideUpFadeIn.exit }
+                }}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+            >
+                <h4>{subheadline}</h4>
+                <h2>{title}</h2>
+                <p className="mal-text-medium">{description}</p>
+            </motion.div>
         </TraitTokenContainer>
     );
 };
