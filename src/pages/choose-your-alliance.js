@@ -17,11 +17,11 @@ const StyledMalCarousel = styled(MalCarousel)`
   .slide {
     margin: 0 !important;
     padding: 0 !important;
-    max-height: 40vh;
+    max-height: 60vh;
     overflow: visible !important;
 
     &.slide img {
-        max-height: 40vh;
+        max-height: 60vh;
     }
   }
 `;
@@ -48,7 +48,6 @@ const StyledParagraph = styled(motion.p).attrs(() => ({
   position: absolute;
   top: 0;
   width: auto;
-  max-width: 66%;
   line-height: 1.2em;
   overflow: hidden;
   font-size: 0.95rem;
@@ -105,13 +104,17 @@ const StyledImage = styled(motion.div)`
     transform: translateX(-50%);
   }`;
 
-const HeaderSection = styled(motion.div)`
-  // Add your header-section styles here.
-`;
-
-const BodySection = styled(motion.div)`
-  // Add your body-section styles here.
-`;
+const BodySection = styled('div')`
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-top: 24px;
+  
+      @media (min-width: 768px) {
+          margin-top: -20%;
+      }
+  `;
 
 const FooterSection = styled(motion.div)`
   // Add your footer-section styles here.
@@ -183,46 +186,50 @@ const ChooseYourAlliance = () => {
 
     return (
         <Layout>
-            <HeaderSection
-                animate={controls.headerControls}
-                className="header-section"
-            >
-                {content === 'initial' ? (
+            {content === 'initial' ? (
+                <AnimatedBodySection keyName="header" className="header-section" animationVariant={animations.slideUpFadeIn}>
                     <div className="mal-margin-bottom-large mal-padding-remove-horizontal">
                         <h3 className="mal-margin-remove-top">
                             <TextPerCharAnimation
                                 text={replaceElementNoun(`Shortly after, you come across other spirits. Choose your ally in the Realm of *element_noun*.`)}
                                 animationVariant={animations.textFadeInByChar}
                             />
-                            </h3>
+                        </h3>
                     </div>
-                ) : ``}
-            </HeaderSection>
-            <BodySection
-                animate={controls.bodyControls}
-                className="body-section"
-            >
-                {content === 'initial' ? (
-                    <div>
-                        <Container>
-                            <AnimatePresence>
-                                <StyledParagraph
-                                    key={currentSlide.index}
-                                    lines={3}>
-                                    "{replaceElementNoun(currentSlide.description)}"
-                                </StyledParagraph>
-                            </AnimatePresence>
-                        </Container>
-                        <StyledMalCarousel
-                            elementsList={allianceList}
-                            initialSlide={initialSlide.index}
-                            onCurrentSlideChange={handleCurrentSlideChange}
-                            handleCardClick={handleButtonClick}
-                        />
-                    </div>
-                ) : (
+                </AnimatedBodySection>
+            ) : (
+                <AnimatedBodySection keyName="header2" className="header-section" animationVariant={animations.slideUpFadeIn}>
+                    &nbsp;
+                </AnimatedBodySection>
+            )
+            }
+
+            {content === 'initial' ? (
+                <AnimatedBodySection keyName="carousel" className="body-section" animationVariant={animations.slideUpFadeIn}>
+                    <BodySection className="mal-padding-small mal-padding-remove-vertical">
+                        <div>
+                            <Container>
+                                <AnimatePresence>
+                                    <StyledParagraph
+                                        key={currentSlide.index}
+                                        lines={3}>
+                                        "{replaceElementNoun(currentSlide.description)}"
+                                    </StyledParagraph>
+                                </AnimatePresence>
+                            </Container>
+                            <StyledMalCarousel
+                                elementsList={allianceList}
+                                initialSlide={initialSlide.index}
+                                onCurrentSlideChange={handleCurrentSlideChange}
+                                handleCardClick={handleButtonClick}
+                            />
+                        </div>
+                    </BodySection>
+                </AnimatedBodySection>
+            ) : (
+                <AnimatedBodySection keyName="animal" className="body-section" animationVariant={animations.fadeIn}>
                     <div className="mal-flex mal-flex-column mal-flex-between">
-                        <div className="mal-position-top mal-text-center mal-margin-auto mal-width-auto">
+                        <div className="mal-text-center mal-margin-auto mal-width-auto">
                             <h3>{currentSlide.reaction}</h3>
                             <p className="mal-text-medium mal-text-italic">"{currentSlide.text}"</p>
                         </div>
@@ -235,18 +242,16 @@ const ChooseYourAlliance = () => {
                             </OrnateButton>
                         </div>
                     </div>
-                )}
-            </BodySection>
-            <FooterSection
-                animate={controls.footerControls}
-                className="footer-section"
-            >
-                {content === 'initial' ? (
+                </AnimatedBodySection>
+            )}
+
+            {content === 'initial' ? (
+                <AnimatedBodySection keyName="choice" className="footer-section" animationVariant={animations.slideUpFadeIn}>
                     <OrnateButton onClick={handleButtonClick}>
                         The {currentSlide.title}
                     </OrnateButton>
-                ) : null}
-            </FooterSection>
+                </AnimatedBodySection>
+            ) : null}
         </Layout >
     );
 };
