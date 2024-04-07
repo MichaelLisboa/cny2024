@@ -7,6 +7,7 @@ import { usePageAnimations } from '../contexts/AnimationContext';
 import { useDynamicTextReplacer } from '../hooks/useDynamicTextReplacer';
 import pages from '../utils/pages';
 import Layout from '../templates/layout';
+import { AnimatedBodySection } from '../components/AnimatedSections';
 import TraitToken from '../components/TraitToken';
 import { elementsList } from '../data';
 import MalCarousel from '../components/MalCarousel';
@@ -81,10 +82,6 @@ const HeaderSection = styled(motion.div)`
   // Add your header-section styles here.
 `;
 
-const BodySection = styled(motion.div)`
-  // Add your body-section styles here.
-`;
-
 const FooterSection = styled(motion.div)`
   // Add your footer-section styles here.
 `;
@@ -142,71 +139,62 @@ const WhatIsYourElement = () => {
 
     return (
         <Layout>
-            <HeaderSection
-                className="header-section mal-text-center"
-            >
-                <AnimatePresence mode='wait'>
-                    {content === 'initial' ? (
-                        <motion.div
-                            key="header"
-                            initial="hidden"
-                            animate="visible"
-                            exit="exit"
-                            variants={animations.slideUpFadeIn} // Adjust according to the desired animation
-                        >
-                            <div className="mal-margin-bottom-large mal-padding-remove-horizontal">
-                                <h3 className="mal-margin-remove-top">
-                                    <TextPerCharAnimation
-                                        text="You find yourself in an ethereal realm, surrounded by a captivating aura of..."
-                                        animationVariant={animations.textFadeInByChar}
-                                    />
-                                </h3>
-                            </div>
-                        </motion.div>
-                    ) : null}
-                </AnimatePresence>
-            </HeaderSection>
-
-            <BodySection className="body-section">
-                <AnimatePresence mode='wait'>
-                    {content === 'initial' ? (
-                        <motion.div
-                            key="carousel"
-                            initial="hidden"
-                            animate="visible"
-                            exit="exit"
-                            variants={animations.slideUpFadeIn} // Adjust according to the desired animation
-                        >
-                            <div className="mal-padding mal-padding-remove-vertical">
-                                <StyledMalCarousel
-                                    elementsList={elementsList}
-                                    initialSlide={initialSlide.index}
-                                    onCurrentSlideChange={handleCurrentSlideChange}
-                                    handleCardClick={handleButtonClick}
-                                />
-                            </div>
-                        </motion.div>
-                    ) : (
-                        <motion.div
-                            key="traitToken"
-                            initial="hidden"
-                            animate="visible"
-                            exit="exit"
-                            variants={{ ...animations.slideUpFadeIn }} // Adjust according to the desired animation
-                        >
-                            <TraitToken
-                                trait={elementTokenImage}
-                                selected={selectedCard}
-                                subheadline={currentSlide.subheadline}
-                                title={currentSlide.title}
-                                description={currentSlide.description}
+            {content === 'initial' ? (
+                <AnimatedBodySection keyName="header" className="header-section" animationVariant={animations.slideUpFadeIn}>
+                    <div className="mal-margin-bottom-large mal-padding-remove-horizontal">
+                        <h3 className="mal-margin-remove-top">
+                            <TextPerCharAnimation
+                                text="You find yourself in an ethereal realm, surrounded by a captivating aura of..."
+                                animationVariant={animations.textFadeInByChar}
                             />
-                        </motion.div>
-                    )}
-                </AnimatePresence>
-            </BodySection>
+                        </h3>
+                    </div>
+                </AnimatedBodySection>
+            ) : (
+                <AnimatedBodySection keyName="header2" className="header-section" animationVariant={animations.slideUpFadeIn}>
+                    &nbsp;
+                </AnimatedBodySection>
+            )}
 
-            <FooterSection
+            {content === 'initial' ? (
+                <AnimatedBodySection keyName="carousel" className="body-section" animationVariant={animations.slideUpFadeIn}>
+                    <div className="mal-padding mal-padding-remove-vertical">
+                        <StyledMalCarousel
+                            elementsList={elementsList}
+                            initialSlide={initialSlide.index}
+                            onCurrentSlideChange={handleCurrentSlideChange}
+                            handleCardClick={handleButtonClick}
+                        />
+                    </div>
+                </AnimatedBodySection>
+            ) : (
+                <AnimatedBodySection keyName="traitToken" animationVariant={animations.slideUpFadeIn}>
+                    <TraitToken
+                        trait={elementTokenImage}
+                        selected={selectedCard}
+                        subheadline={currentSlide.subheadline}
+                        title={currentSlide.title}
+                        description={currentSlide.description}
+                    />
+                </AnimatedBodySection>
+            )}
+
+            {content === 'initial' ? (
+                <AnimatedBodySection keyName="choice" className="footer-section" animationVariant={animations.slideUpFadeIn}>
+                    <OrnateButton onClick={handleButtonClick}>
+                        {currentSlide.title}
+                        <DescriptionText className="mal-text-small">{currentSlide.text}</DescriptionText>
+                    </OrnateButton>
+                </AnimatedBodySection>
+            ) : (
+                <AnimatedBodySection keyName="result" className="footer-section" animationVariant={animations.slideUpFadeIn}>
+                    <OrnateButton url={nextPage.url}>
+                        {nextPage.title}
+                    </OrnateButton>
+                </AnimatedBodySection>
+            )}
+
+            {/* <FooterSection
                 animate={controls.footerControls}
                 className="footer-section"
             >
@@ -220,7 +208,7 @@ const WhatIsYourElement = () => {
                         {nextPage.title}
                     </OrnateButton>
                 )}
-            </FooterSection>
+            </FooterSection> */}
         </Layout >
     );
 };

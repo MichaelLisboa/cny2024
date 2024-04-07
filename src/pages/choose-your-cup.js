@@ -4,12 +4,13 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { AppContext } from '../contexts/AppContext';
 import { usePageAnimations } from '../contexts/AnimationContext';
-
 import { useDynamicTextReplacer } from '../hooks/useDynamicTextReplacer';
 import pages from '../utils/pages';
 import Layout from '../templates/layout';
+import { AnimatedBodySection } from '../components/AnimatedSections';
 import MalCarousel from '../components/MalCarousel';
 import TraitToken from '../components/TraitToken';
+import { TextPerCharAnimation } from '../components/TextPerCharAnimation';
 import { OrnateButton } from '../components/Button';
 import { traitsList } from '../data';
 import trait from "../images/tokens/trait.png";
@@ -37,16 +38,11 @@ const DescriptionText = styled(motion.p)`
     padding: 0;
 `;
 
-const HeaderSection = styled(motion.div)`
-  // Add your header-section styles here.
-`;
-
-const BodySection = styled(motion.div)`
-  // Add your body-section styles here.
-`;
-
-const FooterSection = styled(motion.div)`
-  // Add your footer-section styles here.
+const BodySection = styled('div')`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
 `;
 
 const ChooseYourTrait = () => {
@@ -57,7 +53,7 @@ const ChooseYourTrait = () => {
     const location = useLocation();
     const currentPage = useMemo(() => pages.find(page => page.url === location.pathname), [location.pathname]);
     const nextPage = useMemo(() => pages.find(page => page.url === currentPage.nextPage), [currentPage]);
-    const { animateEnter, animateExit, controls } = usePageAnimations();
+    const { animations, animateEnter, animateExit, controls } = usePageAnimations();
 
     // Function to get random index
     const getRandomIndex = (length) => Math.floor(Math.random() * length);
@@ -118,31 +114,44 @@ const ChooseYourTrait = () => {
 
     return (
         <Layout>
-            <HeaderSection
-                animate={controls.headerControls}
-                className="header-section"
-            >
-                {content === 'initial' ? (
-                    <div className="mal-margin-bottom-large mal-padding-remove-horizontal">
-                        <h3 className="mal-margin-remove-top">Emperor Jade presents you with five shimmering cups, each radiating a unique essence of a distinct personality trait. </h3>
-                        <DescriptionText>Choose your cup wisely.</DescriptionText>
+            {content === 'initial' ? (
+                <AnimatedBodySection keyName="header" className="header-section" animationVariant={animations.slideUpFadeIn}>
+                    <div className="mal-margin-large-bottom mal-padding-remove-horizontal">
+                        <h3 className="mal-margin-remove-top">
+                            <TextPerCharAnimation
+                                text={replaceElementNoun(`As you explore the realm of *element_noun* you discover five shimmering cups, each radiating a unique essence.`)}
+                                animationVariant={animations.textFadeInByChar}
+                            />
+                        </h3>
+                        <DescriptionText
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 1.75 }}>
+                            Choose your cup wisely.
+                        </DescriptionText>
                     </div>
-                ) : ``}
-            </HeaderSection>
-            <BodySection
-                animate={controls.bodyControls}
-                className="body-section"
-            >
-                {content === 'initial' ? (
-                    <div>
-                        <StyledMalCarousel
+                </AnimatedBodySection>
+            ) : 
+            (
+                <AnimatedBodySection keyName="header2" className="header-section" animationVariant={animations.slideUpFadeIn}>
+                    &nbsp;
+                </AnimatedBodySection>
+            )
+            }
+
+            {content === 'initial' ? (
+                <AnimatedBodySection keyName="carousel" className="body-section" animationVariant={animations.slideUpFadeIn}>
+                    <BodySection className="mal-margin-large-top mal-padding mal-padding-remove-vertical">
+                    <StyledMalCarousel
                             elementsList={randomItems}
                             initialSlide={0}
                             onCurrentSlideChange={handleCurrentSlideChange}
                             handleCardClick={handleButtonClick}
                         />
-                    </div>
-                ) : (
+                    </BodySection>
+                </AnimatedBodySection>
+            ) : (
+                <AnimatedBodySection keyName="traitToken" animationVariant={animations.slideUpFadeIn}>
                     <TraitToken
                         trait={trait}
                         selected={selectedCard}
@@ -150,22 +159,22 @@ const ChooseYourTrait = () => {
                         title={currentSlide.title}
                         description={currentSlide.description}
                     />
-                )}
-            </BodySection>
-            <FooterSection
-                animate={controls.footerControls}
-                className="footer-section"
-            >
-                {content === 'initial' ? (
+                </AnimatedBodySection>
+            )}
+
+            {content === 'initial' ? (
+                <AnimatedBodySection keyName="choice" className="footer-section" animationVariant={animations.slideUpFadeIn}>
                     <OrnateButton onClick={handleButtonClick}>
                         {currentSlide.title}
                     </OrnateButton>
-                ) : (
+                </AnimatedBodySection>
+            ) : (
+                <AnimatedBodySection keyName="result" className="footer-section" animationVariant={animations.slideUpFadeIn}>
                     <OrnateButton url={nextPage.url}>
                         {nextPage.title}
                     </OrnateButton>
-                )}
-            </FooterSection>
+                </AnimatedBodySection>
+            )}
         </Layout >
     );
 };

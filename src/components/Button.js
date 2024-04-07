@@ -128,7 +128,7 @@ export const OrnateButton = ({ children, url, onClick }) => {
       onClick={handleClick}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ delay: 1.5 }}
+      transition={{ delay: .75 }}
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseLeave}

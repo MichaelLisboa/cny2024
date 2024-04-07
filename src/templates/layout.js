@@ -259,11 +259,6 @@ const Layout = ({ children, refreshEnabled = true }) => {
           initial={{ scale: 2 }}
         />
         <motion.section
-          initial={{ y: browserSize.height }}
-          animate={{ y: 0 }}
-          exit={{ y: browserSize.height }}
-          enter={{ y: 0 }}
-          transition={{ type: 'spring', stiffness: 90, damping: 20 }}
           style={{ height: browserSize.height }}
         >
           <MalContainer className="mal-container mal-container-small">
