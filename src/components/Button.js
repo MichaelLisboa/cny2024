@@ -48,6 +48,12 @@ const StyledLink = styled(Link)`
   }
 `;
 
+const textVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.5, ease: 'easeIn' }},
+  exit: { opacity: 0, transition: { duration: 1, ease: 'easeOut' }}
+};
+
 const OptionButtonLink = styled(Link)`
   position: relative;
   z-index: 2;
@@ -98,6 +104,18 @@ const OptionButtonLink = styled(Link)`
 const NextButton = motion(StyledLink);
 const UserOptionButton = motion(OptionButtonLink);
 
+const ButtonLabel = ({ children }) => (
+  <motion.span
+    key={children}
+    initial="hidden"
+    animate="visible"
+    exit="exit"
+    variants={textVariants}
+  >
+    {children}
+  </motion.span>
+);
+
 export const OrnateButton = ({ children, url, onClick }) => {
   const [isactive, setisactive] = useState(false);
 
@@ -132,7 +150,11 @@ export const OrnateButton = ({ children, url, onClick }) => {
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseLeave}
-      isactive={isactive}>{children}</NextButton>
+      isactive={isactive}>
+        <ButtonLabel>
+          {children}
+        </ButtonLabel>
+      </NextButton>
   );
 };
 

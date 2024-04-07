@@ -4,7 +4,9 @@ import styled from 'styled-components';
 import { motion, useAnimation, AnimatePresence } from 'framer-motion';
 import { AppContext } from '../contexts/AppContext';
 import { usePageAnimations } from '../contexts/AnimationContext';
+import { AnimatedBodySection } from '../components/AnimatedSections';
 import { useDynamicTextReplacer } from '../hooks/useDynamicTextReplacer';
+import { TextPerCharAnimation } from '../components/TextPerCharAnimation';
 import pages from '../utils/pages';
 import Layout from '../templates/layout';
 import MalCarousel from '../components/MalCarousel';
@@ -127,7 +129,7 @@ const ChooseYourAlliance = () => {
     const currentPage = useMemo(() => pages.find(page => page.url === location.pathname), [location.pathname]);
     const nextPage = useMemo(() => pages.find(page => page.url === currentPage.nextPage), [currentPage]);
     const previousPage = useMemo(() => pages.find(page => page.url === currentPage.previousPage), [currentPage]);
-    const { animateEnter, animateExit, controls } = usePageAnimations();
+    const { animations, animateEnter, animateExit, controls } = usePageAnimations();
     const paragraphControls = useAnimation();
 
     const initialSlide = {
@@ -187,7 +189,12 @@ const ChooseYourAlliance = () => {
             >
                 {content === 'initial' ? (
                     <div className="mal-margin-bottom-large mal-padding-remove-horizontal">
-                        <h3 className="mal-margin-remove-top">Shortly after, you come across other spirits.</h3>
+                        <h3 className="mal-margin-remove-top">
+                            <TextPerCharAnimation
+                                text={replaceElementNoun(`Shortly after, you come across other spirits. Choose your ally in the Realm of *element_noun*.`)}
+                                animationVariant={animations.textFadeInByChar}
+                            />
+                            </h3>
                     </div>
                 ) : ``}
             </HeaderSection>
@@ -224,7 +231,7 @@ const ChooseYourAlliance = () => {
                         </StyledImage>
                         <div className="footer-section mal-position-bottom mal-position-large">
                             <OrnateButton url={nextPage.url}>
-                                {nextPage.title}
+                                First, we must solve a riddle
                             </OrnateButton>
                         </div>
                     </div>
@@ -236,7 +243,7 @@ const ChooseYourAlliance = () => {
             >
                 {content === 'initial' ? (
                     <OrnateButton onClick={handleButtonClick}>
-                        {currentSlide.title}
+                        The {currentSlide.title}
                     </OrnateButton>
                 ) : null}
             </FooterSection>

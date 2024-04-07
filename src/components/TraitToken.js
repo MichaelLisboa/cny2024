@@ -8,8 +8,9 @@ const TraitTokenContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     text-align: center;
+    height: 50vh;
 
     h2 {
         margin: 0;
@@ -28,11 +29,19 @@ const TraitTokenContainer = styled.div`
 const TraitTokenImage = styled.div`
     width: auto;
     padding: 0 0 8px 0;
+    margin: 48px auto;
 
     img {
         height: 100%;
         max-height: 25vh;
         object-fit: contain;
+    }
+
+    @media (min-width: 768px) {
+        img {
+            height: 40vh;
+            max-height: 40vh;
+        }
     }
 `;
 
@@ -40,7 +49,7 @@ const TraitToken = ({ trait, selected, subheadline, title, description }) => {
     const { animations } = usePageAnimations();
     return (
         <TraitTokenContainer>
-            <TraitTokenImage className="mal-padding">
+            <TraitTokenImage>
                 <Image src={trait} alt={`The Trait of ${selected}`} />
             </TraitTokenImage>
             <motion.div

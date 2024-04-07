@@ -42,7 +42,12 @@ const BodySection = styled('div')`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
+    margin-top: 80px;
+
+    @media (min-width: 768px) {
+        margin-top: 0;
+    }
 `;
 
 const ChooseYourTrait = () => {
@@ -53,7 +58,7 @@ const ChooseYourTrait = () => {
     const location = useLocation();
     const currentPage = useMemo(() => pages.find(page => page.url === location.pathname), [location.pathname]);
     const nextPage = useMemo(() => pages.find(page => page.url === currentPage.nextPage), [currentPage]);
-    const { animations, animateEnter, animateExit, controls } = usePageAnimations();
+    const { animations, animateEnter, animateExit } = usePageAnimations();
 
     // Function to get random index
     const getRandomIndex = (length) => Math.floor(Math.random() * length);
@@ -141,7 +146,7 @@ const ChooseYourTrait = () => {
 
             {content === 'initial' ? (
                 <AnimatedBodySection keyName="carousel" className="body-section" animationVariant={animations.slideUpFadeIn}>
-                    <BodySection className="mal-margin-large-top mal-padding mal-padding-remove-vertical">
+                    <BodySection className="mal-padding mal-padding-remove-vertical">
                     <StyledMalCarousel
                             elementsList={randomItems}
                             initialSlide={0}
@@ -152,6 +157,7 @@ const ChooseYourTrait = () => {
                 </AnimatedBodySection>
             ) : (
                 <AnimatedBodySection keyName="traitToken" animationVariant={animations.slideUpFadeIn}>
+                    
                     <TraitToken
                         trait={trait}
                         selected={selectedCard}

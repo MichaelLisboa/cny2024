@@ -344,6 +344,17 @@ h6,
   text-transform: none;
 }
 
+@media (min-width: 728px) {
+  .header-section h1,
+  .header-section h2,
+  .header-section h3,
+  .header-section h4,
+  .header-section h5,
+  .header-section h6 {
+    font-size: 180% !important;
+  }
+}
+
 /* Add margin if adjacent element */
 *+h1,
 *+.mal-h1,
