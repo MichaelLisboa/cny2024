@@ -134,7 +134,7 @@ export const allianceList = [
     {
         title: "Clever Rat",
         image: require('../images/zodiac_actual/animals/rat.png'),
-        description: "I am known for my wit. Will you join forces with me to navigate these challenges?",
+        description: "I am known for my wit. Join forces with me to navigate the challenges of the *element_noun* realm!",
         reaction: "Rat scurries excitedly, saying,",
         text: "Ah, great choice, spirit! Let's outsmart the competition!",
         slug: "clever-rat",
@@ -143,7 +143,7 @@ export const allianceList = [
     {
         title: "Strong Ox",
         image: require('../images/zodiac_actual/animals/ox.png'),
-        description: "My strength is unmatched. Shall we join forces to overcome these challenges?",
+        description: "My strength is unmatched. Shall we join forces to overcome the challenges of the Realm of *element_noun*?",
         reaction: "With sturdy trot, Ox declares,",
         text: "A worthy adversary! Brace yourself, spirit, for a test of strength.",
         slug: "strong-ox",
@@ -161,7 +161,7 @@ export const allianceList = [
     {
         title: "Smart Rabbit",
         image: require('../images/zodiac_actual/animals/rabbit.png'),
-        description: "I am known for my agility and wit. Would you like to team up and outpace the competition?",
+        description: "I am known for my agility and wit. Would you like to team up and outpace the competition in the *element_noun*?",
         reaction: "Rabbit hops lightly, stating,",
         text: "Smart move, spirit! Quick thinking will be our path to victory.",
         slug: "smart-rabbit",
@@ -170,7 +170,7 @@ export const allianceList = [
     {
         title: "Wise Dragon",
         image: require('../images/zodiac_actual/animals/dragon.png'),
-        description: "Only the brave dare to navigate this treacherous course. Let's see if you can succeed.",
+        description: "Only the brave dare to navigate this treacherous course of *element_noun*. Let us see if we can succeed together.",
         reaction: "With a sweep of its powerful wings, the Dragon hovers,",
         text: "Bravery, I like! Let us navigate the twists of fate and rise above the challenges, spirit.",
         slug: "wise-dragon",
@@ -179,7 +179,7 @@ export const allianceList = [
     {
         title: "Patient Snake",
         image: require('../images/zodiac_actual/animals/snake.png'),
-        description: "Ahead liesss a path woven with complexity. With patience, we can overcome them together. Shall we navigate it as alliesss?",
+        description: "Ahead liesss a path woven with complexity. With patience, we can overcome the Realm of *element_noun* together. Shall we navigate it as alliesss?",
         reaction: "Snake slithers with finesse, hissing,",
         text: "Wisssely chosen, spirit! With cunning and patience, we'll navigate the twisssts of fate together.",
         slug: "patient-snake",
@@ -188,7 +188,7 @@ export const allianceList = [
     {
         title: "Mighty Horse",
         image: require('../images/zodiac_actual/animals/horse.png'),
-        description: "It is time for a test of strength. Are you up for the challenge?",
+        description: "It is time for a test of endurance. Are you up for the challenge of the Realm of *element_noun*?",
         reaction: "Horse gallops forward with vibrant energy,",
         text: "Our strength will carry us to success. Prepare for a true test of your spirit's might!",
         slug: "mighty-horse",
@@ -197,7 +197,7 @@ export const allianceList = [
     {
         title: "Polite Goat",
         image: require('../images/zodiac_actual/animals/goat.png'),
-        description: "Your journey thus far is admirable. Together, with our combined resilience and strategic thinking, we can overcome the hurdles with ease. Shall we join forces?",
+        description: "With our combined resilience and strategic thinking, we can overcome the challenges of the Realm of *element_noun* with ease. Shall we join forces?",
         reaction: "Goat nods in greeting,",
         text: "Welcome, kindred spirit! With wisdom and cooperation, we'll scale heights and overcome any obstacle.",
         slug: "polite-goat",
@@ -215,7 +215,7 @@ export const allianceList = [
     {
         title: "Determined Rooster",
         image: require('../images/zodiac_actual/animals/rooster.png'),
-        description: "Your determination is admirable. Join me, and we'll overcome these challenges together!",
+        description: "Your determination is admirable. Join me in the *element_noun*, and we'll overcome these challenges together!",
         reaction: "Rooster struts confidently, crowing,",
         text: "Bravo! With determination, we'll conquer all obstacles.",
         slug: "determined-rooster",
@@ -224,7 +224,7 @@ export const allianceList = [
     {
         title: "Friendly Dog",
         image: require('../images/zodiac_actual/animals/dog.png'),
-        description: "With a loyal friend by your side, every step of the journey becomes a delightful adventure. Would you be my companion?",
+        description: "With a loyal friend by your side, every step of our journey is an adventure. Would you be my companion in the Realm of *element_noun*?",
         reaction: "Dog bounds joyfully, barking,",
         text: "Oh, splendid choice! With you as my companion, there's nothing we can't conquer!",
         slug: "friendly-dog",

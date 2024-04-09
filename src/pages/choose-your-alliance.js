@@ -26,7 +26,7 @@ const StyledMalCarousel = styled(MalCarousel)`
   }
 `;
 
-const Container = styled.div`
+const Container = styled(motion.div)`
   position: relative;
   height: 7em;
   width: 100%;
@@ -68,6 +68,23 @@ const StyledParagraph = styled(motion.p).attrs(() => ({
         padding: 16px 32px;
     }
 `;
+
+const paragraphContainerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+        opacity: 1,
+        transition: {
+            delay: 1.5,
+            duration: 0.75,
+        },
+    },
+    exit: {
+        opacity: 0,
+        transition: {
+            duration: 0.5,
+        },
+    },
+};
 
 const paragraphVariants = {
     hidden: { opacity: 0 },
@@ -115,10 +132,6 @@ const BodySection = styled('div')`
           margin-top: -20%;
       }
   `;
-
-const FooterSection = styled(motion.div)`
-  // Add your footer-section styles here.
-`;
 
 const ChooseYourAlliance = () => {
     const { updateUserSelection, getUserInfo } = useContext(AppContext);
@@ -208,7 +221,12 @@ const ChooseYourAlliance = () => {
                 <AnimatedBodySection keyName="carousel" className="body-section" animationVariant={animations.slideUpFadeIn}>
                     <BodySection className="mal-padding-small mal-padding-remove-vertical">
                         <div>
-                            <Container>
+                            <Container
+                                variants={paragraphContainerVariants}
+                                initial='hidden'
+                                animate='show'
+                                exit='exit'
+                            >
                                 <AnimatePresence>
                                     <StyledParagraph
                                         key={currentSlide.index}
