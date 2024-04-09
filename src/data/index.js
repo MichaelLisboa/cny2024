@@ -233,7 +233,7 @@ export const allianceList = [
     {
         title: "Chill Pig",
         image: require('../images/zodiac_actual/animals/pig.png'),
-        description: "Fancy a leisurely stroll through the forest together? I bet we could make a great team!",
+        description: "Oh, are we on an adventure in the Realm of *element_noun*? Let's have a leisurely stroll together, I know we'll make a great team!",
         reaction: "Pig rolls over, oinking,",
         text: "Delightful! I'm more of a stroll-at-my-own-pace kind of pig, but we could still have a good time together.",
         slug: "chill-pig",
