@@ -9,9 +9,9 @@ export const animations = {
       visible: { opacity: 0, transition: { duration: 0.5 } }
     },
     slideUpFadeIn: { 
-      hidden: { y: "50%", opacity: 0 },
-      visible: { y: 0, opacity: 1, transition: { duration: 0.5, ease: "easeInOut" } },
-      exit: { y: "50%", opacity: 0, transition: { duration: 0.25, ease: "easeOut" } }
+      hidden: { y: 50, opacity: 0 },
+      visible: { y: 0, opacity: 1, transition: { duration: 0.5, ease: "easeOut" } },
+      exit: { y: -50, opacity: 0, transition: { duration: 0.25, ease: "easeIn" } }
     },
     slideDownFadeOut: { 
       hidden: { y: 0, opacity: 1 },

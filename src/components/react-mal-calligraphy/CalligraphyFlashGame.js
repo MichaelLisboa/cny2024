@@ -160,7 +160,7 @@ const CalligraphyFlashGame = ({ timeLimit = 30, onCompletionStatusChange }) => {
           </>
         ) : (
           !isTimeUp &&
-          <AnimatePresence>
+          <AnimatePresence mode="wait">
             <OptionsGrid key="characterOptions" variants={variants} initial="hidden" animate="visible" exit="exit">
               {characterOptions.map((option, index) => (
                 <CharacterButton key={index} onClick={() => handleCharacterChoice(option)}>

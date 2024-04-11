@@ -50,8 +50,18 @@ const StyledLink = styled(Link)`
 
 const textVariants = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { duration: 0.5, ease: 'easeIn' }},
-  exit: { opacity: 0, transition: { duration: 1, ease: 'easeOut' }}
+    show: {
+        opacity: 1,
+        transition: {
+            duration: 0.5,
+        },
+    },
+    exit: {
+        opacity: 0,
+        transition: {
+            duration: 0.5,
+        },
+    },
 };
 
 const OptionButtonLink = styled(Link)`
@@ -108,7 +118,7 @@ const ButtonLabel = ({ children }) => (
   <motion.span
     key={children}
     initial="hidden"
-    animate="visible"
+    animate="show"
     exit="exit"
     variants={textVariants}
   >

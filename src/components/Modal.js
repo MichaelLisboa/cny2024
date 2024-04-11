@@ -113,7 +113,7 @@ const Modal = ({ children, closeOnEscape = true, closeOnBackgroundClick = true, 
     };
 
     return (
-        <AnimatePresence>
+        <AnimatePresence mode="wait">
             {isOpen && (
                 <>
                     <Background

@@ -220,14 +220,13 @@ const ChooseYourAlliance = () => {
             {content === 'initial' ? (
                 <AnimatedBodySection keyName="carousel" className="body-section" animationVariant={animations.slideUpFadeIn}>
                     <BodySection className="mal-padding-small mal-padding-remove-vertical">
-                        <div>
                             <Container
                                 variants={paragraphContainerVariants}
                                 initial='hidden'
                                 animate='show'
                                 exit='exit'
                             >
-                                <AnimatePresence>
+                                <AnimatePresence mode="sync">
                                     <StyledParagraph
                                         key={currentSlide.index}
                                         lines={3}>
@@ -241,7 +240,6 @@ const ChooseYourAlliance = () => {
                                 onCurrentSlideChange={handleCurrentSlideChange}
                                 handleCardClick={handleButtonClick}
                             />
-                        </div>
                     </BodySection>
                 </AnimatedBodySection>
             ) : (
