@@ -43,7 +43,7 @@ const BodySection = styled('div')`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: 80px;
+    margin-top: 10%;
 
     @media (min-width: 768px) {
         margin-top: 0;
